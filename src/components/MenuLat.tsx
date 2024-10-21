@@ -14,7 +14,8 @@ import {
   IonRouterOutlet,
   IonTitle,
   IonToolbar,
-  setupIonicReact, IonButton
+  setupIonicReact, IonButton,
+  IonBadge
 } from '@ionic/react';
 import { Redirect, Route,useParams } from 'react-router-dom';
 import { analytics, chatbox, clipboard, ellipse, heart, home, information, logoOctocat, navigate, newspaper, people, peopleCircle, person, square, text, time, triangle, warning } from 'ionicons/icons';
@@ -34,14 +35,6 @@ const MenuLat: React.FC = () => {
 <IonContent>
   <IonList>
     <IonMenuToggle auto-hide="false">
-      {/* <IonItem button routerLink={`/tabs/tab1/${ficha2}`}>
-        <IonIcon slot="start" icon={information} />
-        <IonLabel>0 INFORMACION DEL EVENTO</IonLabel>
-      </IonItem>
-      <IonItem button routerLink={`/tabs/tab2/${ficha2}`}>
-        <IonIcon slot="start" icon={chatbox} />
-        <IonLabel>1 IDENTIFICACION DEL EVENTO</IonLabel>
-      </IonItem> */}
       <IonItem button routerLink={`/tabs/ciudadano/${ficha2}`}>
         <IonIcon slot="start" icon={person} />
         <IonLabel>CIUDADANO</IonLabel>
@@ -50,15 +43,23 @@ const MenuLat: React.FC = () => {
         <IonIcon slot="start" icon={navigate} />
         <IonLabel>LOCALIZACION</IonLabel>
       </IonItem>
-      {/* <IonItem button routerLink={`/tabs/tab4/${ficha2}`}>
-        <IonIcon slot="start" icon={warning} />
-        <IonLabel>3 - EVALUACION Y DAÑOS</IonLabel>
+      <IonItem button routerLink={`/tabs/tab1/${ficha2}`}>
+      <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>0&nbsp;&nbsp;&nbsp;</IonBadge>
+        <IonLabel>INFORMACIÓN DILIGENCIAMIENTO</IonLabel>
+      </IonItem>
+        <IonItem button routerLink={`/tabs/tab2/${ficha2}`}>
+        <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>1&nbsp;&nbsp;&nbsp;</IonBadge>
+        <IonLabel>INFORMACIÓN PERSONAL</IonLabel>
+      </IonItem>
+        <IonItem button routerLink={`/tabs/tab4/${ficha2}`}>
+        <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>2&nbsp;&nbsp;&nbsp;</IonBadge>
+        <IonLabel>CARACTERIZACIÓN Y ORIGEN DE LA DISCAPACIDAD</IonLabel>
       </IonItem>
       <IonItem button routerLink={`/tabs/tab5/${ficha2}`}>
-        <IonIcon slot="start" icon={analytics} />
-        <IonLabel>4 - DATOS DE LA VIVIENDA</IonLabel>
+        <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>3&nbsp;&nbsp;&nbsp;</IonBadge>
+        <IonLabel>ATENCIÓN EN SALUD</IonLabel>
       </IonItem>
-      <IonItem button routerLink={`/tabs/tab6/${ficha2}`}>
+      {/* <IonItem button routerLink={`/tabs/tab6/${ficha2}`}>
         <IonIcon slot="start" icon={newspaper} />
         <IonLabel>5 - SERVICIOS PUBLICOS</IonLabel>
       </IonItem>*/}
