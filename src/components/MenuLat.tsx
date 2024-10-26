@@ -59,6 +59,10 @@ const MenuLat: React.FC = () => {
         <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>3&nbsp;&nbsp;&nbsp;</IonBadge>
         <IonLabel>ATENCIÓN EN SALUD</IonLabel>
       </IonItem>
+      <IonItem button routerLink={`/tabs/tab8/${ficha2}`}>
+        <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>4&nbsp;&nbsp;&nbsp;</IonBadge>
+        <IonLabel>SALUD MENTAL</IonLabel>
+      </IonItem>
       {/* <IonItem button routerLink={`/tabs/tab6/${ficha2}`}>
         <IonIcon slot="start" icon={newspaper} />
         <IonLabel>5 - SERVICIOS PUBLICOS</IonLabel>

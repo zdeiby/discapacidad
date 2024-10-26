@@ -13,27 +13,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import loadSQL from '../models/database';
 
 interface Person {
-  idfiu: string | null;
-  tenenciadelavivienda: string | null;
-  propietario: string | null;
-  propietariotel1: string | null;
-  propietariotel2: string | null;
-  escritura: string | null;
-  compraventa: string | null;
-  promesa: string | null;
-  posesion: string | null;
-  impuestopredial: string | null;
-  serviciospublicos: string | null;
-  matriculapredial: string | null;
-  extrajuicio: string | null;
-  ninguno: string | null;
-  otro: string | null;
-  cualdocumentos: string | null;
-  unidadproductuva: string | null;
-  cualunidadproductiva: string | null;
+  id_usuario: number;
+  ideas_suicidas: string | null;
+  intento_de_suicidio: string | null;
+  hospitalizacion_por_psiquiatria: string | null;
+  tristeza_extrema_y_permanente: string | null;
+  ansiedad_constante_que_afecta_desarrollo: string | null;
+  trastornos_alimenticios: string | null;
+  consumo_sustancias_psicoactivas: string | null;
+  cambios_importantes_en_la_personalidad: string | null;
+  alteraciones_permanentes_estado_del_sueño: string | null;
+  otro_cuales: string | null;
   fecharegistro: string | null;
-  usuario: string | null;
-  estado: string | null;
+  usuario: number | null;
+  estado: number | null;
   tabla: string | null;
 }
 
@@ -45,24 +38,17 @@ const Tab8: React.FC = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [db, setDb] = useState<any>(null);
   const [items, setItems] = useState({
-    idfiu: '',
-    tenenciadelavivienda: '',
-    propietario: '',
-    propietariotel1: '',
-    propietariotel2: '',
-    escritura: '',
-    compraventa: '',
-    promesa: '',
-    posesion: '',
-    impuestopredial: '',
-    serviciospublicos: '',
-    matriculapredial: '',
-    extrajuicio: '',
-    ninguno: '',
-    otro: '',
-    cualdocumentos: '',
-    unidadproductuva: '',
-    cualunidadproductiva: '',
+    id_usuario: '',
+    ideas_suicidas: '',
+    intento_de_suicidio: '',
+    hospitalizacion_por_psiquiatria: '',
+    tristeza_extrema_y_permanente: '',
+    ansiedad_constante_que_afecta_desarrollo: '',
+    trastornos_alimenticios: '',
+    consumo_sustancias_psicoactivas: '',
+    cambios_importantes_en_la_personalidad: '',
+    alteraciones_permanentes_estado_del_sueño: '',
+    otro_cuales: '',
     fecharegistro: '',
     usuario: '',
     estado: '',
@@ -110,7 +96,7 @@ const Tab8: React.FC = () => {
 
   const fetchUsers = async (database = db) => {
     if (db) {
-      const res = await database.exec(`SELECT * FROM infraccion_tenencia_vivienda WHERE idfiu=${params.ficha}`);
+      const res = await database.exec(`SELECT * FROM discapacidad_capitulo_4 WHERE id_usuario=${params.ficha}`);
       if (res[0]?.values && res[0]?.columns) {
         const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
           return res[0].columns.reduce((obj, col, index) => {
@@ -119,35 +105,29 @@ const Tab8: React.FC = () => {
           }, {} as Person);
         });
         setPeople(transformedPeople);
-        setButtonDisabled((transformedPeople[0].tenenciadelavivienda)?false:true); 
+        setButtonDisabled((transformedPeople[0].ideas_suicidas) ? false : true);
       } else {
         setItems({
-          idfiu: params.ficha,
-          tenenciadelavivienda: '',
-          propietario: '',
-          propietariotel1: '',
-          propietariotel2: '',
-          escritura: '1',
-          compraventa: '1',
-          promesa: '1',
-          posesion: '1',
-          impuestopredial: '1',
-          serviciospublicos: '1',
-          matriculapredial: '1',
-          extrajuicio: '1',
-          ninguno: '1',
-          otro: '1',
-          cualdocumentos: '',
-          unidadproductuva: '',
-          cualunidadproductiva: '',
+          id_usuario: params.ficha,
+          ideas_suicidas: '1',
+          intento_de_suicidio: '1',
+          hospitalizacion_por_psiquiatria: '1',
+          tristeza_extrema_y_permanente: '1',
+          ansiedad_constante_que_afecta_desarrollo: '1',
+          trastornos_alimenticios: '1',
+          consumo_sustancias_psicoactivas: '1',
+          cambios_importantes_en_la_personalidad: '1',
+          alteraciones_permanentes_estado_del_sueño: '1',
+          otro_cuales: '1',
           fecharegistro: getCurrentDateTime(),
-          usuario: localStorage.getItem('cedula'),
+          usuario: localStorage.getItem('cedula') ,
           estado: '1',
-          tabla: 'infraccion_tenencia_vivienda',
+          tabla: 'discapacidad_capitulo_4',
         });
       }
     }
   };
+  
 
   const getCurrentDateTime = () => {
     const date = new Date();
@@ -164,31 +144,25 @@ const Tab8: React.FC = () => {
     if (people.length > 0) {
       let data = people[0] || {};
       setItems({
-        idfiu: data.idfiu || params.ficha,
-        tenenciadelavivienda: data.tenenciadelavivienda || '',
-        propietario: data.propietario || '',
-        propietariotel1: data.propietariotel1 || '',
-        propietariotel2: data.propietariotel2 || '',
-        escritura: data.escritura || '',
-        compraventa: data.compraventa || '',
-        promesa: data.promesa || '',
-        posesion: data.posesion || '',
-        impuestopredial: data.impuestopredial || '',
-        serviciospublicos: data.serviciospublicos || '',
-        matriculapredial: data.matriculapredial || '',
-        extrajuicio: data.extrajuicio || '',
-        ninguno: data.ninguno || '',
-        otro: data.otro || '',
-        cualdocumentos: data.cualdocumentos || '',
-        unidadproductuva: data.unidadproductuva || '',
-        cualunidadproductiva: data.cualunidadproductiva || '',
+        id_usuario: data.id_usuario || parseInt(params.ficha),
+        ideas_suicidas: data.ideas_suicidas || '',
+        intento_de_suicidio: data.intento_de_suicidio || '',
+        hospitalizacion_por_psiquiatria: data.hospitalizacion_por_psiquiatria || '',
+        tristeza_extrema_y_permanente: data.tristeza_extrema_y_permanente || '',
+        ansiedad_constante_que_afecta_desarrollo: data.ansiedad_constante_que_afecta_desarrollo || '',
+        trastornos_alimenticios: data.trastornos_alimenticios || '',
+        consumo_sustancias_psicoactivas: data.consumo_sustancias_psicoactivas || '',
+        cambios_importantes_en_la_personalidad: data.cambios_importantes_en_la_personalidad || '',
+        alteraciones_permanentes_estado_del_sueño: data.alteraciones_permanentes_estado_del_sueño || '',
+        otro_cuales: data.otro_cuales || '',
         fecharegistro: data.fecharegistro || '',
-        usuario: data.usuario || '',
-        estado: data.estado || '',
-        tabla: data.tabla || '',
+        usuario: data.usuario || 0,
+        estado: data.estado || 1,
+        tabla: data.tabla || 'discapacidad_capitulo_4',
       });
     }
   }, [people]);
+  
 
   useEffect(() => {
     fetchUsers();
@@ -198,16 +172,7 @@ const Tab8: React.FC = () => {
     const { value } = event.target;
     setItems((prevItems) => {
       const newState = { ...prevItems, [field]: value };
-      if (field === 'tenenciadelavivienda') {
-        newState.propietario = value === '4' ? '' : '';
-        newState.propietariotel1 = value === '1' ? '' : '';
-        newState.propietariotel2 = value === '6' ? '' : '';
-      } if (field === 'otro') {
-        newState.cualdocumentos = value === '2' ? '' : '';
-      } 
-      if (field === 'unidadproductuva') {
-        newState.cualunidadproductiva = value === '2' ? '' : '';
-      } 
+     
 
       
       return newState;
@@ -219,23 +184,23 @@ const Tab8: React.FC = () => {
   }, [items]);
 
   const validarCampos = () => {
-    const camposObligatorios = ['tenenciadelavivienda', 'unidadproductuva','cualunidadproductiva'];
-    if (items.tenenciadelavivienda === '2' || items.tenenciadelavivienda === '3') {
-      camposObligatorios.push('propietario');
-    }
-    if (items.unidadproductuva === '1') {
-      let index = camposObligatorios.indexOf('cualunidadproductiva');
-      if (index !== -1) {
-          camposObligatorios.splice(index, 1);
-      }
-  }
+    //const camposObligatorios = ['tenenciadelavivienda', 'unidadproductuva','cualunidadproductiva'];
+  //   if (items.tenenciadelavivienda === '2' || items.tenenciadelavivienda === '3') {
+  //     camposObligatorios.push('propietario');
+  //   }
+  //   if (items.unidadproductuva === '1') {
+  //     let index = camposObligatorios.indexOf('cualunidadproductiva');
+  //     if (index !== -1) {
+  //         camposObligatorios.splice(index, 1);
+  //     }
+  // }
   
   
-    for (let campo of camposObligatorios) {
-      if (!items[campo]) {
-        return false;
-      }
-    }
+    // for (let campo of camposObligatorios) {
+    //   if (!items[campo]) {
+    //     return false;
+    //   }
+    // }
     return true;
   };
   
@@ -248,21 +213,51 @@ const Tab8: React.FC = () => {
      event.preventDefault();
     console.log(items)
     try {
-      await db.exec(`INSERT OR REPLACE INTO infraccion_tenencia_vivienda (idfiu, tenenciadelavivienda, propietario, propietariotel1, propietariotel2, escritura, compraventa, promesa, posesion, impuestopredial, serviciospublicos, matriculapredial, extrajuicio, ninguno, otro, cualdocumentos, unidadproductuva, cualunidadproductiva, fecharegistro, usuario, estado, tabla)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);`,
+      await db.exec(
+        `INSERT OR REPLACE INTO discapacidad_capitulo_4 (
+          id_usuario, 
+          ideas_suicidas, 
+          intento_de_suicidio, 
+          hospitalizacion_por_psiquiatria, 
+          tristeza_extrema_y_permanente, 
+          ansiedad_constante_que_afecta_desarrollo, 
+          trastornos_alimenticios, 
+          consumo_sustancias_psicoactivas, 
+          cambios_importantes_en_la_personalidad, 
+          alteraciones_permanentes_estado_del_sueño, 
+          otro_cuales, 
+          fecharegistro, 
+          usuario, 
+          estado, 
+          tabla
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         [
-          items.idfiu, items.tenenciadelavivienda, items.propietario, items.propietariotel1, items.propietariotel2, items.escritura, items.compraventa, items.promesa, items.posesion,
-          items.impuestopredial, items.serviciospublicos, items.matriculapredial, items.extrajuicio, items.ninguno, items.otro, items.cualdocumentos, items.unidadproductuva, items.cualunidadproductiva,
-          items.fecharegistro, items.usuario, items.estado, items.tabla
-        ]);
-
-      const respSelect = db.exec(`SELECT * FROM "infraccion_tenencia_vivienda" WHERE idfiu="${items.idfiu}";`);
+          items.id_usuario,
+          items.ideas_suicidas,
+          items.intento_de_suicidio,
+          items.hospitalizacion_por_psiquiatria,
+          items.tristeza_extrema_y_permanente,
+          items.ansiedad_constante_que_afecta_desarrollo,
+          items.trastornos_alimenticios,
+          items.consumo_sustancias_psicoactivas,
+          items.cambios_importantes_en_la_personalidad,
+          items.alteraciones_permanentes_estado_del_sueño,
+          items.otro_cuales,
+          items.fecharegistro,
+          items.usuario,
+          items.estado,
+          items.tabla
+        ]
+      );
+    
+      const respSelect = db.exec(`SELECT * FROM "discapacidad_capitulo_4" WHERE id_usuario="${items.id_usuario}";`);
       setButtonDisabled(false);
       saveDatabase();
       alert('Datos Guardados con éxito');
     } catch (err) {
       console.error('Error al exportar los datos JSON:', err);
     }
+    
   };
 
   function sololectura() {
@@ -272,139 +267,83 @@ const Tab8: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle slot="start">3 - TENENCIA DE LA VIVIENDA</IonTitle>
+          <IonTitle slot="start">CAPITULO IV. SALUD MENTAL</IonTitle>
           <IonTitle slot="end">FICHA: <label style={{ color: '#17a2b8' }}>{params.ficha}</label> </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <form>
-      <div className="social-card">
+      {/* <div className="social-card">
       <span className="label">Ficha:</span>
-      <span className="value">{params.ficha}</span>
-    </div>
+      <span className="value">{params.ficha}</span> 
+    </div>*/}
 
-        <div className=' shadow p-3 mb-5 bg-white rounded'>
-          <IonList>
-            <div className="alert alert-primary" role="alert">
-              <span className="badge badge-secondary text-dark">3 - TENENCIA DE LA VIVIENDA</span>
-            </div>
-            <div className="row g-3 was-validated ">
-              <div className="col-sm">
-                <label className="form-label">Tenencia de la vivienda:</label>
-                <select onChange={(e) => handleInputChange(e, 'tenenciadelavivienda')} value={items.tenenciadelavivienda} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
-                <option value=""> SELECCIONE </option><option value="2"> ALQUILADA </option><option value="4"> INVADIDA </option><option value="5"> POSESION </option><option value="3"> PRESTADA </option><option value="1"> PROPIA </option><option value="6"> SUCESION </option>                </select>
-              </div>
-              {(items.tenenciadelavivienda =='2' ||items.tenenciadelavivienda =='3')? 
-              <div className="col-sm">
-                <label className="form-label" >Propietario/poseedor</label>
-                <input type="text"  onChange={(e) => handleInputChange(e, 'propietario')} value={items.propietario} className="form-control form-control-sm  " required/>
-              </div>
-              :'' }
-
-            </div>
-          </IonList> 
-          <IonList>{(items.tenenciadelavivienda =='2' ||items.tenenciadelavivienda =='3')?
-            <div className="row g-3 was-validated ">
-              <div className="col-sm">
-                <label className="form-label" >Telefono1 del propietario:</label>
-                <input type="number" placeholder="" onChange={(e) => handleInputChange(e, 'propietariotel1')} value={items.propietariotel1} className="form-control form-control-sm  " />
-              <small>Minimo 10 digitos, si es fijo debe incluir el 604.</small>
-              </div>
-            </div>:'' }
-        </IonList>
-        <IonList>{(items.tenenciadelavivienda =='2' ||items.tenenciadelavivienda =='3')?
-            <div className="row g-3 was-validated ">
-              <div className="col-sm">
-                <label className="form-label" >Telefono2 del propietario:</label>
-                <input type="number" placeholder="" onChange={(e) => handleInputChange(e, 'propietariotel2')} value={items.propietariotel2} className="form-control form-control-sm  " />
-                <small>Minimo 10 digitos, si es fijo debe incluir el 604.</small>
-              </div>
-            </div>:'' }
-        </IonList>
-        </div>
+       
         <div className=' shadow p-3 mb-2 pt-0 bg-white rounded'>
           <IonList>
             <div className="alert alert-primary" role="alert">
-              <span className="badge badge-secondary text-dark">4 - DOCUMENTOS DE LA VIVIENDA</span>
+              <span className="badge badge-secondary text-dark">CAPITULO IV. SALUD MENTAL</span>
             </div>
             <div className="row g-3 was-validated ">
               <div className="col-sm-6">
-                <label className="form-label">Escritura:</label>
-                <select onChange={(e) => handleInputChange(e, 'escritura')} value={items.escritura} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label htmlFor="">Durante los últimos 6 meses ha presentado:</label><br />
+                <label className="form-label">4.1 Ideas suicidas:</label>
+                <select onChange={(e) => handleInputChange(e, 'ideas_suicidas')} value={items.ideas_suicidas} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div> <div className="col-sm-6">
-                <label className="form-label">Compraventa:</label>
-                <select onChange={(e) => handleInputChange(e, 'compraventa')} value={items.compraventa}className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+              <label htmlFor=""></label><br />
+                <label className="form-label">4.2 Intento de suicidio:</label>
+                <select onChange={(e) => handleInputChange(e, 'intento_de_suicidio')} value={items.intento_de_suicidio}className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div> <div className="col-sm-6">
-                <label className="form-label">Promesa de compraventa:</label>
-                <select onChange={(e) => handleInputChange(e, 'promesa')} value={items.promesa} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label className="form-label">4.3 Hospitalización por psiquiatría:</label>
+                <select onChange={(e) => handleInputChange(e, 'hospitalizacion_por_psiquiatria')} value={items.hospitalizacion_por_psiquiatria} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div> <div className="col-sm-6">
-                <label className="form-label">Posesion:</label>
-                <select onChange={(e) => handleInputChange(e, 'posesion')} value={items.posesion} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label className="form-label">4.4 Tristeza extrema y permanente:</label>
+                <select onChange={(e) => handleInputChange(e, 'tristeza_extrema_y_permanente')} value={items.tristeza_extrema_y_permanente} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div> <div className="col-sm-6">
-                <label className="form-label">Impuesto predial:</label>
-                <select onChange={(e) => handleInputChange(e, 'impuestopredial')} value={items.impuestopredial} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label className="form-label">4.5 Ansiedad constante que afecta el desarrollo de actividades cotidianas:</label>
+                <select onChange={(e) => handleInputChange(e, 'ansiedad_constante_que_afecta_desarrollo')} value={items.ansiedad_constante_que_afecta_desarrollo} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div> <div className="col-sm-6">
-                <label className="form-label">Servicios Publicos:</label>
-                <select onChange={(e) => handleInputChange(e, 'serviciospublicos')} value={items.serviciospublicos} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label className="form-label">4.6 Trastornos alimenticios:</label>
+                <select onChange={(e) => handleInputChange(e, 'trastornos_alimenticios')} value={items.trastornos_alimenticios} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div> <div className="col-sm-6">
-                <label className="form-label">Matricula predial:</label>
-                <select onChange={(e) => handleInputChange(e, 'matriculapredial')} value={items.matriculapredial} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label className="form-label">4.7 Consumo de sustancias psicoactivas:</label>
+                <select onChange={(e) => handleInputChange(e, 'consumo_sustancias_psicoactivas')} value={items.consumo_sustancias_psicoactivas} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div> <div className="col-sm-6">
-                <label className="form-label">Extrajuicio:</label>
-                <select onChange={(e) => handleInputChange(e, 'extrajuicio')} value={items.extrajuicio} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label className="form-label">4.8 Cambios importantes en la personalidad:</label>
+                <select onChange={(e) => handleInputChange(e, 'cambios_importantes_en_la_personalidad')} value={items.cambios_importantes_en_la_personalidad} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div> <div className="col-sm-6">
-                <label className="form-label">Ninguno:</label>
-                <select onChange={(e) => handleInputChange(e, 'ninguno')} value={items.ninguno} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label className="form-label">4.9 Alteraciones permanentes en el estado del sueño:</label>
+                <select onChange={(e) => handleInputChange(e, 'alteraciones_permanentes_estado_del_sueño')} value={items.alteraciones_permanentes_estado_del_sueño} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div>
               <div className="col-sm-6">
-                <label className="form-label">Otro:</label>
-                <select onChange={(e) => handleInputChange(e, 'otro')} value={items.otro} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
+                <label className="form-label">Otros ¿Cuáles?:</label>
+                <select onChange={(e) => handleInputChange(e, 'otro_cuales')} value={items.otro_cuales} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
                 <option value="1"> NO </option><option value="2"> SI </option>
                 </select>
               </div>
-              {(items.otro =='2')?
-              <div className="col-sm">
-                <label className="form-label" >Cual</label>
-                <input type="text" placeholder="" onChange={(e) => handleInputChange(e, 'cualdocumentos')} value={items.cualdocumentos} className="form-control form-control-sm  " required/>
-              </div> :''}
+           
               
             </div>
           </IonList>
-          <IonList>
-            <div className="row g-3 was-validated ">
-            <div className="col-sm">
-                <label className="form-label">La vivienda cuenta con unidad productiva:</label>
-                <select onChange={(e) => handleInputChange(e, 'unidadproductuva')} value={items.unidadproductuva} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
-                <option value=""> Seleccione </option>
-                <option value="1"> NO </option>
-                <option value="2"> SI </option>
-                </select>
-              </div>
-              {(items.unidadproductuva =='2')?
-              <div className="col-sm">
-                <label className="form-label" >Cual</label>
-                <input type="text" placeholder="" onChange={(e) => handleInputChange(e, 'cualunidadproductiva')} value={items.cualunidadproductiva} className="form-control form-control-sm  " required/>
-              </div>:''}
-            </div>
-          </IonList>
+         
 
         </div>
 

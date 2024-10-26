@@ -1987,7 +1987,7 @@ const Tab5: React.FC = () => {
 
     {/* <div><IonButton color="success" onClick={enviar}>Guardar</IonButton><IonButton disabled={buttonDisabled} routerLink={`/tabs/tab6/${params.ficha}`}>Siguiente</IonButton></div> */}
     <div><button className='btn btn-success' type="submit" onClick={(e)=>(enviar(db,e))}>Guardar</button>&nbsp;
-       <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab6/${params.ficha}`;} }}> Siguiente</div>
+       <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab8/${params.ficha}`;} }}> Siguiente</div>
        </div>
     </form>
     </IonContent>

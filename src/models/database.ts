@@ -393,6 +393,27 @@ const loadSQL = async (setDb, fetchUsers) => {
           PRIMARY KEY (id_usuario)
         );
       `);
+
+      database.run(`
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_4 (
+         id_usuario INTEGER PRIMARY KEY NOT NULL,
+         ideas_suicidas VARCHAR(45) DEFAULT NULL,
+         intento_de_suicidio VARCHAR(45) DEFAULT NULL,
+         hospitalizacion_por_psiquiatria VARCHAR(45) DEFAULT NULL,
+         tristeza_extrema_y_permanente VARCHAR(45) DEFAULT NULL,
+         ansiedad_constante_que_afecta_desarrollo VARCHAR(45) DEFAULT NULL,
+         trastornos_alimenticios VARCHAR(45) DEFAULT NULL,
+         consumo_sustancias_psicoactivas VARCHAR(45) DEFAULT NULL,
+         cambios_importantes_en_la_personalidad VARCHAR(45) DEFAULT NULL,
+         alteraciones_permanentes_estado_del_sueño VARCHAR(45) DEFAULT NULL,
+         otro_cuales TEXT DEFAULT NULL,
+         fecharegistro DATETIME DEFAULT NULL,
+         usuario INTEGER DEFAULT NULL,
+         estado INTEGER DEFAULT NULL,
+         tabla VARCHAR(100) DEFAULT NULL
+       );
+   `);
+   
       
         
 
