@@ -21,6 +21,7 @@ interface Person {
   nameFile: string | null;
 }
 
+
 const Tab9: React.FC = () => {
   const params = useParams();
   const history = useHistory();
@@ -82,12 +83,6 @@ const Tab9: React.FC = () => {
   const fetchUsers = async (database = db) => {
     if (db) {
       const res = await database.exec(`SELECT * FROM infraccion_conformacion_familiar WHERE idfiu=${params.ficha}`);
-       const jefedehogar = await database.exec(`SELECT * FROM infraccion_integrante_familiar WHERE idfiu=${params.ficha} AND parentesco = 1`);
-       if (jefedehogar[0]?.values && jefedehogar[0].values.length > 0) {
-        setJefe(true); // Si hay registros, asignamos true a 'jefe'.
-      }
-
-      console.log('jefedehogar'+jefe)
       if (res[0]?.values && res[0]?.columns) {
         const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
           return res[0].columns.reduce((obj, col, index) => {
@@ -109,7 +104,7 @@ const Tab9: React.FC = () => {
         });
       }
 
-      const integrantesRes = await database.exec(`SELECT * FROM infraccion_integrante_familiar WHERE idfiu=${params.ficha}`);
+      const integrantesRes = await database.exec(`SELECT * FROM inclusion_ciudadano WHERE id_usuario=${params.ficha}`);
       if (integrantesRes[0]?.values && integrantesRes[0]?.columns) {
         const transformedIntegrantes = integrantesRes[0].values.map((row: any[]) => {
           return integrantesRes[0].columns.reduce((obj, col, index) => {
@@ -301,6 +296,212 @@ const Tab9: React.FC = () => {
             </div>
           </IonList>
         </div>
+
+
+        <div className='shadow p-3 mb-2 pt-0 bg-white rounded'>
+        <div className="row g-3 was-validated ">
+          <IonList>
+            <div className="alert alert-primary" role="alert">
+              <span className="badge badge-secondary text-dark">CAPÍTULO VIII. INFORMACIÓN DEL HOGAR</span>
+            </div>
+
+            {/* Necesidades de capacitación de la familia */}
+            <div className="row g-3">
+              <div className="col-sm-12">
+                <label htmlFor="neceidades_de_capacitacion_de_la_familia">Necesidades de capacitación de la familia:</label>
+                <textarea
+                  onChange={(e) => handleInputChange(e, 'neceidades_de_capacitacion_de_la_familia')}
+                  value={items.neceidades_de_capacitacion_de_la_familia}
+                  className="form-control"
+                  id="neceidades_de_capacitacion_de_la_familia"
+                  style={{ textTransform: 'uppercase' }}
+                  rows="10"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* N° de personas en el hogar según parentesco */}
+            <div className="row g-3">
+              <div className="col-sm-12">
+                <h6>N° de personas en el hogar según parentesco:</h6>
+              </div>
+
+              {[
+                { label: 'Abuelo (a)', key: 'personas_hogar_parentesco_abuelo' },
+                { label: 'Acudiente', key: 'personas_hogar_parentesco_acudiente' },
+                { label: 'Bisabuelo (a)', key: 'personas_hogar_parentesco_bisabuelos' },
+                { label: 'Bisnietos', key: 'personas_hogar_parentesco_bisnietos' },
+                { label: 'Cónyuge o compañero (a) permanente', key: 'personas_hogar_parentesco_conyuge' },
+                { label: 'Cuñada', key: 'personas_hogar_parentesco_cuniada' },
+                { label: 'Hermano (a)', key: 'personas_hogar_parentesco_hermano' },
+                { label: 'Hijastro (a)', key: 'personas_hogar_parentesco_hijastro' },
+                { label: 'Hijo (a)', key: 'personas_hogar_parentesco_hijo' },
+                { label: 'Hijos adoptivos', key: 'personas_hogar_parentesco_hijo_adoptivo' },
+                { label: 'Jefe del hogar', key: 'personas_hogar_parentesco_jefe_hogar' },
+                { label: 'Madrastra', key: 'personas_hogar_parentesco_madrastra' },
+                { label: 'Nieto (a)', key: 'personas_hogar_parentesco_nieto' },
+                { label: 'Nuera', key: 'personas_hogar_parentesco_nuera' },
+                { label: 'Otros no parientes', key: 'personas_hogar_parentesco_otros_no_parientes' },
+                { label: 'Otros parientes', key: 'personas_hogar_parentesco_otros_parientes' },
+                { label: 'Padrastro', key: 'personas_hogar_parentesco_padrastro' },
+                { label: 'Padres', key: 'personas_hogar_parentesco_padres' },
+                { label: 'Padres adoptantes', key: 'personas_hogar_parentesco_padres_adoptantes' },
+                { label: 'Representante legal', key: 'personas_hogar_parentesco_rep_legal' },
+                { label: 'Sobrinos', key: 'personas_hogar_parentesco_sobrinos' },
+                { label: 'Suegros', key: 'personas_hogar_parentesco_suegros' },
+                { label: 'Tíos', key: 'personas_hogar_parentesco_tios' },
+                { label: 'Yerno', key: 'personas_hogar_parentesco_yerno' },
+              ].map(({ label, key }, index) => (
+                <div className="col-sm-6" key={index}>
+                  <label htmlFor={key}>{label}</label>
+                  <input
+                    type="number"
+                    onChange={(e) => handleInputChange(e, key)}
+                    value={items[key]}
+                    className="form-control form-control-sm"
+                    id={key}
+                    style={{ textTransform: 'uppercase' }}
+                    required
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* N° de personas en el hogar según ciclo de vida */}
+            <div className="row g-3">
+              <div className="col-sm-12">
+                <h6>N° de personas en el hogar según ciclo de vida:</h6>
+              </div>
+
+              {[
+                { label: 'Primera infancia (0 - 5 años)', key: 'personas_hogar_ciclo_primera_infancia' },
+                { label: 'Infancia (6 - 11 años)', key: 'personas_hogar_ciclo_infancia' },
+                { label: 'Adolescencia (12-18 años)', key: 'personas_hogar_ciclo_primera_adolescencia' },
+                { label: 'Juventud (14-26 años)', key: 'personas_hogar_ciclo_juventud' },
+                { label: 'Adultez (27-59 años)', key: 'personas_hogar_ciclo_adultez' },
+                { label: 'Persona mayor (60 años o más)', key: 'personas_hogar_ciclo_persona_mayor' },
+              ].map(({ label, key }, index) => (
+                <div className="col-sm-6" key={index}>
+                  <label htmlFor={key}>{label}</label>
+                  <input
+                    type="number"
+                    onChange={(e) => handleInputChange(e, key)}
+                    value={items[key]}
+                    className="form-control form-control-sm"
+                    id={key}
+                    style={{ textTransform: 'uppercase' }}
+                    required
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* N° de personas en el hogar según escolaridad */}
+            <div className="row g-3">
+              <div className="col-sm-12">
+                <h6>N° de personas en el hogar según escolaridad:</h6>
+              </div>
+
+              {[
+                { label: 'Educación inicial (menores de 0 a 5 años)', key: 'personas_hogar_escolaridad_inicial' },
+                { label: 'Ninguna', key: 'personas_hogar_escolaridad_ninguna' },
+                { label: 'Posgrado', key: 'personas_hogar_escolaridad_posgrado' },
+                { label: 'Preescolar', key: 'personas_hogar_escolaridad_preescolar' },
+                { label: 'Pregrado completo', key: 'personas_hogar_escolaridad_pregrado_completo' },
+                { label: 'Pregrado incompleto', key: 'personas_hogar_escolaridad_pregrado_incompleto' },
+                { label: 'Primaria completa', key: 'personas_hogar_escolaridad_primaria_completa' },
+                { label: 'Primaria incompleta', key: 'personas_hogar_escolaridad_primaria_incompleta' },
+                { label: 'Secundaria completa', key: 'personas_hogar_escolaridad_secundaria_completa' },
+                { label: 'Secundaria incompleta', key: 'personas_hogar_escolaridad_secundaria_incompleta' },
+                { label: 'Técnica completa', key: 'personas_hogar_escolaridad_tecnica_completa' },
+                { label: 'Técnica incompleta', key: 'personas_hogar_escolaridad_tecnica_incompleta' },
+                { label: 'Tecnología completa', key: 'personas_hogar_escolaridad_tecnologia_completa' },
+                { label: 'Tecnología incompleta', key: 'personas_hogar_escolaridad_tecnologia_incompleta' },
+                { label: 'Sin dato', key: 'personas_hogar_escolaridad_sin_dato' },
+              ].map(({ label, key }, index) => (
+                <div className="col-sm-6" key={index}>
+                  <label htmlFor={key}>{label}</label>
+                  <input
+                    type="number"
+                    onChange={(e) => handleInputChange(e, key)}
+                    value={items[key]}
+                    className="form-control form-control-sm"
+                    id={key}
+                    style={{ textTransform: 'uppercase' }}
+                    required
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* N° de personas en el hogar según ocupación */}
+            <div className="row g-3">
+              <div className="col-sm-12">
+                <h6>N° de personas en el hogar según ocupación:</h6>
+              </div>
+
+              {[
+                { label: 'Actividades de sobrevivencia', key: 'personas_hogar_ocupacion_sobrevivencia' },
+                { label: 'Ama de casa', key: 'personas_hogar_ocupacion_ama_de_casa' },
+                { label: 'Desempleado (a)', key: 'personas_hogar_ocupacion_desempleado' },
+                { label: 'Empleado', key: 'personas_hogar_ocupacion_empleado' },
+                { label: 'Estudiante', key: 'personas_hogar_ocupacion_estudiante' },
+                { label: 'Independiente', key: 'personas_hogar_ocupacion_independiente' },
+                { label: 'Ninguna', key: 'personas_hogar_ocupacion_ninguna' },
+                { label: 'Trabajador (a) informal', key: 'personas_hogar_ocupacion_trabajador_informal' },
+                { label: 'Sin dato', key: 'personas_hogar_ocupacion_sin_dato' },
+              ].map(({ label, key }, index) => (
+                <div className="col-sm-6" key={index}>
+                  <label htmlFor={key}>{label}</label>
+                  <input
+                    type="number"
+                    onChange={(e) => handleInputChange(e, key)}
+                    value={items[key]}
+                    className="form-control form-control-sm"
+                    id={key}
+                    style={{ textTransform: 'uppercase' }}
+                    required
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Confirmación de número de personas en el hogar */}
+            <div className="row g-3">
+              <div className="col-sm-12">
+                <blockquote className="blockquote text-center">
+                  <p className="mb-0">
+                    <h6>N° de personas en el hogar, incluyendo la persona caracterizada:</h6>
+                  </p>
+                  <p className="mb-0">
+                    <h5>{parseInt(items.numero_personas_hogar_discapacidad, 10) + 1}</h5>
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+          </IonList>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         <div className=' shadow p-3 mb-2 pt-0 bg-white rounded'>
           <IonList>
             <div className="alert alert-primary" role="alert">

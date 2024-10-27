@@ -413,6 +413,129 @@ const loadSQL = async (setDb, fetchUsers) => {
          tabla VARCHAR(100) DEFAULT NULL
        );
    `);
+
+      database.run(` 
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_5 (
+          id_usuario INTEGER PRIMARY KEY NOT NULL,
+          sabe_leer_y_escribir_solo_mayores_de_5_años VARCHAR(45) DEFAULT NULL,
+          asiste_actualmente_a_establecimiento_educativo VARCHAR(45) DEFAULT NULL,
+          el_establecimiento_donde_estudia_es VARCHAR(45) DEFAULT NULL,
+          el_establecimiento_cuenta_con_ayuda_pedagogica VARCHAR(45) DEFAULT NULL,
+          el_establecimiento_cuenta_con_ayuda_tecnologicas VARCHAR(45) DEFAULT NULL,
+          el_establecimiento_cuenta_con_ayuda_terapeuticas VARCHAR(45) DEFAULT NULL,
+          el_establecimiento_cuenta_con_ayuda_comunicativos VARCHAR(45) DEFAULT NULL,
+          el_establecimiento_cuenta_con_ayuda_administrativos VARCHAR(45) DEFAULT NULL,
+          el_establecimiento_cuenta_con_ayuda_financieros VARCHAR(45) DEFAULT NULL,
+          el_establecimiento_cuenta_con_ayuda_ninguno VARCHAR(45) DEFAULT NULL,
+          los_docentes_atienden_adecuadamente_necesidades_educ VARCHAR(45) DEFAULT NULL,
+          la_educacion_que_recibe_responde_a_sus_necesidades VARCHAR(45) DEFAULT NULL,
+          hace_cuantos_años_estudio TEXT DEFAULT NULL,
+          repitio_algun_año_escolar VARCHAR(45) DEFAULT NULL,
+          repitio_grado_0 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_0_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_1 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_1_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_2 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_2_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_3 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_3_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_4 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_4_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_5 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_5_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_6 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_6_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_7 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_7_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_8 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_8_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_9 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_9_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_10 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_10_numero_veces INTEGER DEFAULT NULL,
+          repitio_grado_11 VARCHAR(45) DEFAULT NULL,
+          repitio_grado_11_numero_veces INTEGER DEFAULT NULL,
+          cual_es_la_causa_principal_la_cual_no_estudia VARCHAR(45) DEFAULT NULL,
+          si_le_dieran_la_oportunidad_de_estudiar_lo_haria VARCHAR(45) DEFAULT NULL,
+          que_estudiaria TEXT DEFAULT NULL,
+          sabe_utilizar_herramientas_tecnologicas VARCHAR(45) DEFAULT NULL,
+          cuales_herramientas_tecnologicas_maneja_computador VARCHAR(45) DEFAULT NULL,
+          cuales_herramientas_tecnologicas_maneja_tablet VARCHAR(45) DEFAULT NULL,
+          cuales_herramientas_tecnologicas_maneja_celular VARCHAR(45) DEFAULT NULL,
+          cuales_herramientas_tecnologicas_maneja_otro VARCHAR(45) DEFAULT NULL,
+          cuales_herramientas_tecnologicas_maneja_otro_cual TEXT DEFAULT NULL,
+          fecharegistro DATETIME DEFAULT NULL,
+          usuario INTEGER DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(100) DEFAULT NULL,
+          ultimo_nivel_educacion_aprobado VARCHAR(100) DEFAULT NULL
+        );
+      `);
+
+
+      database.run(`
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_6 (
+          id_usuario INTEGER PRIMARY KEY NOT NULL,
+          participa_actividades_con_familia_amigos VARCHAR(45) DEFAULT NULL,
+          participa_actividades_con_comunidad VARCHAR(45) DEFAULT NULL,
+          participa_actividades_religiosas VARCHAR(45) DEFAULT NULL,
+          participa_actividades_productivas VARCHAR(45) DEFAULT NULL,
+          participa_actividades_deportivas_recreacion VARCHAR(45) DEFAULT NULL,
+          participa_actividades_culturales VARCHAR(45) DEFAULT NULL,
+          participa_actividades_trabajo_des_humano VARCHAR(45) DEFAULT NULL,
+          participa_actividades_ciudadanas VARCHAR(45) DEFAULT NULL,
+          participa_actividades_otras VARCHAR(45) DEFAULT NULL,
+          participa_actividades_ninguna VARCHAR(45) DEFAULT NULL,
+          participa_programas_del_inder VARCHAR(45) DEFAULT NULL,
+          participa_en_alguna_organizacion VARCHAR(45) DEFAULT NULL,
+          señale_porque_no_participa_en_organizacion VARCHAR(45) DEFAULT NULL,
+          participa_en_org_personas_discapacidad VARCHAR(45) DEFAULT NULL,
+          fecharegistro DATETIME DEFAULT NULL,
+          usuario INTEGER DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(100) DEFAULT NULL
+        );
+      `);
+      
+      database.run(`
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_7 (
+          id_usuario INTEGER PRIMARY KEY NOT NULL,
+          durante_los_ultimos_6_meses_ha_estado VARCHAR(45) DEFAULT NULL,
+          usted_tiene_contrato_de_trabajo VARCHAR(45) DEFAULT NULL,
+          la_actividad_economica_en_la_cual_trabaja VARCHAR(45) DEFAULT NULL,
+          en_el_trabajo_se_desempeña_como VARCHAR(45) DEFAULT NULL,
+          le_interesa_el_emprendimiento VARCHAR(45) DEFAULT NULL,
+          tiene_alguna_idea_de_negocio VARCHAR(45) DEFAULT NULL,
+          en_que_sector_se_inscribe_su_idea_de_negocio VARCHAR(45) DEFAULT NULL,
+          otro_sector_cual TEXT DEFAULT NULL,
+          su_capacidad_laboral_afectada_por_discapacidad VARCHAR(45) DEFAULT NULL,
+          cuenta_con_calificacion_perdida_capacidad_laboral VARCHAR(45) DEFAULT NULL,
+          porcentaje_de_perdida_laboral TEXT DEFAULT NULL,
+          cual_es_su_ingreso_mensual_promedio VARCHAR(45) DEFAULT NULL,
+          ha_recibido_capacitacion_despues_de_discapacidad VARCHAR(45) DEFAULT NULL,
+          donde_recibio_capacitacion VARCHAR(45) DEFAULT NULL,
+          necesita_capacitacion_para VARCHAR(45) DEFAULT NULL,
+          necesidades_de_capacitacion_de_pers_discapacidad TEXT DEFAULT NULL,
+          fecharegistro DATETIME DEFAULT NULL,
+          usuario INTEGER DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(100) DEFAULT NULL
+        );
+      `);
+
+      database.run(`
+        CREATE TABLE IF NOT EXISTS inclusion_grupofamiliar (
+          integrantes INTEGER NOT NULL, 
+          id_usuario INTEGER NOT NULL,
+          fecharegistro DATETIME DEFAULT NULL,
+          usuario VARCHAR(45) DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(45) DEFAULT NULL,
+          PRIMARY KEY (integrantes, id_usuario)
+        );
+      `);
+      
+      
    
       
         

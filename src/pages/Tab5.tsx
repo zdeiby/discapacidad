@@ -632,7 +632,7 @@ const Tab5: React.FC = () => {
 <IonList>
 <div className="row g-3 was-validated ">
 
-        <div className="row pt-2">
+        <div className="row pt-2 pb-3">
   <div className="form-group col-sm">
     <label htmlFor="oportunamente_diagnosticada">3.1 ¿Su condición de discapacidad fue oportunamente diagnosticada?</label>
     <select

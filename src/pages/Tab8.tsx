@@ -284,7 +284,11 @@ const Tab8: React.FC = () => {
             <div className="alert alert-primary" role="alert">
               <span className="badge badge-secondary text-dark">CAPITULO IV. SALUD MENTAL</span>
             </div>
+            <div className="alert alert-warning" role="alert">
+                    <span className="badge badge-warning"><b className='text-dark'>IMPORTANTE:</b></span> Este capítulo aplica para mayores de <strong>5 años</strong>, si el ciudadano es menor, todos los campos estarán deshabilitados y debes dar clic en guardar para continuar. La edad del ciudadano es de <strong> 38 años </strong>.
+                </div>
             <div className="row g-3 was-validated ">
+              
               <div className="col-sm-6">
                 <label htmlFor="">Durante los últimos 6 meses ha presentado:</label><br />
                 <label className="form-label">4.1 Ideas suicidas:</label>
@@ -353,7 +357,7 @@ const Tab8: React.FC = () => {
         {/* <div><IonButton color="success" onClick={enviar}>Guardar</IonButton><IonButton disabled={buttonDisabled} routerLink={`/tabs/tab9/${params.ficha}`}>Siguiente</IonButton></div> */}
 
         <div><button className='btn btn-success' type="submit" onClick={(e)=>(enviar(db,e))}>Guardar</button>&nbsp;
-       <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab6/${params.ficha}`;} }}> Siguiente</div>
+       <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab7/${params.ficha}`;} }}> Siguiente</div>
        </div>
        </form>
       </IonContent>

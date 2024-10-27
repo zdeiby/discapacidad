@@ -63,22 +63,22 @@ const MenuLat: React.FC = () => {
         <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>4&nbsp;&nbsp;&nbsp;</IonBadge>
         <IonLabel>SALUD MENTAL</IonLabel>
       </IonItem>
+      <IonItem button routerLink={`/tabs/tab7/${ficha2}`}>
+        <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>5&nbsp;&nbsp;&nbsp;</IonBadge>
+        <IonLabel>EDUCACIÓN</IonLabel>
+      </IonItem>
+      <IonItem button routerLink={`/tabs/tab1/${ficha2}`}>
+        <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>6&nbsp;&nbsp;&nbsp;</IonBadge>
+        <IonLabel>PARTICIPACIÓN EN ACTIVIDADES</IonLabel>
+      </IonItem>
+      <IonItem button routerLink={`/tabs/tab7/${ficha2}`}>
+        <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>7&nbsp;&nbsp;&nbsp;</IonBadge>
+        <IonLabel>OCUPACIÓN Y TRABAJO</IonLabel>
+      </IonItem>
       {/* <IonItem button routerLink={`/tabs/tab6/${ficha2}`}>
         <IonIcon slot="start" icon={newspaper} />
         <IonLabel>5 - SERVICIOS PUBLICOS</IonLabel>
       </IonItem>*/}
-      <IonItem button routerLink={`/tabs/tab7/${ficha2}`}>
-        <IonIcon slot="start" icon={time} />
-        <IonLabel>2 - TIEMPO EN LA VIVIENDA</IonLabel>
-      </IonItem>
-      <IonItem button routerLink={`/tabs/tab8/${ficha2}`}> 
-        <IonIcon slot="start" icon={home} />
-        <IonLabel>3 y 4- TENENCIA DE LA VIVIENDA</IonLabel>
-      </IonItem>
-      <IonItem button routerLink={`/tabs/tab6/${ficha2}`}>
-        <IonIcon slot="start" icon={newspaper} />
-        <IonLabel>5 - SERVICIOS PUBLICOS</IonLabel>
-      </IonItem>
       <IonItem button routerLink={`/tabs/tab9/${ficha2}`}>
         <IonIcon slot="start" icon={people} />
         <IonLabel>6 - CONFORMACION DEL HOGAR</IonLabel>

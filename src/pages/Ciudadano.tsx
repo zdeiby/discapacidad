@@ -101,12 +101,12 @@ const Ciudadano: React.FC = () => {
     campesino: '',
     victima: '',
     fecharegistro: getCurrentDateTime(),
-    auditiva: '',
-    mental: '',
-    fisica: '',
-    sordoceguera: '',
-    visual: '',
-    intelectual: '',
+    auditiva: '1',
+    mental: '1',
+    fisica: '1',
+    sordoceguera: '1',
+    visual: '1',
+    intelectual: '1',
     habitanzacalle: '',
     correoelectronico: '',
     telcontactouno: '',
@@ -131,6 +131,37 @@ const Ciudadano: React.FC = () => {
   }, [db, params.ficha]);
   
   
+  
+  const buscarPorNumeroDocumento = async (numeroDocumento) => {
+    if (db && numeroDocumento) {
+      try {
+        // Consulta en la base de datos utilizando el número de documento
+        const res = await db.exec(`SELECT * FROM inclusion_ciudadano WHERE numerodedocumento = ?`, [numeroDocumento]);
+  
+        if (res[0]?.values && res[0]?.columns) {
+          // Transforma los resultados de la consulta en un objeto tipo Person
+          const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
+            return res[0].columns.reduce((obj, col, index) => {
+              obj[col] = row[index];
+              return obj;
+            }, {} as Person);
+          });
+  
+          if (transformedPeople.length > 0) {
+            setItems(transformedPeople[0]); // Guardar el primer objeto en items
+            console.log('Datos encontrados:', transformedPeople[0]); // Verifica los datos
+            window.location.href = `/tabs/ciudadano/${transformedPeople[0].id_usuario}`;
+          } else {
+            //alert('No se encontraron registros con ese número de documento.');
+          }
+        } else {
+         // alert('No se encontraron registros con ese número de documento.');
+        }
+      } catch (err) {
+        console.error("Error en la consulta SQL:", err);
+      }
+    }
+  };
   
   
 
@@ -245,8 +276,11 @@ const Ciudadano: React.FC = () => {
     
     setItems((prevItems) => {
       const newState = { ...prevItems, [field]: value };
-  
+      if (field === 'numerodedocumento' && value) {
+          buscarPorNumeroDocumento(value);
+        }
       if (field === 'discapacidad') {
+        
         if (value === '7') {
           // Si es múltiple, no cambiamos los valores, pero los requerimos.
           // (Puedes resetearlos si lo prefieres.)
@@ -694,7 +728,7 @@ const Ciudadano: React.FC = () => {
         <br />
 
         <div><button className='btn btn-success' type="submit" onClick={(e)=>(enviar(db,e))}>Guardar</button>&nbsp;
-          <div className="btn btn-primary" onClick={() => window.location.href = `/tabs/tab3/${params.ficha}`}>Volver</div>
+          <div className="btn btn-primary" onClick={() => window.location.href = `/tabs/tab3/${params.ficha}`}>Siguiente</div>
         </div>
          </form> 
 

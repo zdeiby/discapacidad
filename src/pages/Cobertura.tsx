@@ -933,7 +933,7 @@ const Cobertura: React.FC = () => {
                   <IonButton color="danger" slot="end" onClick={() => {
                     //localStorage.removeItem('cedula');
                     window.location.href = `/tabs/ciudadano/${Math.random().toString().substr(2, 5)}${cedula}`;
-                  }}>Crear Ficha</IonButton>
+                  }}>Caracterizar nuevo</IonButton>
                   <IonButton slot="end" color="success" onClick={downloadFile}>Descargar bd</IonButton>
                   <IonButton slot="end" onClick={() => {
                     localStorage.removeItem('cedula');
