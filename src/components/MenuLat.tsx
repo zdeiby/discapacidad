@@ -43,7 +43,7 @@ const MenuLat: React.FC = () => {
         <IonIcon slot="start" icon={navigate} />
         <IonLabel>LOCALIZACION</IonLabel>
       </IonItem>
-      <IonItem button routerLink={`/tabs/tab1/${ficha2}`}>
+      <IonItem button routerLink={`/tabs/tab18/${ficha2}`}>
       <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>0&nbsp;&nbsp;&nbsp;</IonBadge>
         <IonLabel>INFORMACIÓN DILIGENCIAMIENTO</IonLabel>
       </IonItem>
@@ -71,7 +71,7 @@ const MenuLat: React.FC = () => {
         <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>6&nbsp;&nbsp;&nbsp;</IonBadge>
         <IonLabel>PARTICIPACIÓN EN ACTIVIDADES</IonLabel>
       </IonItem>
-      <IonItem button routerLink={`/tabs/tab7/${ficha2}`}>
+      <IonItem button routerLink={`/tabs/tab6/${ficha2}`}>
         <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>7&nbsp;&nbsp;&nbsp;</IonBadge>
         <IonLabel>OCUPACIÓN Y TRABAJO</IonLabel>
       </IonItem>
@@ -80,8 +80,16 @@ const MenuLat: React.FC = () => {
         <IonLabel>5 - SERVICIOS PUBLICOS</IonLabel>
       </IonItem>*/}
       <IonItem button routerLink={`/tabs/tab9/${ficha2}`}>
-        <IonIcon slot="start" icon={people} />
-        <IonLabel>6 - CONFORMACION DEL HOGAR</IonLabel>
+      <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>8&nbsp;&nbsp;&nbsp;</IonBadge>
+      <IonLabel>ASPECTOS SOCIO-FAMILIAR</IonLabel>
+      </IonItem>
+      <IonItem button routerLink={`/tabs/tab17/${ficha2}`}>
+      <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>9&nbsp;&nbsp;&nbsp;</IonBadge>
+      <IonLabel>DINÁMICA FAMILIAR</IonLabel>
+      </IonItem>
+      <IonItem button routerLink={`/tabs/tab10/${ficha2}`}>
+      <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>10&nbsp;</IonBadge>
+      <IonLabel>INGRESOS Y EGRESOS MENSUALES</IonLabel>
       </IonItem>
       {/* <IonItem button routerLink={`/tabs/tab10/${ficha2}`}>
         <IonIcon slot="start" icon={clipboard} />

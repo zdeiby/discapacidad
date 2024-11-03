@@ -9,28 +9,25 @@ import {
   import 'bootstrap/dist/css/bootstrap.min.css';
   
   interface Person {
-    idfiu: number;
-    ingreso_empleo_formal: string;
-    ingreso_empleo_informal: string;
-    ingreso_subsidio: string;
-    ingreso_pension: string;
-    ingreso_ayuda: string;
-    ingreso_otro: string;
-    ingreso_total: string;
-    egreso_alimentacion: string;
-    egreso_educacion: string;
-    egreso_arriendo: string;
-    egreso_servicios: string;
-    egreso_salud: string;
-    egreso_transporte: string;
-    egreso_deuda: string;
-    egreso_otro: string;
-    egreso_total: string;
-    fecharegistro: string;
-    usuario: string;
-    estado: string;
-    tabla: string;
+    id_usuario: number;
+    registre_relacion_familiar_con_persona_con_discapacidad: string;
+    la_famiilia_es_red_de_apoyo_para_la_pcd: string | null;
+    la_familia_acepta_el_diagnostico_de_la_pcd: string | null;
+    la_pcd_participa_en_la_toma_de_decisiones: string | null;
+    comunicacion_asertiva_en_el_hogar: string | null;
+    habitos_de_vida_saludables: string | null;
+    riesgo_por_violencia_intrafamiliar: string | null;
+    riesgo_por_desconocimiento_del_manejo_diagnostico: string | null;
+    riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar: string | null;
+    riesgo_en_el_territorio_por_dinamicas_del_contexto: string | null;
+    riesgo_por_presunta_vulneracion_de_derechos: string | null;
+    tiene_representante_legal: number | null;
+    fecharegistro: string | null;
+    usuario: number | null;
+    estado: number | null;
+    tabla: string | null;
   }
+  
   
   const Tab17: React.FC = () => {
     const getCurrentDateTime = () => {
@@ -42,28 +39,25 @@ import {
     const [people, setPeople] = useState<Person[]>([]);
     const [db, setDb] = useState<any>(null);
     const [items, setItems] = useState<Person>({
-      idfiu: Number(params.ficha),
-      ingreso_empleo_formal: '0',
-      ingreso_empleo_informal: '0',
-      ingreso_subsidio: '0',
-      ingreso_pension: '0',
-      ingreso_ayuda: '0',
-      ingreso_otro: '0',
-      ingreso_total: '0',
-      egreso_alimentacion: '0',
-      egreso_educacion: '0',
-      egreso_arriendo: '0',
-      egreso_servicios: '0',
-      egreso_salud: '0',
-      egreso_transporte: '0',
-      egreso_deuda: '0',
-      egreso_otro: '0',
-      egreso_total: '0',
+      id_usuario: Number(params.ficha),
+      registre_relacion_familiar_con_persona_con_discapacidad: '',
+      la_famiilia_es_red_de_apoyo_para_la_pcd: '1',
+      la_familia_acepta_el_diagnostico_de_la_pcd: '1',
+      la_pcd_participa_en_la_toma_de_decisiones: '1',
+      comunicacion_asertiva_en_el_hogar: '1',
+      habitos_de_vida_saludables: '1',
+      riesgo_por_violencia_intrafamiliar: '1',
+      riesgo_por_desconocimiento_del_manejo_diagnostico: '1',
+      riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar: '1',
+      riesgo_en_el_territorio_por_dinamicas_del_contexto: '1',
+      riesgo_por_presunta_vulneracion_de_derechos: '1',
+      tiene_representante_legal: 0,
       fecharegistro: getCurrentDateTime(),
       usuario: localStorage.getItem('cedula') || '',
       estado: '1',
-      tabla: 'infraccion_socioeconomico',
+      tabla: 'discapacidad_capitulo_9',
     });
+    
     const [buttonDisabled, setButtonDisabled] = useState(true);
   
     useEffect(() => {
@@ -77,18 +71,32 @@ import {
     useEffect(() => {
       if (people.length > 0) {
         const data = people[0];
-        setItems((prevItems) => ({
-          ...prevItems,
-          ...data,
-          ingreso_total: calculateTotalIngresos(data).toString(),
-          egreso_total: calculateTotalEgresos(data).toString(),
-        }));
+        setItems({
+          id_usuario: data.id_usuario || Number(params.ficha),
+          registre_relacion_familiar_con_persona_con_discapacidad: data.registre_relacion_familiar_con_persona_con_discapacidad || '',
+          la_famiilia_es_red_de_apoyo_para_la_pcd: data.la_famiilia_es_red_de_apoyo_para_la_pcd || '0',
+          la_familia_acepta_el_diagnostico_de_la_pcd: data.la_familia_acepta_el_diagnostico_de_la_pcd || '0',
+          la_pcd_participa_en_la_toma_de_decisiones: data.la_pcd_participa_en_la_toma_de_decisiones || '0',
+          comunicacion_asertiva_en_el_hogar: data.comunicacion_asertiva_en_el_hogar || '0',
+          habitos_de_vida_saludables: data.habitos_de_vida_saludables || '0',
+          riesgo_por_violencia_intrafamiliar: data.riesgo_por_violencia_intrafamiliar || '0',
+          riesgo_por_desconocimiento_del_manejo_diagnostico: data.riesgo_por_desconocimiento_del_manejo_diagnostico || '0',
+          riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar: data.riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar || '0',
+          riesgo_en_el_territorio_por_dinamicas_del_contexto: data.riesgo_en_el_territorio_por_dinamicas_del_contexto || '0',
+          riesgo_por_presunta_vulneracion_de_derechos: data.riesgo_por_presunta_vulneracion_de_derechos || '0',
+          tiene_representante_legal: data.tiene_representante_legal || 0,
+          fecharegistro: data.fecharegistro || getCurrentDateTime(),
+          usuario: data.usuario || localStorage.getItem('cedula') || '',
+          estado: data.estado || '1',
+          tabla: data.tabla || 'discapacidad_capitulo_9',
+        });
       }
     }, [people]);
+    
   
     const fetchUsers = async (database = db) => {
         if (database) {
-          const res = await database.exec(`SELECT * FROM infraccion_socioeconomico WHERE idfiu=${params.ficha}`);
+          const res = await database.exec(`SELECT * FROM discapacidad_capitulo_9 WHERE id_usuario=${params.ficha}`);
           if (res[0]?.values && res[0]?.columns) {
             const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
               return res[0].columns.reduce((obj, col, index) => {
@@ -97,7 +105,7 @@ import {
               }, {} as Person);
             });
             setPeople(transformedPeople);
-            setButtonDisabled(!transformedPeople[0].idfiu);
+            setButtonDisabled(!transformedPeople[0].id_usuario);
           }
         }
       };
@@ -127,178 +135,135 @@ import {
     };
   
   
-    const calculateTotalIngresos = (items) => {
-      return [
-        'ingreso_empleo_formal',
-        'ingreso_empleo_informal',
-        'ingreso_subsidio',
-        'ingreso_pension',
-        'ingreso_ayuda',
-        'ingreso_otro'
-      ].reduce((total, field) => total + parseFloat(items[field] || '0'), 0);
-    };
-  
-    const calculateTotalEgresos = (items) => {
-      return [
-        'egreso_alimentacion',
-        'egreso_educacion',
-        'egreso_arriendo',
-        'egreso_servicios',
-        'egreso_salud',
-        'egreso_transporte',
-        'egreso_deuda',
-        'egreso_otro'
-      ].reduce((total, field) => total + parseFloat(items[field] || '0'), 0);
-    };
-  
-    const handleInputChange = (event, field) => {
-      const { value } = event.target;
-      setItems((prevItems) => {
-        const updatedItems = {
-          ...prevItems,
-          [field]: value,
-        };
-        return {
-          ...updatedItems,
-          ingreso_total: calculateTotalIngresos(updatedItems).toString(),
-          egreso_total: calculateTotalEgresos(updatedItems).toString(),
-        };
-      });
-    };
-  
 
   
     const enviar = async (database = db, event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-
+    
       try {
-        await database.exec(`INSERT OR REPLACE INTO infraccion_socioeconomico (
-          idfiu, ingreso_empleo_formal, ingreso_empleo_informal, ingreso_subsidio, ingreso_pension,
-          ingreso_ayuda, ingreso_otro, ingreso_total, egreso_alimentacion, egreso_educacion, egreso_arriendo,
-          egreso_servicios, egreso_salud, egreso_transporte, egreso_deuda, egreso_otro, egreso_total, fecharegistro,
-          usuario, estado, tabla
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+        await database.exec(`INSERT OR REPLACE INTO discapacidad_capitulo_9 (
+          id_usuario, registre_relacion_familiar_con_persona_con_discapacidad, la_famiilia_es_red_de_apoyo_para_la_pcd,
+          la_familia_acepta_el_diagnostico_de_la_pcd, la_pcd_participa_en_la_toma_de_decisiones, comunicacion_asertiva_en_el_hogar,
+          habitos_de_vida_saludables, riesgo_por_violencia_intrafamiliar, riesgo_por_desconocimiento_del_manejo_diagnostico,
+          riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar, riesgo_en_el_territorio_por_dinamicas_del_contexto,
+          riesgo_por_presunta_vulneracion_de_derechos, tiene_representante_legal, fecharegistro, usuario, estado, tabla
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
           [
-            items.idfiu, items.ingreso_empleo_formal, items.ingreso_empleo_informal, items.ingreso_subsidio, items.ingreso_pension,
-            items.ingreso_ayuda, items.ingreso_otro, items.ingreso_total, items.egreso_alimentacion, items.egreso_educacion,
-            items.egreso_arriendo, items.egreso_servicios, items.egreso_salud, items.egreso_transporte, items.egreso_deuda,
-            items.egreso_otro, items.egreso_total, items.fecharegistro, items.usuario, items.estado, items.tabla
-          ]);
+            items.id_usuario, items.registre_relacion_familiar_con_persona_con_discapacidad, items.la_famiilia_es_red_de_apoyo_para_la_pcd,
+            items.la_familia_acepta_el_diagnostico_de_la_pcd, items.la_pcd_participa_en_la_toma_de_decisiones, items.comunicacion_asertiva_en_el_hogar,
+            items.habitos_de_vida_saludables, items.riesgo_por_violencia_intrafamiliar, items.riesgo_por_desconocimiento_del_manejo_diagnostico,
+            items.riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar, items.riesgo_en_el_territorio_por_dinamicas_del_contexto,
+            items.riesgo_por_presunta_vulneracion_de_derechos, items.tiene_representante_legal, items.fecharegistro,
+            items.usuario, items.estado, items.tabla
+          ]
+        );
+        
         saveDatabase();
         alert('Datos Guardados con éxito');
-        fetchUsers(); // Actualizar los datos después de guardar
+        fetchUsers(); // Actualiza los datos después de guardar
       } catch (err) {
         console.error('Error al exportar los datos JSON:', err);
       }
     };
+
+    const handleInputChange = (event, field) => {
+      const { value } = event.target;
+      setItems((prevItems) => ({
+        ...prevItems,
+        [field]: value,
+      }));
+      console.log(items);
+      
+    };
+    
   
     return (
       <IonPage>
         <IonHeader><div className='col-12'>
           <IonToolbar>
-            <IonTitle slot="start">10 - ASPECTOS SOCIOECONÓMICOS DEL GRUPO FAMILIAR</IonTitle>
+            <IonTitle slot="start">CAPITULO IX. DINÁMICA FAMILIAR</IonTitle>
             <IonTitle slot="end">FICHA: <label style={{ color: '#17a2b8' }}>{params.ficha}</label> </IonTitle>
           </IonToolbar></div>
         </IonHeader>
         <IonContent fullscreen><form>
           
-          <div className="social-card">
-            <span className="label">Ficha: {params.ficha}</span>
-          </div>
-          <div className="social-card2 text-center">
-            <span className="value2">INGRESOS MENSUALES DEL GRUPO FAMILIAR</span>
-          </div>
-          <br />
-         
+      
         <div className=' shadow p-3 mb-5 bg-white rounded'>
-        <IonList>
   <div className="row g-3 was-validated">
-            <div className="col-sm-4">
-              <label  className="form-label">Salario (Empleo formal): $</label>
-              <input onChange={(e) => handleInputChange(e, 'ingreso_empleo_formal' )}  value={items.ingreso_empleo_formal} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-              <div className="col-sm-4">
-              <label  className="form-label">Ingresos (Empleo Informal): $</label>
-              <input onChange={(e) => handleInputChange(e, 'ingreso_empleo_informal')}  value={items.ingreso_empleo_informal } type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Subsidios en dinero: $</label>
-              <input onChange={(e) => handleInputChange(e, 'ingreso_subsidio')}  value={items.ingreso_subsidio} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Pensión: $</label>
-              <input onChange={(e) => handleInputChange(e, 'ingreso_pension')}  value={items.ingreso_pension } type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Ayuda Económica: $</label>
-              <input onChange={(e) => handleInputChange(e, 'ingreso_ayuda')}  value={items.ingreso_ayuda } type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Otro: $</label>
-              <input onChange={(e) => handleInputChange(e, 'ingreso_otro')}  value={items.ingreso_otro} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">TOTAL: $</label>
-              <input disabled onChange={(e) => handleInputChange(e, 'ingreso_total')}  value={items.ingreso_total} type="number" placeholder="" className="form-control form-control-sm  "  />
-            </div>
-            </div>
-  </IonList>
 
-         <br />
-          <div className="social-card2 text-center">
-            <span className="value2">EGRESOS MENSUALES DEL GRUPO FAMILIAR</span>
+  <IonList>
+        <div className="row g-3">
+          <div className="col-sm-12">
+            <label htmlFor="registre_relacion_familiar_con_persona_con_discapacidad">
+              Registre relación familiar con la persona con discapacidad
+            </label>
+            <textarea
+              className="form-control"
+              id="registre_relacion_familiar_con_persona_con_discapacidad"
+              style={{ textTransform: 'uppercase' }}
+              rows="5"
+              required
+              value={items.registre_relacion_familiar_con_persona_con_discapacidad || ''}
+              onChange={(e) => handleInputChange(e, 'registre_relacion_familiar_con_persona_con_discapacidad')}
+            ></textarea>
           </div>
-          <br />
-  
-  <IonList>
-  <div className="row g-3 was-validated">
-            <div className="col-sm-4">
-              <label  className="form-label">Alimentación: $</label>
-              <input onChange={(e) => handleInputChange(e, 'egreso_alimentacion')}  value={items.egreso_alimentacion} type="number" placeholder="" className="form-control form-control-sm  "  required/>
+        </div>
+      </IonList>
+      <IonList>
+         {/* Campos con opciones Sí/No en dos columnas */}
+         {[
+          { label: '9.1 La familia es red de apoyo para la PcD:', key: 'la_famiilia_es_red_de_apoyo_para_la_pcd' },
+          { label: '9.2 La familia acepta el diagnóstico de la PcD:', key: 'la_familia_acepta_el_diagnostico_de_la_pcd' },
+          { label: '9.3 La PcD participa en la toma de decisiones:', key: 'la_pcd_participa_en_la_toma_de_decisiones' },
+          { label: '9.4 Comunicación asertiva en el hogar:', key: 'comunicacion_asertiva_en_el_hogar' },
+          { label: '9.5 Hábitos de vida saludables:', key: 'habitos_de_vida_saludables' },
+          { label: '9.6 Riesgo por violencia intrafamiliar:', key: 'riesgo_por_violencia_intrafamiliar' },
+          { label: '9.7 Riesgo por desconocimiento del manejo del diagnóstico:', key: 'riesgo_por_desconocimiento_del_manejo_diagnostico' },
+          { label: '9.8 Riesgo por consumo de sustancias psicoactivas en el hogar:', key: 'riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar' },
+          { label: '9.9 Riesgo en el territorio por dinámicas del contexto:', key: 'riesgo_en_el_territorio_por_dinamicas_del_contexto' },
+          { label: '9.10 Riesgo por presunta vulneración de derechos:', key: 'riesgo_por_presunta_vulneracion_de_derechos' },
+        ].map(({ label, key }, index, array) => (
+          // Agrupar cada par de campos en una fila
+          index % 2 === 0 && (
+            <div className="row g-3 pb-3" key={index}>
+              <div className="col-sm-6">
+                <label htmlFor={array[index].key}>{array[index].label}</label>
+                <select
+                  className="form-control form-control-sm"
+                  id={array[index].key}
+                  required
+                  value={items[array[index].key] || ''}
+                  onChange={(e) => handleInputChange(e, array[index].key)}
+                >
+                   <option value="1">NO</option>
+                   <option value="2">SI</option>
+                </select>
+              </div>
+              {index + 1 < array.length && (
+                <div className="col-sm-6">
+                  <label htmlFor={array[index + 1].key}>{array[index + 1].label}</label>
+                  <select
+                    className="form-control form-control-sm"
+                    id={array[index + 1].key}
+                    required
+                    value={items[array[index + 1].key] || ''}
+                    onChange={(e) => handleInputChange(e, array[index + 1].key)}
+                  >
+                    <option value="1">NO</option>
+                    <option value="2">SI</option>
+                  </select>
+                </div>
+              )}
             </div>
-              <div className="col-sm-4">
-              <label  className="form-label">Educación: $</label>
-              <input onChange={(e) => handleInputChange(e, 'egreso_educacion')}  value={items.egreso_educacion} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Arriendo: $</label>
-              <input onChange={(e) => handleInputChange(e, 'egreso_arriendo')}  value={items.egreso_arriendo } type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Servicios: $</label>
-              <input onChange={(e) => handleInputChange(e, 'egreso_servicios')}  value={items.egreso_servicios} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Salud: $</label>
-              <input onChange={(e) => handleInputChange(e, 'egreso_salud')}  value={items.egreso_salud} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Transporte: $</label>
-              <input onChange={(e) => handleInputChange(e, 'egreso_transporte')}  value={items.egreso_transporte} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Deudas: $</label>
-              <input  onChange={(e) => handleInputChange(e, 'egreso_deuda')}  value={items.egreso_deuda} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            <div className="col-sm-4">
-              <label  className="form-label">Otros: $</label>
-              <input  onChange={(e) => handleInputChange(e, 'egreso_otro')}  value={items.egreso_otro} type="number" placeholder="" className="form-control form-control-sm  "  required/>
-            </div>
-            </div>
-  </IonList>
-  <IonList>
-  <div className="row g-3 was-validated">
-  <div className="col-sm-4">
-              <label  className="form-label">TOTAL: $</label>
-              <input disabled onChange={(e) => handleInputChange(e, 'egreso_total')}  value={items.egreso_total} type="number" placeholder="" className="form-control form-control-sm  "  />
-            </div>
-            </div>
-            </IonList>
+          )
+        ))}
+      </IonList>
+      </div>
   </div>
 
       <br />
          <div><button className='btn btn-success' type="submit" onClick={(e)=>(enviar(db,e))}>Guardar</button>&nbsp;
-         <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab15/${params.ficha}`;} }}> Siguiente</div>
+         <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab10/${params.ficha}`;} }}> Siguiente</div>
          </div> 
              </form>
         </IonContent>

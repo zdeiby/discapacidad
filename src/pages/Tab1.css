@@ -38,3 +38,12 @@
     pointer-events: none;
     opacity: 0.6;
   }
+
+  .center-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto; /* Ajusta el ancho si es necesario */
+  }
+  

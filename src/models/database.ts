@@ -535,6 +535,151 @@ const loadSQL = async (setDb, fetchUsers) => {
         );
       `);
       
+      database.run(`
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_8 (
+          id_usuario INTEGER NOT NULL,
+          neceidades_de_capacitacion_de_la_familia TEXT,
+          personas_hogar_ocupacion_sin_dato INTEGER DEFAULT NULL,
+          fecharegistro DATETIME DEFAULT NULL,
+          usuario INTEGER DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(100) DEFAULT NULL,
+          personas_hogar_parentesco_abuelo INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_acudiente INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_bisabuelos INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_bisnietos INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_conyuge INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_cuniada INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_hermano INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_hijastro INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_hijo INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_hijo_adoptivo INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_jefe_hogar INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_madrastra INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_nieto INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_nuera INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_otros_no_parientes INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_otros_parientes INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_padrastro INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_padres INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_padres_adoptantes INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_rep_legal INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_sobrinos INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_suegros INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_tios INTEGER DEFAULT NULL,
+          personas_hogar_parentesco_yerno INTEGER DEFAULT NULL,
+          numero_personas_hogar_discapacidad INTEGER DEFAULT NULL,
+          personas_hogar_ciclo_primera_infancia INTEGER DEFAULT NULL,
+          personas_hogar_ciclo_infancia INTEGER DEFAULT NULL,
+          personas_hogar_ciclo_primera_adolescencia INTEGER DEFAULT NULL,
+          personas_hogar_ciclo_juventud INTEGER DEFAULT NULL,
+          personas_hogar_ciclo_adultez INTEGER DEFAULT NULL,
+          personas_hogar_ciclo_persona_mayor INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_inicial INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_ninguna INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_posgrado INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_preescolar INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_pregrado_completo INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_pregrado_incompleto INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_primaria_completa INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_primaria_incompleta INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_secundaria_completa INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_secundaria_incompleta INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_tecnica_completa INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_tecnica_incompleta INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_tecnologia_completa INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_tecnologia_incompleta INTEGER DEFAULT NULL,
+          personas_hogar_escolaridad_sin_dato INTEGER DEFAULT NULL,
+          personas_hogar_ocupacion_sobrevivencia INTEGER DEFAULT NULL,
+          personas_hogar_ocupacion_ama_de_casa INTEGER DEFAULT NULL,
+          personas_hogar_ocupacion_desempleado INTEGER DEFAULT NULL,
+          personas_hogar_ocupacion_empleado INTEGER DEFAULT NULL,
+          personas_hogar_ocupacion_estudiante INTEGER DEFAULT NULL,
+          personas_hogar_ocupacion_independiente INTEGER DEFAULT NULL,
+          personas_hogar_ocupacion_ninguna INTEGER DEFAULT NULL,
+          personas_hogar_ocupacion_trabajador_informal INTEGER DEFAULT NULL,
+          PRIMARY KEY (id_usuario)
+        );
+      `);
+
+
+      database.run(`
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_9 (
+          id_usuario INTEGER NOT NULL,
+          registre_relacion_familiar_con_persona_con_discapacidad TEXT,
+          la_famiilia_es_red_de_apoyo_para_la_pcd VARCHAR(45) DEFAULT NULL,
+          la_familia_acepta_el_diagnostico_de_la_pcd VARCHAR(45) DEFAULT NULL,
+          la_pcd_participa_en_la_toma_de_decisiones VARCHAR(45) DEFAULT NULL,
+          comunicacion_asertiva_en_el_hogar VARCHAR(45) DEFAULT NULL,
+          habitos_de_vida_saludables VARCHAR(45) DEFAULT NULL,
+          riesgo_por_violencia_intrafamiliar VARCHAR(45) DEFAULT NULL,
+          riesgo_por_desconocimiento_del_manejo_diagnostico VARCHAR(45) DEFAULT NULL,
+          riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar VARCHAR(45) DEFAULT NULL,
+          riesgo_en_el_territorio_por_dinamicas_del_contexto VARCHAR(45) DEFAULT NULL,
+          riesgo_por_presunta_vulneracion_de_derechos VARCHAR(45) DEFAULT NULL,
+          tiene_representante_legal INTEGER DEFAULT NULL,
+          fecharegistro DATETIME DEFAULT NULL,
+          usuario VARCHAR(45) DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(100) DEFAULT NULL,
+          PRIMARY KEY (id_usuario)
+        );
+      `);
+
+      database.run(`
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_10 (
+          id_usuario INTEGER NOT NULL,
+          persona_entidad TEXT,
+          persona_parentesco VARCHAR(45) DEFAULT NULL,
+          persona_procedencia TEXT,
+          valor INTEGER DEFAULT NULL,
+          persona_entidad2 TEXT,
+          persona_parentesco2 VARCHAR(45) DEFAULT NULL,
+          direccion_persona_parentesco TEXT,
+          persona_procedencia2 TEXT,
+          valor2 INTEGER DEFAULT NULL,
+          persona_entidad3 TEXT,
+          persona_parentesco3 VARCHAR(45) DEFAULT NULL,
+          persona_procedencia3 TEXT,
+          valor3 INTEGER DEFAULT NULL,
+          persona_entidad4 TEXT,
+          persona_parentesco4 VARCHAR(45) DEFAULT NULL,
+          persona_procedencia4 TEXT,
+          valor4 INTEGER DEFAULT NULL,
+          total_ingresos VARCHAR(45) DEFAULT NULL,
+          egresos_mensuales_salud VARCHAR(45) DEFAULT NULL,
+          egresos_mensuales_arriendo VARCHAR(45) DEFAULT NULL,
+          egresos_mensuales_alimentacion VARCHAR(45) DEFAULT NULL,
+          egresos_mensuales_servicios_publicos VARCHAR(45) DEFAULT NULL,
+          egresos_mensuales_subsidio VARCHAR(45) DEFAULT NULL,
+          egresos_mensuales_transporte VARCHAR(45) DEFAULT NULL,
+          egresos_mensuales_otros VARCHAR(45) DEFAULT NULL,
+          egresos_familiar_total VARCHAR(45) DEFAULT NULL,
+          fecharegistro DATETIME DEFAULT NULL,
+          usuario VARCHAR(45) DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(100) DEFAULT NULL,
+          PRIMARY KEY (id_usuario)
+        );
+      `);
+
+      database.run(`
+        CREATE TABLE IF NOT EXISTS dicapacidad_ingresos_mensuales (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          id_usuario INTEGER DEFAULT NULL,
+          nombres_y_apellidos TEXT,
+          parentesco TEXT,
+          procedencia TEXT,
+          ingresos_mensuales DOUBLE DEFAULT NULL,
+          usuario INTEGER DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(100) DEFAULT NULL
+        );
+      `);
+      
+      
+      
+
       
    
       

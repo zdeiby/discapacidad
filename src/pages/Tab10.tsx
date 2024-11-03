@@ -1,100 +1,241 @@
-import './Tab4.css';
-import React, { useState, useEffect } from 'react';
 import {
   IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-  IonList, IonButton
+  IonList, IonInput, IonButton,
+  IonIcon,
+  IonAlert,
+  IonToast
 } from '@ionic/react';
-import { useHistory, useParams } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import CustomDataTable from '../components/DataTable';
+
+import React, { useEffect, useState } from 'react';
 import loadSQL from '../models/database';
+import { useParams } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import DataTable from 'react-data-table-component';
+import { informationCircleOutline, trash } from 'ionicons/icons';
 
 interface Person {
-  idintegrante: number | null;
-  fichasocial: number | null;
-  programa: number | null;
+  id_usuario: number;
+  persona_entidad: string;
+  persona_parentesco: string | null;
+  persona_procedencia: string;
+  valor: number | null;
+  persona_entidad2: string;
+  persona_parentesco2: string | null;
+  direccion_persona_parentesco: string;
+  persona_procedencia2: string;
+  valor2: number | null;
+  persona_entidad3: string;
+  persona_parentesco3: string | null;
+  persona_procedencia3: string;
+  valor3: number | null;
+  persona_entidad4: string;
+  persona_parentesco4: string | null;
+  persona_procedencia4: string;
+  valor4: number | null;
+  total_ingresos: string | null;
+  egresos_mensuales_salud: string | null;
+  egresos_mensuales_arriendo: string | null;
+  egresos_mensuales_alimentacion: string | null;
+  egresos_mensuales_servicios_publicos: string | null;
+  egresos_mensuales_subsidio: string | null;
+  egresos_mensuales_transporte: string | null;
+  egresos_mensuales_otros: string | null;
+  egresos_familiar_total: string | null;
   fecharegistro: string | null;
   usuario: number | null;
   estado: number | null;
   tabla: string | null;
-  observacion: string | null;
-  motivo: string | null;
 }
 
-interface Remision {
-  fichasocial: number;
-  remisiones: number | null;
-  fecharegistro: string | null;
+interface IngresoMensual {
+  id?: number; // Opcional debido a AUTO_INCREMENT
+  id_usuario: number | null;
+  nombres_y_apellidos: string;
+  parentesco: string  | null;
+  procedencia: string  | null;
+  ingresos_mensuales?: number | null;
   usuario: number | null;
   estado: number | null;
   tabla: string | null;
-  programa: string | null; // nombre del programa
-  integrante: string | null; // nombre del integrante
 }
 
-interface Integrante {
-  idintegrante: number;
-  nombre1: string;
-  nombre2: string;
-  apellido1: string;
-  apellido2: string;
-  parentesco: string;
-  descripcion: String;
-}
 
-interface Programa {
-  id: number;
-  descripcion: string;
-  estado: number;
-  tipo: number;
-  usuario: number;
-  tabla: string;
-  fecharegistro: string;
-}
 
-const getCurrentDateTime = () => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-};
 
 const Tab10: React.FC = () => {
+  const getCurrentDateTime = () => {
+      const date = new Date();
+      return date.toISOString().slice(0, 19).replace('T', ' ');
+    };
+  
   const params = useParams<{ ficha: string }>();
-  const history = useHistory();
-
   const [people, setPeople] = useState<Person[]>([]);
-  const [remisiones, setRemisiones] = useState<Remision[]>([]);
-  const [integrantes, setIntegrantes] = useState<Integrante[]>([]);
-  const [programas, setProgramas] = useState<Programa[]>([]);
+  const [ingresosMensuales, setIngresosMensuales] = useState<IngresoMensual[]>([]);
   const [db, setDb] = useState<any>(null);
-  const [numRemisiones, setNumRemisiones] = useState(0);
-  const [selectedIntegrante, setSelectedIntegrante] = useState(null);
- // const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [formattedValue, setFormattedValue] = useState('');
+  const [ingresosFamiliares, setIngresosFamiliares] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
 
-  const [items, setItems] = useState({
-    idintegrante: '',
-    fichasocial: params.ficha,
-    programa: '',
+  const [items, setItems] = useState<Person>({
+    id_usuario: Number(params.ficha),
+    persona_entidad: '',
+    persona_parentesco: '',
+    persona_procedencia: '',
+    valor: 0,
+    persona_entidad2: '',
+    persona_parentesco2: '',
+    direccion_persona_parentesco: '',
+    persona_procedencia2: '',
+    valor2: 0,
+    persona_entidad3: '',
+    persona_parentesco3: '',
+    persona_procedencia3: '',
+    valor3: 0,
+    persona_entidad4: '',
+    persona_parentesco4: '',
+    persona_procedencia4: '',
+    valor4: 0,
+    total_ingresos: '0',
+    egresos_mensuales_salud: '0',
+    egresos_mensuales_arriendo: '0',
+    egresos_mensuales_alimentacion: '0',
+    egresos_mensuales_servicios_publicos: '0',
+    egresos_mensuales_subsidio: '0',
+    egresos_mensuales_transporte: '0',
+    egresos_mensuales_otros: '0',
+    egresos_familiar_total: '0',
     fecharegistro: getCurrentDateTime(),
     usuario: localStorage.getItem('cedula') || '',
     estado: '1',
-    tabla: 'c10_datosgeneralesremisiones',
-    observacion: '',
-    motivo: '',
+    tabla: 'discapacidad_capitulo_10',
   });
 
+  const [itemsMensual, setItemsMensual] = useState<IngresoMensual>({
+    id_usuario: Number(params.ficha),
+    nombres_y_apellidos: '',
+    parentesco: '',
+    procedencia: '',
+    ingresos_mensuales: 0,
+    usuario: Number(localStorage.getItem('cedula')) || null,
+    estado: 1,
+    tabla: 'dicapacidad_ingresos_mensuales',
+  });
+  
+
+
+
+  
+ 
+  
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
   useEffect(() => {
-    loadSQL(setDb, () => {
-      fetchUsers();
-      fetchRemisiones();
-      fetchProgramas();
-    });
-  }, [params.ficha]);
+    loadSQL(setDb, fetchUsers);
+  }, []);
+
+  useEffect(() => {
+    if (db) fetchUsers(db);
+  }, [db]);
+
+  useEffect(() => {
+    if (people.length > 0) {
+      const data = people[0];
+      setItems({
+        id_usuario: data.id_usuario || Number(params.ficha),
+        persona_entidad: data.persona_entidad || '',
+        persona_parentesco: data.persona_parentesco || '',
+        persona_procedencia: data.persona_procedencia || '',
+        valor: data.valor || 0,
+        persona_entidad2: data.persona_entidad2 || '',
+        persona_parentesco2: data.persona_parentesco2 || '',
+        direccion_persona_parentesco: data.direccion_persona_parentesco || '',
+        persona_procedencia2: data.persona_procedencia2 || '',
+        valor2: data.valor2 || 0,
+        persona_entidad3: data.persona_entidad3 || '',
+        persona_parentesco3: data.persona_parentesco3 || '',
+        persona_procedencia3: data.persona_procedencia3 || '',
+        valor3: data.valor3 || 0,
+        persona_entidad4: data.persona_entidad4 || '',
+        persona_parentesco4: data.persona_parentesco4 || '',
+        persona_procedencia4: data.persona_procedencia4 || '',
+        valor4: data.valor4 || 0,
+        total_ingresos: data.total_ingresos || '0',
+        egresos_mensuales_salud: data.egresos_mensuales_salud || '0',
+        egresos_mensuales_arriendo: data.egresos_mensuales_arriendo || '0',
+        egresos_mensuales_alimentacion: data.egresos_mensuales_alimentacion || '0',
+        egresos_mensuales_servicios_publicos: data.egresos_mensuales_servicios_publicos || '0',
+        egresos_mensuales_subsidio: data.egresos_mensuales_subsidio || '0',
+        egresos_mensuales_transporte: data.egresos_mensuales_transporte || '0',
+        egresos_mensuales_otros: data.egresos_mensuales_otros || '0',
+        egresos_familiar_total: data.egresos_familiar_total || '0',
+        fecharegistro: data.fecharegistro || getCurrentDateTime(),
+        usuario: data.usuario || localStorage.getItem('cedula') || '',
+        estado: data.estado || '1',
+        tabla: data.tabla || 'discapacidad_capitulo_10',
+      });
+    }
+  }, [people]);
+
+  useEffect(() => {
+    if (people.length > 0) {
+      const data = people[0];
+      setItemsMensual({
+        id_usuario: data.id_usuario || Number(params.ficha),
+        nombres_y_apellidos: data.nombres_y_apellidos || '',
+        parentesco: data.parentesco || '',
+        procedencia: data.procedencia || '',
+        ingresos_mensuales: data.ingresos_mensuales || 0,
+        usuario: data.usuario || Number(localStorage.getItem('cedula')) || null,
+        estado: data.estado || 1,
+        tabla: data.tabla || 'dicapacidad_ingresos_mensuales',
+      });
+    }
+  }, [people]);
+  
+  
+  
+
+  const fetchDiscapacidadCapitulo10 = async (database) => {
+    try {
+      const res = await database.exec(`SELECT * FROM discapacidad_capitulo_10 WHERE id_usuario=${params.ficha}`);
+      if (res[0]?.values && res[0]?.columns) {
+        const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
+          return res[0].columns.reduce((obj, col, index) => {
+            obj[col] = row[index] !== '' ? row[index].toString() : '0'; // Convertir valores null a '0'
+            return obj;
+          }, {} as Person);
+        });
+        setPeople(transformedPeople);
+        setButtonDisabled(!transformedPeople[0]?.id_usuario);
+      }
+    } catch (error) {
+      console.error("Error fetching data from discapacidad_capitulo_10:", error);
+    }
+  };
+  
+  const fetchDicapacidadIngresosMensuales = async (database) => {
+    try {
+      const resultado = await database.exec(`SELECT * FROM dicapacidad_ingresos_mensuales WHERE id_usuario=${params.ficha}`);
+      if (resultado[0]?.values && resultado[0]?.columns) {
+        const ingresosTransformados: IngresoMensual[] = resultado[0].values.map((fila: any[]) => {
+          return resultado[0].columns.reduce((obj, columna, indice) => {
+            obj[columna] = fila[indice] !== '' ? fila[indice].toString() : '0'; // Convertir valores null a '0'
+            return obj;
+          }, {} as IngresoMensual);
+        });
+        setIngresosMensuales(ingresosTransformados);
+      }
+    } catch (error) {
+      console.error("Error fetching data from dicapacidad_ingresos_mensuales:", error);
+    }
+  };
+
+  const fetchUsers = async (database = db) => {
+    if (database) {
+      await fetchDiscapacidadCapitulo10(database);
+      await fetchDicapacidadIngresosMensuales(database);
+    }
+  };
 
   const saveDatabase = () => {
     if (db) {
@@ -113,383 +254,477 @@ const Tab10: React.FC = () => {
         const db = event.target.result;
         const transaction = db.transaction(['sqliteStore'], 'readwrite');
         const store = transaction.objectStore('sqliteStore');
-        const putRequest = store.put(data, 'sqliteDb');
-
-        putRequest.onsuccess = () => {
+        store.put(data, 'sqliteDb').onsuccess = () => {
           console.log('Data saved to IndexedDB');
         };
-
-        putRequest.onerror = (event) => {
-          console.error('Error saving data to IndexedDB:', event.target.error);
-        };
-      };
-
-      request.onerror = (event) => {
-        console.error('Failed to open IndexedDB:', event.target.error);
       };
     }
   };
 
-  const fetchUsers = async () => {
-    if (db) {
-      const res = await db.exec(`SELECT * FROM c10_datosgeneralesremisiones WHERE fichasocial=${params.ficha}`);
-      if (res[0]?.values && res[0]?.columns) {
-        const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
-          return res[0].columns.reduce((obj, col, index) => {
-            obj[col] = row[index];
-            return obj;
-          }, {} as Person);
-        });
-        setPeople(transformedPeople);
-       // setButtonDisabled((transformedPeople[0].tipodefamilia)?false:true);  
-      } else {
-        setItems({
-          ...items,
-          fecharegistro: getCurrentDateTime(),
-          usuario: parseInt(localStorage.getItem('cedula') || '0', 10),
-        });
-      }
+  const columns = [
+   
+    {
+      name: 'Nombres y Apellidos',
+      selector: row => row.nombres_y_apellidos,
+      sortable: true,
+    },
+    {
+      name: 'Parentesco',
+      selector: row => row.parentesco,
+      sortable: true,
+    },
+    {
+      name: 'Procedencia',
+      selector: row => row.procedencia,
+      sortable: true,
+    },
+    {
+      name: 'Ingresos',
+      selector: row => `$ ${parseFloat(row.ingresos_mensuales).toLocaleString('de-DE')}`,
+      sortable: true,
+    },
+    {
+      name: 'Eliminar',
+      cell: (row) => (
+          <button
+              className="btn btn-danger btn-sm"
+              onClick={(e) => handleDeleteIngreso(e, row)}
+          >
+              <IonIcon slot="start" icon={trash} /> Eliminar
+          </button>
+      ),
+  },
+  ];
+  
 
-      const integrantesRes = await db.exec(`
-        SELECT ig.idintegrante, ig.nombre1, ig.nombre2, ig.apellido1, ig.apellido2, tp.descripcion, ig.parentesco 
-        FROM c131_integrante ig
-        JOIN t1_parentesco tp ON ig.parentesco=tp.id 
-        WHERE fichasocial=${params.ficha}`);
-      if (integrantesRes[0]?.values && integrantesRes[0]?.columns) {
-        const transformedIntegrantes: Integrante[] = integrantesRes[0].values.map((row: any[]) => {
-          return integrantesRes[0].columns.reduce((obj, col, index) => {
-            obj[col] = row[index];
-            return obj;
-          }, {} as Integrante);
-        });
-        setIntegrantes(transformedIntegrantes);
-        console.log(transformedIntegrantes)
-      }
-    }
-  };
 
-  const fetchProgramas = async () => {
-    if (db) {
-      const res = await db.exec(`SELECT *  FROM t1_programas`);
-      if (res[0]?.values && res[0]?.columns) {
-        const transformedProgramas: Programa[] = res[0].values.map((row: any[]) => {
-          return res[0].columns.reduce((obj, col, index) => {
-            obj[col] = row[index];
-            return obj;
-          }, {} as Programa);
-        });
-        setProgramas(transformedProgramas);
-      }
-    }
-  };
-
-  const fetchRemisiones = async () => {
-    if (db) {
-      const res = await db.exec(`
-        SELECT r.*, p.descripcion as programa, p.id as codigoprograma, i.nombre1 || ' ' || i.nombre2 || ' ' || i.apellido1 || ' ' || i.apellido2 AS integrante
-        FROM c10_datosgeneralesremisiones r
-        JOIN c131_integrante i ON r.idintegrante = i.idintegrante
-        JOIN t1_programas p ON r.programa = p.id
-        WHERE r.fichasocial=${params.ficha}
-      `);
-      if (res[0]?.values && res[0]?.columns) {
-        const transformedRemisiones: Remision[] = res[0].values.map((row: any[]) => {
-          return res[0].columns.reduce((obj, col, index) => {
-            obj[col] = row[index];
-            return obj;
-          }, {} as Remision);
-        });
-        setRemisiones(transformedRemisiones);
-        setNumRemisiones(transformedRemisiones.length);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (people.length > 0) {
-      let data = people[0] || {};
-      setItems({
-        idintegrante: data.idintegrante || '',
-        fichasocial: data.fichasocial || params.ficha,
-        programa: data.programa || '',
-        fecharegistro: data.fecharegistro || '',
-        usuario: data.usuario || '',
-        estado: data.estado || '',
-        tabla: data.tabla || '',
-        observacion: data.observacion || '',
-        motivo: data.motivo || '',
-      });
-    }
-  }, [people]);
-
-  useEffect(() => {
-    fetchUsers();
-    fetchProgramas();
-    fetchRemisiones();
-  }, [db, params.ficha]);
-
-  const handleInputChange = (event, field) => {
-    const { value } = event.target;
-    setItems((prevItems) => {
-      const newState = { ...prevItems, [field]: value };
-      if (field === 'tipodefamilia') {
-        newState.programa = value ? '' : '';
-        newState.idintegrante = value ? '' : '';
-        newState.observacion = value ? '' : '';
-
-      }
-      return newState;
-    });
-  };
-
-  useEffect(() => {
-    console.log("Items updated:", items);
-  }, [items]);
-
-  const enviar = async () => {
-    console.log(items);
+  const enviar = async (database = db, event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  
     try {
-      if (items.tipodefamilia == '1' || items.tipodefamilia == '2' && items.idintegrante !== '') {
-        await db.exec(`INSERT OR REPLACE INTO c10_datosgeneralesremisiones (idintegrante, fichasocial, programa, fecharegistro, usuario, estado, tabla, observacion, motivo)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-          [
-            items.idintegrante, items.fichasocial, items.programa, items.fecharegistro, items.usuario, items.estado, items.tabla, items.observacion, items.motivo
-          ]);
-      }
-
-      if (items.tipodefamilia == '1' || items.tipodefamilia == '2') {
-        await db.exec(`INSERT OR REPLACE INTO c101_remisiones (fichasocial, remisiones, fecharegistro, usuario, estado, tabla)
-      VALUES (?, ?, ?, ?, ?, ?);`,
-          [
-            items.fichasocial, 1, items.fecharegistro, items.usuario, items.estado, '101_remisiones'
-          ]);
-      }
-
+      await database.exec(`INSERT OR REPLACE INTO discapacidad_capitulo_10 (
+        id_usuario, persona_entidad, persona_parentesco, persona_procedencia, valor, persona_entidad2, persona_parentesco2,
+        direccion_persona_parentesco, persona_procedencia2, valor2, persona_entidad3, persona_parentesco3, persona_procedencia3,
+        valor3, persona_entidad4, persona_parentesco4, persona_procedencia4, valor4, total_ingresos, egresos_mensuales_salud,
+        egresos_mensuales_arriendo, egresos_mensuales_alimentacion, egresos_mensuales_servicios_publicos, egresos_mensuales_subsidio,
+        egresos_mensuales_transporte, egresos_mensuales_otros, egresos_familiar_total, fecharegistro, usuario, estado, tabla
+      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+        [
+          items.id_usuario, items.persona_entidad, items.persona_parentesco, items.persona_procedencia, items.valor, items.persona_entidad2,
+          items.persona_parentesco2, items.direccion_persona_parentesco, items.persona_procedencia2, items.valor2, items.persona_entidad3,
+          items.persona_parentesco3, items.persona_procedencia3, items.valor3, items.persona_entidad4, items.persona_parentesco4,
+          items.persona_procedencia4, items.valor4, items.total_ingresos, items.egresos_mensuales_salud, items.egresos_mensuales_arriendo,
+          items.egresos_mensuales_alimentacion, items.egresos_mensuales_servicios_publicos, items.egresos_mensuales_subsidio,
+          items.egresos_mensuales_transporte, items.egresos_mensuales_otros, items.egresos_familiar_total, items.fecharegistro,
+          items.usuario, items.estado, items.tabla
+        ]
+      );
+  
       saveDatabase();
       alert('Datos Guardados con éxito');
-      fetchRemisiones(); // Actualizar la lista de remisiones después de guardar
-     // setButtonDisabled(false);
-      setItems({ idintegrante: '',
-        fichasocial: params.ficha,
-        programa: '',
-        fecharegistro: getCurrentDateTime(),
-        usuario: localStorage.getItem('cedula') || '',
-        estado: '1',
-        tabla: 'c10_datosgeneralesremisiones',
-        observacion: '',
-        motivo: '',})
+      fetchUsers(); // Actualiza los datos después de guardar
     } catch (err) {
       console.error('Error al exportar los datos JSON:', err);
     }
   };
 
-  const eliminarRemision = async (idintegrante, codigoprograma) => {
-    console.log('Eliminando remisión:', idintegrante, codigoprograma);
+  const registraringresosfamiliares = async (database = db, event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  
+    const newIngreso = {
+        id_usuario: items.id_usuario,
+        nombres_y_apellidos: items.persona_entidad,
+        parentesco: items.persona_parentesco,
+        procedencia: items.persona_procedencia,
+        ingresos_mensuales: items.valor,
+        usuario: items.usuario,
+        estado: items.estado,
+        tabla: items.tabla,
+    };
+  
+    // Verifica que todos los campos necesarios estén llenos
+    if (!newIngreso.nombres_y_apellidos || !newIngreso.parentesco || !newIngreso.procedencia || !newIngreso.ingresos_mensuales) {
+        return setShowAlert(true);
+    }
+
     try {
-      await db.exec(`DELETE FROM c10_datosgeneralesremisiones WHERE idintegrante = ? AND programa = ?`, [idintegrante, codigoprograma]);
-      console.log('Remisión eliminada en la base de datos');
+        await database.exec(
+            `INSERT OR REPLACE INTO dicapacidad_ingresos_mensuales (
+                id_usuario, nombres_y_apellidos, parentesco, procedencia, ingresos_mensuales, usuario, estado, tabla
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+            [
+                newIngreso.id_usuario, newIngreso.nombres_y_apellidos, newIngreso.parentesco,
+                newIngreso.procedencia, newIngreso.ingresos_mensuales, newIngreso.usuario,
+                newIngreso.estado, newIngreso.tabla,
+            ]
+        );
+        
+        // Guarda en IndexedDB
+        saveDatabase();
 
-      setRemisiones(prevRemisiones => {
-        const updatedRemisiones = prevRemisiones.filter(remision => remision.idintegrante !== idintegrante || remision.codigoprograma !== codigoprograma);
-        setNumRemisiones(updatedRemisiones.length);
-        return updatedRemisiones;
-      });
+        // Actualiza la lista de ingresos con todos los registros desde la base de datos
+        const resultado = await database.exec(`SELECT * FROM dicapacidad_ingresos_mensuales WHERE id_usuario = ?`, [newIngreso.id_usuario]);
+        if (resultado[0]?.values && resultado[0]?.columns) {
+            const ingresosTransformados: IngresoMensual[] = resultado[0].values.map((fila: any[]) => {
+                return resultado[0].columns.reduce((obj, columna, indice) => {
+                    obj[columna] = fila[indice] !== '' ? fila[indice].toString() : '0';
+                    return obj;
+                }, {} as IngresoMensual);
+            });
+            setIngresosMensuales(ingresosTransformados);
+        }
 
-      alert('Remisión eliminada con éxito');
+        // Limpia los campos del formulario
+        setItems((prevItems) => ({
+            ...prevItems,
+            persona_entidad: '',
+            persona_parentesco: '',
+            persona_procedencia: '',
+            valor: '',
+        }));
+        
+        console.log('Datos guardados con éxito');
     } catch (err) {
-      console.error('Error al eliminar la remisión:', err);
+        console.error('Error al guardar los datos en la base de datos:', err);
     }
-  };
-  const [showModal, setShowModal] = useState(false);
+};
 
-  const columns = [
-    {
-      name: 'Ver Observacion',
-      selector: row => (
-        <>
-          <button
-            className='btn btn-info btn-sm text-light'
-            onClick={() => eliminarRemision(row.idintegrante, row.codigoprograma)}
-          >
-            eliminar
-          </button>&nbsp;
-          <button
-            className="btn btn-info btn-sm text-light"
-            type="button"
-            onClick={() => {
-              setSelectedIntegrante(row);
-              setShowModal(true);
-            }}
-          >
-            Ver
-          </button>
-        </>
-      ),
-      sortable: true,
-      style: {
-        whiteSpace: 'nowrap',
-        overflow: 'visible'
-      },
-      minWidth: '200px'
-    },
-    {
-      name: 'Programa',
-      selector: row => row.programa,
-      sortable: true,
-      style: {
-        whiteSpace: 'nowrap',
-        overflow: 'visible'
-      },
-      minWidth: '500px'
-    },
-    {
-      name: 'Integrante',
-      selector: row => row.integrante,
-      sortable: true,
-      style: {
-        whiteSpace: 'nowrap',
-        overflow: 'visible'
-      },
-      minWidth: '400px'
+
+
+  const handleInputChange = (event, field) => {
+    const { value } = event.target;
+    setItems((prevItems) => ({
+      ...prevItems,
+      [field]: value,
+    }));
+    console.log(items);
+    
+  };
+// Calcula el total de ingresos sumando el campo ingresos_mensuales
+const totalIngresos = ingresosMensuales.reduce((total, item) => total + Number(item.ingresos_mensuales || 0), 0);
+
+// Formatea el total de ingresos con dos decimales en formato europeo
+const formattedTotalIngresos = totalIngresos.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+
+
+const sumaringresos = () => {
+    const total =
+      (items.valor ? parseInt(items.valor) : 0) +
+      (items.valor2 ? parseInt(items.valor2) : 0) +
+      (items.valor3 ? parseInt(items.valor3) : 0) +
+      (items.valor4 ? parseInt(items.valor4) : 0);
+    setItems((prev) => ({
+      ...prev,
+      total_ingresos: total.toString(),
+    }));
+    ingresosformato(total); // Actualizar el formato de ingresos totales
+  };
+
+  const ingresosformato = (value) => {
+    const formatted = `$ ${new Intl.NumberFormat('de-DE').format(value)}`;
+    setFormattedValue(formatted);
+  };
+  const sumaregresos = () => {
+    const totalEgresos = [
+      'egresos_mensuales_arriendo',
+      'egresos_mensuales_alimentacion',
+      'egresos_mensuales_salud',
+      'egresos_mensuales_servicios_publicos',
+      'egresos_mensuales_subsidio',
+      'egresos_mensuales_transporte',
+      'egresos_mensuales_otros',
+    ]
+      .map((key) => parseInt(items[key] || '0'))
+      .reduce((a, b) => a + b, 0);
+    setItems((prev) => ({ ...prev, egresos_familiar_total: totalEgresos.toString() }));
+  };
+
+  useEffect(() => {
+    sumaringresos();
+    sumaregresos();
+  }, [items.valor, items.valor2, items.valor3, items.valor4, items.egresos_mensuales_arriendo, items.egresos_mensuales_alimentacion, items.egresos_mensuales_salud, items.egresos_mensuales_servicios_publicos, items.egresos_mensuales_subsidio, items.egresos_mensuales_transporte, items.egresos_mensuales_otros]);
+
+  const handleDeleteIngreso = async (e, ingreso) => {
+    e.preventDefault();
+
+    // Verifica si el ingreso tiene un ID válido antes de intentar eliminarlo
+    if (!ingreso.id) {
+        console.error('No se encontró el ID del ingreso a eliminar.');
+        return;
     }
-  ];
-  console.log('remisiones', remisiones)
+
+    // Elimina el registro de la base de datos
+    try {
+        await db.exec(
+            `DELETE FROM dicapacidad_ingresos_mensuales WHERE id = ? AND id_usuario = ?`,
+            [ingreso.id, items.id_usuario]
+        );
+
+        // Actualiza la lista en el estado después de eliminar el ingreso de la base de datos
+        setIngresosMensuales((prevIngresos) =>
+            prevIngresos.filter((item) => item.id !== ingreso.id)
+        );
+
+        console.log(`Ingreso con ID ${ingreso.id} eliminado exitosamente.`);
+        saveDatabase();
+    } catch (err) {
+        console.error('Error al eliminar el ingreso de la base de datos:', err);
+    }
+};
+
+  
+  
+
+  const customFooter = () => (
+    <div style={{ padding: '10px', fontWeight: 'bold', textAlign: 'right' }}>
+      Total ingresos: ${formattedTotalIngresos}
+    </div>
+  );
+  
+
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader><div className='col-12'>
         <IonToolbar>
-          <IonTitle slot="start">10 - DATOS GENERALES (REMISIONES)</IonTitle>
-          <IonTitle slot="end">FICHA SOCIAL: <label style={{ color: '#17a2b8' }}>{params.ficha}</label> </IonTitle>
-        </IonToolbar>
+          <IonTitle slot="start">CAPITULO X. INGRESOS Y EGRESOS MENSUALES</IonTitle>
+          <IonTitle slot="end">FICHA: <label style={{ color: '#17a2b8' }}>{params.ficha}</label> </IonTitle>
+        </IonToolbar></div>
       </IonHeader>
-      <IonContent fullscreen>
-        <div className="social-card">
-          <span className="label">Ficha social:</span>
-          <span className="value">{params.ficha}</span>
-        </div>
+      <IonContent fullscreen ><form>
+        
+    
+      <div className=' shadow p-3 mb-5 bg-white rounded'>
+<div className="row g-3 was-validated">
 
-        <div className='shadow p-3 mb-5 bg-white rounded'>
-          <IonList>
-            <div className="alert alert-primary" role="alert">
-              <span className="badge badge-secondary text-dark">9 - CONFORMACION DEL HOGAR</span>
-            </div>
-            <div className="row g-3 was-validated">
-              <div className="col-sm">
-                <label className="form-label">El caso es remitido?</label>
-                <select onChange={(e) => handleInputChange(e, 'tipodefamilia')} value={items.tipodefamilia || ''} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
-                  <option value="">SELECCIONE</option>
-                  <option value="3">NO</option>
-                  <option value="2">SI - INSPECCION</option>
-                  <option value="1">SI - PROGRAMA</option>
-                </select>
-              </div>
-              <div className="col-sm">
-                <blockquote className="blockquote text-center">
-                  <p className="mb-0"></p>
-                  <h6>Numero de remisiones:</h6>
-                  <p></p>
-                  <p className="mb-0"></p>
-                  <h5 id="numerointegrantes">{numRemisiones}</h5>
-                  <p></p>
-                </blockquote>
-              </div>
-            </div>
-          </IonList>
-          {(items.tipodefamilia == '2' || items.tipodefamilia == '1') ? <IonList>
-            <div className="row g-3 was-validated">
-              <div className="col-sm">
-                <label className="form-label">Nombre del programa / Inspeccion</label>
-                <select onChange={(e) => handleInputChange(e, 'programa')} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
-                  <option value="" selected>SELECCIONE</option>
-                  {items.tipodefamilia === '1' && programas.filter(programa => programa.tipo === 1).map((programa) => (
-                    <option key={programa.id} value={programa.id}>{programa.descripcion}</option>
-                  ))}
-                  {items.tipodefamilia === '2' && programas.filter(programa => programa.tipo === 2).map((programa) => (
-                    <option key={programa.id} value={programa.id}>{programa.descripcion}</option>
-                  ))}
-
-                </select>
-              </div>
-              <div className="col-sm">
-                <label className="form-label">Integrante del hogar:</label>
-                <select onChange={(e) => handleInputChange(e, 'idintegrante')} value={items.idintegrante} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" required>
-                  <option value="">SELECCIONE</option>
-                    { integrantes
-                    .filter(integrante => integrante.parentesco == '1')
-                    .map((integrante) => (
-                      <option key={integrante.idintegrante} value={integrante.idintegrante}>
-                        {`${integrante.nombre1} ${integrante.nombre2} ${integrante.apellido1} ${integrante.apellido2} - ${integrante.descripcion}`}
-                      </option>
-                    )) } 
-                     {(items.tipodefamilia === '1' && items.programa !='1' && items.programa !='2' && items.programa !='' ) ? integrantes
-                     .filter(integrante => integrante.parentesco >= '2')
-                     .map((integrante) => (
-                       <option key={integrante.idintegrante} value={integrante.idintegrante}>
-                         {`${integrante.nombre1} ${integrante.nombre2} ${integrante.apellido1} ${integrante.apellido2} - ${integrante.descripcion}`}
-                       </option>
-                     )) : ''}
-                      {/* {(items.programa != '1' || items.programa != '2' || items.programa != '' && items.tipodefamilia == '1') ? integrantes
-                     .filter(integrante => integrante.parentesco != '1')
-                     .map((integrante) => (
-                       <option key={integrante.idintegrante} value={integrante.idintegrante}>
-                         {`${integrante.nombre1} ${integrante.nombre2} ${integrante.apellido1} ${integrante.apellido2} - ${integrante.descripcion}`}
-                       </option>
-                     )) : ''} */}
-                   
-                </select>
-              </div>
-            </div><hr />
-            <div className="alert alert-primary" role="alert">
-              <span className="badge badge-secondary text-dark">OBSERVACIONES</span>
-            </div>
-            <div className="row g-3 was-validated">
-              <div className="col-sm">
-                <textarea placeholder="" onChange={(e) => handleInputChange(e, 'observacion')} value={items.observacion} className="form-control" rows="5" required />
-              </div>
-            </div>
-          </IonList> : ''}
-        </div>
-        <div className='shadow p-3 mb-2 pt-0 bg-white rounded'>
-          <IonList>
-            <div className="alert alert-primary" role="alert">
-              <span className="badge badge-secondary text-dark">INTEGRANTES REMITIDOS</span>
-            </div>
-            <CustomDataTable
-              title="Integrantes"
-              data={remisiones}
-              columns={columns}
+<IonList>
+        {/* Ingresos Familiares */}
+        <div className="row">
+          <div className="form-group col-sm pt-2">
+            <label htmlFor="persona_entidad">NOMBRES Y APELLIDOS:</label>
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              id="persona_entidad"
+              style={{ textTransform: 'uppercase' }}
+              value={items.persona_entidad || ''}
+              onChange={(e) => handleInputChange(e, 'persona_entidad')} required
             />
-          </IonList>
-        </div>
-
+          </div>
+          <div className="form-group col-sm pt-2">
+            <label htmlFor="persona_parentesco">PARENTESCO:</label>
+            <select
+              className="form-control form-control-sm"
+              id="persona_parentesco"
+              value={items.persona_parentesco || ''}
+              onChange={(e) => handleInputChange(e, 'persona_parentesco')} required
+            >
+               <option value=""> SELECCIONE </option><option value="6"> ABUELO(A) </option><option value="24"> ACUDIENTE </option><option value="10"> BISABUELO(A) </option><option value="11"> BISNIETO(A) </option><option value="3"> CÓNYUGE O COMPAÑERO(A) PERMANENTE </option><option value="18"> CUÑADO(A) </option><option value="25"> EL MISMO </option><option value="5"> HERMANO(A) </option><option value="15"> HIJASTRO(A) </option><option value="4"> HIJO(A) </option><option value="20"> HIJO(A)S ADOPTIVOS </option><option value="1"> JEFE(A) DEL HOGAR </option><option value="17"> MADRASTRA </option><option value="7"> NIETO(A) </option><option value="14"> NUERA </option><option value="22"> OTROS NO PARIENTES </option><option value="21"> OTROS PARIENTES </option><option value="16"> PADRASTRO </option><option value="2"> PADRES </option><option value="19"> PADRES ADOPTANTES </option><option value="23"> REPRESENTANTE LEGAL - PERSONA CUIDADORA </option><option value="26"> SIN DATO </option><option value="9"> SOBRINO(A) </option><option value="12"> SUEGRO(A) </option><option value="8"> TÍOS O TÍAS </option><option value="13"> YERNO </option>  
+            </select>
+          </div>
+          <div className="form-group col-sm pt-2">
+            <label htmlFor="persona_procedencia">PROCEDENCIA:</label>
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              id="persona_procedencia"
+              style={{ textTransform: 'uppercase' }}
+              value={items.persona_procedencia || ''}
+              onChange={(e) => handleInputChange(e, 'persona_procedencia')} required
+            />
+          </div>
+          <div className="form-group col-sm pt-2">
+            <label htmlFor="valor">INGRESOS MENSUALES:</label>
+            <input
+              type="number"
+              className="form-control form-control-sm"
+              id="valor"
+              style={{ textTransform: 'uppercase' }}
+              value={items.valor || ''}
+              onChange={(e) => handleInputChange(e, 'valor')}
+              onBlur={() => {  sumaringresos() }}
+              onKeyUp={() => { ingresosformato(items.valor) }} required
+            />
+            <small id="valformato"></small>
+          </div>
+          <div className="form-group col-sm">
         <br />
 
+          <button className="btn btn-info " onClick={(e) => registraringresosfamiliares(db,e)}>Registrar</button>
+          </div>
+        </div>
 
+        <hr />
+        <div className="row" id="resumeningresos">
+          <div className="form-group col-sm">
+            <DataTable
+                    title="Resumen de Ingresos Mensuales"
+                    columns={columns}
+                    data={ingresosMensuales}
+                    pagination
+                  />
+                   {customFooter()}
+          </div>
+        </div>
 
-        {showModal &&  selectedIntegrante &&(
-          <>
-            {/* Bootstrap Modal */}
-            <div className={`modal ${showModal ? "d-block" : "d-none"} modalnew modal-backdropnew `} tabIndex="-1" role="dialog">
-              <div className="modal-dialog" role="document"><br /><br /><br />
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => setShowModal(false)}>
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div className="modal-body text-center">
-                  {selectedIntegrante.observacion}
-                  </div>
-                </div>
-              </div>
+        <hr />
+        <div className="row">
+          <div className="form-group col-sm pb-2 ">
+            EGRESOS MENSUALES:
+          </div>
+        </div>
+
+        {/* Formulario de Egresos Mensuales */}
+          <div className="row">
+            <div className="form-group col-sm pb-3">
+              <label htmlFor="egresos_mensuales_servicios_publicos">SERVICIOS PÚBLICOS:</label>
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                id="egresos_mensuales_servicios_publicos"
+                style={{ textTransform: 'uppercase' }}
+                value={items.egresos_mensuales_servicios_publicos || ''}
+                onChange={(e) => handleInputChange(e, 'egresos_mensuales_servicios_publicos')}
+                onBlur={() => { sumaregresos() }}
+                onKeyUp={() => { ingresosformato(items.valor)}}
+              />
+              <small id="egresos_mensuales_servicios_publicosformato"></small>
             </div>
-          </>
-        )}
+            <div className="form-group col-sm pb-3">
+              <label htmlFor="egresos_mensuales_arriendo">ARRIENDO:</label>
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                id="egresos_mensuales_arriendo"
+                style={{ textTransform: 'uppercase' }}
+                value={items.egresos_mensuales_arriendo || ''}
+                onChange={(e) => handleInputChange(e, 'egresos_mensuales_arriendo')}
+                onBlur={() => { sumaregresos()}}
+                onKeyUp={() => {  ingresosformato(items.valor)}}
+              />
+              <small id="egresos_mensuales_arriendoformato"></small>
+            </div>
+          </div>
 
-        <div><IonButton color="success" onClick={enviar}>Guardar</IonButton><IonButton  routerLink={`/tabs/tab11/${params.ficha}`}>Siguiente</IonButton></div>
+          <div className="row">
+            <div className="form-group col-sm pb-3">
+              <label htmlFor="egresos_mensuales_salud">SALUD:</label>
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                id="egresos_mensuales_salud"
+                style={{ textTransform: 'uppercase' }}
+                value={items.egresos_mensuales_salud || ''}
+                onChange={(e) => handleInputChange(e, 'egresos_mensuales_salud')}
+                onBlur={() => { sumaregresos()}}
+                onKeyUp={() => { ingresosformato(items.valor)}}
+              />
+              <small id="egresos_mensuales_saludformato"></small>
+            </div>
+            <div className="form-group col-sm pb-3">
+              <label htmlFor="egresos_mensuales_alimentacion">ALIMENTACIÓN:</label>
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                id="egresos_mensuales_alimentacion"
+                style={{ textTransform: 'uppercase' }}
+                value={items.egresos_mensuales_alimentacion || ''}
+                onChange={(e) => handleInputChange(e, 'egresos_mensuales_alimentacion')}
+                onBlur={() => { sumaregresos()}}
+                onKeyUp={() => { ingresosformato(items.valor)}}
+              />
+              <small id="egresos_mensuales_alimentacionformato"></small>
+            </div>
+          </div>
 
+          <div className="row">
+            <div className="form-group col-sm pb-3">
+              <label htmlFor="egresos_mensuales_subsidio">SUBSIDIO:</label>
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                id="egresos_mensuales_subsidio"
+                style={{ textTransform: 'uppercase' }}
+                value={items.egresos_mensuales_subsidio || ''}
+                onChange={(e) => handleInputChange(e, 'egresos_mensuales_subsidio')}
+                onBlur={() => { sumaregresos()}}
+                onKeyUp={() => {  ingresosformato(items.valor) }}
+              />
+              <small id="egresos_mensuales_subsidioformato"></small>
+            </div>
+            <div className="form-group col-sm pb-3">
+              <label htmlFor="egresos_mensuales_transporte">TRANSPORTE:</label>
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                id="egresos_mensuales_transporte"
+                style={{ textTransform: 'uppercase' }}
+                value={items.egresos_mensuales_transporte || ''}
+                onChange={(e) => handleInputChange(e, 'egresos_mensuales_transporte')}
+                onBlur={() => { sumaregresos() }}
+                onKeyUp={() => { ingresosformato(items.valor) }}
+              />
+              <small id="egresos_mensuales_transporteformato"></small>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="form-group col-sm pb-3">
+              <label htmlFor="egresos_mensuales_otros">OTROS:</label>
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                id="egresos_mensuales_otros"
+                style={{ textTransform: 'uppercase' }}
+                value={items.egresos_mensuales_otros || ''}
+                onChange={(e) => handleInputChange(e, 'egresos_mensuales_otros')}
+                onBlur={() => {sumaregresos()}}
+                onKeyUp={() => { ingresosformato(items.valor)}}
+              />
+              <small id="egresos_mensuales_otrosformato"></small>
+            </div>
+            <div className="form-group col-sm pb-3">
+              <label htmlFor="egresos_familiar_total">TOTAL EGRESOS:</label>
+              <input
+                type="number"
+                className="form-control form-control-sm"
+                id="egresos_familiar_total"
+                style={{ textTransform: 'uppercase' }}
+                value={items.egresos_familiar_total || ''}
+                onChange={(e) => handleInputChange(e, 'egresos_familiar_total')}
+                disabled
+              />
+              <small id="egresos_familiar_totalformato"></small>
+            </div>
+          </div>
+      </IonList>
+    </div>
+</div>
+
+<IonToast
+        isOpen={showAlert}
+        onDidDismiss={() => setShowAlert(false)}
+        message="Llena los campos obligatorios antes de ingresar un ingreso."
+        duration={1000} // 1000 ms = 1 segundo
+        color="primary"
+        icon={informationCircleOutline}
+        position="bottom"
+        buttons={[
+          {
+            side: 'start',
+            icon: informationCircleOutline,
+          }
+        ]}
+      />
+
+    <br />
+       <div><button className='btn btn-success' type="submit" onClick={(e)=>(enviar(db,e))}>Guardar</button>&nbsp;
+       <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab15/${params.ficha}`;} }}> Siguiente</div>
+       </div> 
+           </form>
       </IonContent>
     </IonPage>
+
   );
 };
 

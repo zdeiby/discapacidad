@@ -488,7 +488,7 @@ if(!integrantes){
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle slot="start">9 - INGRESAR INTEGRANTE</IonTitle>
+          <IonTitle slot="start">CARACTERIZACIÓN DEL CIUDADANO</IonTitle>
           <IonTitle slot="end">FICHA: <label style={{ color: '#17a2b8' }}>{params.ficha}</label> </IonTitle>
         </IonToolbar>
       </IonHeader>

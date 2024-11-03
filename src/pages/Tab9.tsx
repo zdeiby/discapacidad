@@ -11,18 +11,84 @@ import CustomDataTable from '../components/DataTable';
 import loadSQL from '../models/database';
 
 interface Person {
-  idfiu: string | null;
-  tipodefamilia: string | null;
+  id_usuario: number;
+  neceidades_de_capacitacion_de_la_familia: string;
+  personas_hogar_ocupacion_sin_dato: number | null;
   fecharegistro: string | null;
-  usuario: string | null;
-  estado: string | null;
+  usuario: number | null;
+  estado: number | null;
   tabla: string | null;
-  observacion: string | null;
-  nameFile: string | null;
+  personas_hogar_parentesco_abuelo: number | null;
+  personas_hogar_parentesco_acudiente: number | null;
+  personas_hogar_parentesco_bisabuelos: number | null;
+  personas_hogar_parentesco_bisnietos: number | null;
+  personas_hogar_parentesco_conyuge: number | null;
+  personas_hogar_parentesco_cuniada: number | null;
+  personas_hogar_parentesco_hermano: number | null;
+  personas_hogar_parentesco_hijastro: number | null;
+  personas_hogar_parentesco_hijo: number | null;
+  personas_hogar_parentesco_hijo_adoptivo: number | null;
+  personas_hogar_parentesco_jefe_hogar: number | null;
+  personas_hogar_parentesco_madrastra: number | null;
+  personas_hogar_parentesco_nieto: number | null;
+  personas_hogar_parentesco_nuera: number | null;
+  personas_hogar_parentesco_otros_no_parientes: number | null;
+  personas_hogar_parentesco_otros_parientes: number | null;
+  personas_hogar_parentesco_padrastro: number | null;
+  personas_hogar_parentesco_padres: number | null;
+  personas_hogar_parentesco_padres_adoptantes: number | null;
+  personas_hogar_parentesco_rep_legal: number | null;
+  personas_hogar_parentesco_sobrinos: number | null;
+  personas_hogar_parentesco_suegros: number | null;
+  personas_hogar_parentesco_tios: number | null;
+  personas_hogar_parentesco_yerno: number | null;
+  numero_personas_hogar_discapacidad: number | null;
+  personas_hogar_ciclo_primera_infancia: number | null;
+  personas_hogar_ciclo_infancia: number | null;
+  personas_hogar_ciclo_primera_adolescencia: number | null;
+  personas_hogar_ciclo_juventud: number | null;
+  personas_hogar_ciclo_adultez: number | null;
+  personas_hogar_ciclo_persona_mayor: number | null;
+  personas_hogar_escolaridad_inicial: number | null;
+  personas_hogar_escolaridad_ninguna: number | null;
+  personas_hogar_escolaridad_posgrado: number | null;
+  personas_hogar_escolaridad_preescolar: number | null;
+  personas_hogar_escolaridad_pregrado_completo: number | null;
+  personas_hogar_escolaridad_pregrado_incompleto: number | null;
+  personas_hogar_escolaridad_primaria_completa: number | null;
+  personas_hogar_escolaridad_primaria_incompleta: number | null;
+  personas_hogar_escolaridad_secundaria_completa: number | null;
+  personas_hogar_escolaridad_secundaria_incompleta: number | null;
+  personas_hogar_escolaridad_tecnica_completa: number | null;
+  personas_hogar_escolaridad_tecnica_incompleta: number | null;
+  personas_hogar_escolaridad_tecnologia_completa: number | null;
+  personas_hogar_escolaridad_tecnologia_incompleta: number | null;
+  personas_hogar_escolaridad_sin_dato: number | null;
+  personas_hogar_ocupacion_sobrevivencia: number | null;
+  personas_hogar_ocupacion_ama_de_casa: number | null;
+  personas_hogar_ocupacion_desempleado: number | null;
+  personas_hogar_ocupacion_empleado: number | null;
+  personas_hogar_ocupacion_estudiante: number | null;
+  personas_hogar_ocupacion_independiente: number | null;
+  personas_hogar_ocupacion_ninguna: number | null;
+  personas_hogar_ocupacion_trabajador_informal: number | null;
 }
 
 
+
 const Tab9: React.FC = () => {
+
+  const getCurrentDateTime = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
   const params = useParams();
   const history = useHistory();
 
@@ -31,15 +97,69 @@ const Tab9: React.FC = () => {
   const [db, setDb] = useState<any>(null);
   const [jefe, setJefe] = useState(false);
   const [items, setItems] = useState({
-    idfiu: '',
-    tipodefamilia: '',
-    fecharegistro: '',
-    usuario: '',
-    estado: '',
-    tabla: '',
-    observacion: '',
-    nameFile: '',
+    id_usuario: params.ficha || '', // Asignando params.ficha o un valor vacío como predeterminado
+    neceidades_de_capacitacion_de_la_familia: '',
+    personas_hogar_ocupacion_sin_dato: 0,
+    fecharegistro: getCurrentDateTime(), // Asigna la fecha y hora actual
+    usuario: localStorage.getItem('cedula') || '', // Obtiene el valor de cédula almacenado o un valor vacío
+    estado: '1', // Estado inicial configurado en '1' por defecto
+    tabla: 'discapacidad_capitulo_8', // Especifica la tabla correspondiente
+    personas_hogar_parentesco_abuelo: 0,
+    personas_hogar_parentesco_acudiente: 0,
+    personas_hogar_parentesco_bisabuelos: 0,
+    personas_hogar_parentesco_bisnietos: 0,
+    personas_hogar_parentesco_conyuge: 0,
+    personas_hogar_parentesco_cuniada: 0,
+    personas_hogar_parentesco_hermano: 0,
+    personas_hogar_parentesco_hijastro: 0,
+    personas_hogar_parentesco_hijo: 0,
+    personas_hogar_parentesco_hijo_adoptivo: 0,
+    personas_hogar_parentesco_jefe_hogar: 0,
+    personas_hogar_parentesco_madrastra: 0,
+    personas_hogar_parentesco_nieto: 0,
+    personas_hogar_parentesco_nuera: 0,
+    personas_hogar_parentesco_otros_no_parientes: 0,
+    personas_hogar_parentesco_otros_parientes: 0,
+    personas_hogar_parentesco_padrastro: 0,
+    personas_hogar_parentesco_padres: 0,
+    personas_hogar_parentesco_padres_adoptantes: 0,
+    personas_hogar_parentesco_rep_legal: 0,
+    personas_hogar_parentesco_sobrinos: 0,
+    personas_hogar_parentesco_suegros: 0,
+    personas_hogar_parentesco_tios: 0,
+    personas_hogar_parentesco_yerno: 0,
+    numero_personas_hogar_discapacidad: 0,
+    personas_hogar_ciclo_primera_infancia: 0,
+    personas_hogar_ciclo_infancia: 0,
+    personas_hogar_ciclo_primera_adolescencia: 0,
+    personas_hogar_ciclo_juventud: 0,
+    personas_hogar_ciclo_adultez: 0,
+    personas_hogar_ciclo_persona_mayor: 0,
+    personas_hogar_escolaridad_inicial: 0,
+    personas_hogar_escolaridad_ninguna: 0,
+    personas_hogar_escolaridad_posgrado: 0,
+    personas_hogar_escolaridad_preescolar: 0,
+    personas_hogar_escolaridad_pregrado_completo: 0,
+    personas_hogar_escolaridad_pregrado_incompleto: 0,
+    personas_hogar_escolaridad_primaria_completa: 0,
+    personas_hogar_escolaridad_primaria_incompleta: 0,
+    personas_hogar_escolaridad_secundaria_completa: 0,
+    personas_hogar_escolaridad_secundaria_incompleta: 0,
+    personas_hogar_escolaridad_tecnica_completa: 0,
+    personas_hogar_escolaridad_tecnica_incompleta: 0,
+    personas_hogar_escolaridad_tecnologia_completa: 0,
+    personas_hogar_escolaridad_tecnologia_incompleta: 0,
+    personas_hogar_escolaridad_sin_dato: 0,
+    personas_hogar_ocupacion_sobrevivencia: 0,
+    personas_hogar_ocupacion_ama_de_casa: 0,
+    personas_hogar_ocupacion_desempleado: 0,
+    personas_hogar_ocupacion_empleado: 0,
+    personas_hogar_ocupacion_estudiante: 0,
+    personas_hogar_ocupacion_independiente: 0,
+    personas_hogar_ocupacion_ninguna: 0,
+    personas_hogar_ocupacion_trabajador_informal: 0,
   });
+  
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   useEffect(() => {
@@ -82,7 +202,7 @@ const Tab9: React.FC = () => {
 
   const fetchUsers = async (database = db) => {
     if (db) {
-      const res = await database.exec(`SELECT * FROM infraccion_conformacion_familiar WHERE idfiu=${params.ficha}`);
+      const res = await database.exec(`SELECT * FROM discapacidad_capitulo_8 WHERE id_usuario=${params.ficha}`);
       if (res[0]?.values && res[0]?.columns) {
         const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
           return res[0].columns.reduce((obj, col, index) => {
@@ -91,20 +211,85 @@ const Tab9: React.FC = () => {
           }, {} as Person);
         });
         setPeople(transformedPeople);
+        setButtonDisabled((transformedPeople[0].neceidades_de_capacitacion_de_la_familia) ? false : true);
+
       } else {
-        setItems({
-          idfiu: params.ficha,
-          tipodefamilia: '',
+       setItems({
+          id_usuario: params.ficha,
+          neceidades_de_capacitacion_de_la_familia: '',
+          personas_hogar_ocupacion_sin_dato: 0,
           fecharegistro: getCurrentDateTime(),
           usuario: localStorage.getItem('cedula'),
-          estado: '1',
-          tabla: 'infraccion_conformacion_familiar',
-          observacion: '',
-          nameFile: '',
+          estado: 1,
+          tabla: 'discapacidad_capitulo_8',
+          personas_hogar_parentesco_abuelo: 0,
+          personas_hogar_parentesco_acudiente: 0,
+          personas_hogar_parentesco_bisabuelos: 0,
+          personas_hogar_parentesco_bisnietos: 0,
+          personas_hogar_parentesco_conyuge: 0,
+          personas_hogar_parentesco_cuniada: 0,
+          personas_hogar_parentesco_hermano: 0,
+          personas_hogar_parentesco_hijastro: 0,
+          personas_hogar_parentesco_hijo: 0,
+          personas_hogar_parentesco_hijo_adoptivo: 0,
+          personas_hogar_parentesco_jefe_hogar: 0,
+          personas_hogar_parentesco_madrastra: 0,
+          personas_hogar_parentesco_nieto: 0,
+          personas_hogar_parentesco_nuera: 0,
+          personas_hogar_parentesco_otros_no_parientes: 0,
+          personas_hogar_parentesco_otros_parientes: 0,
+          personas_hogar_parentesco_padrastro: 0,
+          personas_hogar_parentesco_padres: 0,
+          personas_hogar_parentesco_padres_adoptantes: 0,
+          personas_hogar_parentesco_rep_legal: 0,
+          personas_hogar_parentesco_sobrinos: 0,
+          personas_hogar_parentesco_suegros: 0,
+          personas_hogar_parentesco_tios: 0,
+          personas_hogar_parentesco_yerno: 0,
+          numero_personas_hogar_discapacidad: 0,
+          personas_hogar_ciclo_primera_infancia: 0,
+          personas_hogar_ciclo_infancia: 0,
+          personas_hogar_ciclo_primera_adolescencia: 0,
+          personas_hogar_ciclo_juventud: 0,
+          personas_hogar_ciclo_adultez: 0,
+          personas_hogar_ciclo_persona_mayor: 0,
+          personas_hogar_escolaridad_inicial: 0,
+          personas_hogar_escolaridad_ninguna: 0,
+          personas_hogar_escolaridad_posgrado: 0,
+          personas_hogar_escolaridad_preescolar: 0,
+          personas_hogar_escolaridad_pregrado_completo: 0,
+          personas_hogar_escolaridad_pregrado_incompleto: 0,
+          personas_hogar_escolaridad_primaria_completa: 0,
+          personas_hogar_escolaridad_primaria_incompleta: 0,
+          personas_hogar_escolaridad_secundaria_completa: 0,
+          personas_hogar_escolaridad_secundaria_incompleta: 0,
+          personas_hogar_escolaridad_tecnica_completa: 0,
+          personas_hogar_escolaridad_tecnica_incompleta: 0,
+          personas_hogar_escolaridad_tecnologia_completa: 0,
+          personas_hogar_escolaridad_tecnologia_incompleta: 0,
+          personas_hogar_escolaridad_sin_dato: 0,
+          personas_hogar_ocupacion_sobrevivencia: 0,
+          personas_hogar_ocupacion_ama_de_casa: 0,
+          personas_hogar_ocupacion_desempleado: 0,
+          personas_hogar_ocupacion_empleado: 0,
+          personas_hogar_ocupacion_estudiante: 0,
+          personas_hogar_ocupacion_independiente: 0,
+          personas_hogar_ocupacion_ninguna: 0,
+          personas_hogar_ocupacion_trabajador_informal: 0
         });
       }
 
-      const integrantesRes = await database.exec(`SELECT * FROM inclusion_ciudadano WHERE id_usuario=${params.ficha}`);
+      const integrantesRes = await database.exec(`SELECT 
+        *, inclusion_ciudadano.id_usuario as id_usuariociu
+       FROM 
+           inclusion_ciudadano
+       LEFT JOIN 
+           inclusion_grupofamiliar 
+       ON 
+           inclusion_ciudadano.id_usuario = inclusion_grupofamiliar.integrantes
+       WHERE 
+           inclusion_grupofamiliar.id_usuario = ${params.ficha}
+           OR inclusion_ciudadano.id_usuario = ${params.ficha};`);
       if (integrantesRes[0]?.values && integrantesRes[0]?.columns) {
         const transformedIntegrantes = integrantesRes[0].values.map((row: any[]) => {
           return integrantesRes[0].columns.reduce((obj, col, index) => {
@@ -117,32 +302,77 @@ const Tab9: React.FC = () => {
     }
   };
 
-  const getCurrentDateTime = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  };
+
 
   useEffect(() => {
     if (people.length > 0) {
       let data = people[0] || {};
       setItems({
-        idfiu: data.idfiu || params.ficha,
-        tipodefamilia: data.tipodefamilia || '',
-        fecharegistro: data.fecharegistro || '',
-        usuario: data.usuario || '',
-        estado: data.estado || '',
-        tabla: data.tabla || '',
-        observacion: data.observacion || '',
-        nameFile: data.nameFile || '',
+        id_usuario: data.id_usuario || params.ficha,
+        neceidades_de_capacitacion_de_la_familia: data.neceidades_de_capacitacion_de_la_familia || '',
+        personas_hogar_ocupacion_sin_dato: data.personas_hogar_ocupacion_sin_dato || 0,
+        fecharegistro: data.fecharegistro || getCurrentDateTime(),
+        usuario: data.usuario || localStorage.getItem('cedula'),
+        estado: data.estado || '1',
+        tabla: data.tabla || 'discapacidad_capitulo_8',
+        personas_hogar_parentesco_abuelo: data.personas_hogar_parentesco_abuelo || 0,
+        personas_hogar_parentesco_acudiente: data.personas_hogar_parentesco_acudiente || 0,
+        personas_hogar_parentesco_bisabuelos: data.personas_hogar_parentesco_bisabuelos || 0,
+        personas_hogar_parentesco_bisnietos: data.personas_hogar_parentesco_bisnietos || 0,
+        personas_hogar_parentesco_conyuge: data.personas_hogar_parentesco_conyuge || 0,
+        personas_hogar_parentesco_cuniada: data.personas_hogar_parentesco_cuniada || 0,
+        personas_hogar_parentesco_hermano: data.personas_hogar_parentesco_hermano || 0,
+        personas_hogar_parentesco_hijastro: data.personas_hogar_parentesco_hijastro || 0,
+        personas_hogar_parentesco_hijo: data.personas_hogar_parentesco_hijo || 0,
+        personas_hogar_parentesco_hijo_adoptivo: data.personas_hogar_parentesco_hijo_adoptivo || 0,
+        personas_hogar_parentesco_jefe_hogar: data.personas_hogar_parentesco_jefe_hogar || 0,
+        personas_hogar_parentesco_madrastra: data.personas_hogar_parentesco_madrastra || 0,
+        personas_hogar_parentesco_nieto: data.personas_hogar_parentesco_nieto || 0,
+        personas_hogar_parentesco_nuera: data.personas_hogar_parentesco_nuera || 0,
+        personas_hogar_parentesco_otros_no_parientes: data.personas_hogar_parentesco_otros_no_parientes || 0,
+        personas_hogar_parentesco_otros_parientes: data.personas_hogar_parentesco_otros_parientes || 0,
+        personas_hogar_parentesco_padrastro: data.personas_hogar_parentesco_padrastro || 0,
+        personas_hogar_parentesco_padres: data.personas_hogar_parentesco_padres || 0,
+        personas_hogar_parentesco_padres_adoptantes: data.personas_hogar_parentesco_padres_adoptantes || 0,
+        personas_hogar_parentesco_rep_legal: data.personas_hogar_parentesco_rep_legal || 0,
+        personas_hogar_parentesco_sobrinos: data.personas_hogar_parentesco_sobrinos || 0,
+        personas_hogar_parentesco_suegros: data.personas_hogar_parentesco_suegros || 0,
+        personas_hogar_parentesco_tios: data.personas_hogar_parentesco_tios || 0,
+        personas_hogar_parentesco_yerno: data.personas_hogar_parentesco_yerno || 0,
+        numero_personas_hogar_discapacidad: data.numero_personas_hogar_discapacidad || 0,
+        personas_hogar_ciclo_primera_infancia: data.personas_hogar_ciclo_primera_infancia || 0,
+        personas_hogar_ciclo_infancia: data.personas_hogar_ciclo_infancia || 0,
+        personas_hogar_ciclo_primera_adolescencia: data.personas_hogar_ciclo_primera_adolescencia || 0,
+        personas_hogar_ciclo_juventud: data.personas_hogar_ciclo_juventud || 0,
+        personas_hogar_ciclo_adultez: data.personas_hogar_ciclo_adultez || 0,
+        personas_hogar_ciclo_persona_mayor: data.personas_hogar_ciclo_persona_mayor || 0,
+        personas_hogar_escolaridad_inicial: data.personas_hogar_escolaridad_inicial || 0,
+        personas_hogar_escolaridad_ninguna: data.personas_hogar_escolaridad_ninguna || 0,
+        personas_hogar_escolaridad_posgrado: data.personas_hogar_escolaridad_posgrado || 0,
+        personas_hogar_escolaridad_preescolar: data.personas_hogar_escolaridad_preescolar || 0,
+        personas_hogar_escolaridad_pregrado_completo: data.personas_hogar_escolaridad_pregrado_completo || 0,
+        personas_hogar_escolaridad_pregrado_incompleto: data.personas_hogar_escolaridad_pregrado_incompleto || 0,
+        personas_hogar_escolaridad_primaria_completa: data.personas_hogar_escolaridad_primaria_completa || 0,
+        personas_hogar_escolaridad_primaria_incompleta: data.personas_hogar_escolaridad_primaria_incompleta || 0,
+        personas_hogar_escolaridad_secundaria_completa: data.personas_hogar_escolaridad_secundaria_completa || 0,
+        personas_hogar_escolaridad_secundaria_incompleta: data.personas_hogar_escolaridad_secundaria_incompleta || 0,
+        personas_hogar_escolaridad_tecnica_completa: data.personas_hogar_escolaridad_tecnica_completa || 0,
+        personas_hogar_escolaridad_tecnica_incompleta: data.personas_hogar_escolaridad_tecnica_incompleta || 0,
+        personas_hogar_escolaridad_tecnologia_completa: data.personas_hogar_escolaridad_tecnologia_completa || 0,
+        personas_hogar_escolaridad_tecnologia_incompleta: data.personas_hogar_escolaridad_tecnologia_incompleta || 0,
+        personas_hogar_escolaridad_sin_dato: data.personas_hogar_escolaridad_sin_dato || 0,
+        personas_hogar_ocupacion_sobrevivencia: data.personas_hogar_ocupacion_sobrevivencia || 0,
+        personas_hogar_ocupacion_ama_de_casa: data.personas_hogar_ocupacion_ama_de_casa || 0,
+        personas_hogar_ocupacion_desempleado: data.personas_hogar_ocupacion_desempleado || 0,
+        personas_hogar_ocupacion_empleado: data.personas_hogar_ocupacion_empleado || 0,
+        personas_hogar_ocupacion_estudiante: data.personas_hogar_ocupacion_estudiante || 0,
+        personas_hogar_ocupacion_independiente: data.personas_hogar_ocupacion_independiente || 0,
+        personas_hogar_ocupacion_ninguna: data.personas_hogar_ocupacion_ninguna || 0,
+        personas_hogar_ocupacion_trabajador_informal: data.personas_hogar_ocupacion_trabajador_informal || 0,
       });
     }
   }, [people]);
+  
 
   useEffect(() => {
     fetchUsers();
@@ -167,13 +397,133 @@ const Tab9: React.FC = () => {
   const enviar = async (database = db) => {
     console.log(items);
     try {
-      await db.exec(`INSERT OR REPLACE INTO infraccion_conformacion_familiar (idfiu, tipodefamilia, fecharegistro, usuario, estado, tabla, observacion, nameFile)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+      await db.exec(`INSERT OR REPLACE INTO discapacidad_capitulo_8 (
+        id_usuario, 
+        neceidades_de_capacitacion_de_la_familia, 
+        personas_hogar_ocupacion_sin_dato, 
+        fecharegistro, 
+        usuario, 
+        estado, 
+        tabla, 
+        personas_hogar_parentesco_abuelo, 
+        personas_hogar_parentesco_acudiente, 
+        personas_hogar_parentesco_bisabuelos, 
+        personas_hogar_parentesco_bisnietos, 
+        personas_hogar_parentesco_conyuge, 
+        personas_hogar_parentesco_cuniada, 
+        personas_hogar_parentesco_hermano, 
+        personas_hogar_parentesco_hijastro, 
+        personas_hogar_parentesco_hijo, 
+        personas_hogar_parentesco_hijo_adoptivo, 
+        personas_hogar_parentesco_jefe_hogar, 
+        personas_hogar_parentesco_madrastra, 
+        personas_hogar_parentesco_nieto, 
+        personas_hogar_parentesco_nuera, 
+        personas_hogar_parentesco_otros_no_parientes, 
+        personas_hogar_parentesco_otros_parientes, 
+        personas_hogar_parentesco_padrastro, 
+        personas_hogar_parentesco_padres, 
+        personas_hogar_parentesco_padres_adoptantes, 
+        personas_hogar_parentesco_rep_legal, 
+        personas_hogar_parentesco_sobrinos, 
+        personas_hogar_parentesco_suegros, 
+        personas_hogar_parentesco_tios, 
+        personas_hogar_parentesco_yerno, 
+        numero_personas_hogar_discapacidad, 
+        personas_hogar_ciclo_primera_infancia, 
+        personas_hogar_ciclo_infancia, 
+        personas_hogar_ciclo_primera_adolescencia, 
+        personas_hogar_ciclo_juventud, 
+        personas_hogar_ciclo_adultez, 
+        personas_hogar_ciclo_persona_mayor, 
+        personas_hogar_escolaridad_inicial, 
+        personas_hogar_escolaridad_ninguna, 
+        personas_hogar_escolaridad_posgrado, 
+        personas_hogar_escolaridad_preescolar, 
+        personas_hogar_escolaridad_pregrado_completo, 
+        personas_hogar_escolaridad_pregrado_incompleto, 
+        personas_hogar_escolaridad_primaria_completa, 
+        personas_hogar_escolaridad_primaria_incompleta, 
+        personas_hogar_escolaridad_secundaria_completa, 
+        personas_hogar_escolaridad_secundaria_incompleta, 
+        personas_hogar_escolaridad_tecnica_completa, 
+        personas_hogar_escolaridad_tecnica_incompleta, 
+        personas_hogar_escolaridad_tecnologia_completa, 
+        personas_hogar_escolaridad_tecnologia_incompleta, 
+        personas_hogar_escolaridad_sin_dato, 
+        personas_hogar_ocupacion_sobrevivencia, 
+        personas_hogar_ocupacion_ama_de_casa, 
+        personas_hogar_ocupacion_desempleado, 
+        personas_hogar_ocupacion_empleado, 
+        personas_hogar_ocupacion_estudiante, 
+        personas_hogar_ocupacion_independiente, 
+        personas_hogar_ocupacion_ninguna, 
+        personas_hogar_ocupacion_trabajador_informal
+      ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         [
-          items.idfiu, items.tipodefamilia, items.fecharegistro, items.usuario, items.estado, items.tabla, items.observacion, items.nameFile
+          items.id_usuario, 
+          items.neceidades_de_capacitacion_de_la_familia, 
+          items.personas_hogar_ocupacion_sin_dato, 
+          items.fecharegistro, 
+          items.usuario, 
+          items.estado, 
+          items.tabla, 
+          items.personas_hogar_parentesco_abuelo, 
+          items.personas_hogar_parentesco_acudiente, 
+          items.personas_hogar_parentesco_bisabuelos, 
+          items.personas_hogar_parentesco_bisnietos, 
+          items.personas_hogar_parentesco_conyuge, 
+          items.personas_hogar_parentesco_cuniada, 
+          items.personas_hogar_parentesco_hermano, 
+          items.personas_hogar_parentesco_hijastro, 
+          items.personas_hogar_parentesco_hijo, 
+          items.personas_hogar_parentesco_hijo_adoptivo, 
+          items.personas_hogar_parentesco_jefe_hogar, 
+          items.personas_hogar_parentesco_madrastra, 
+          items.personas_hogar_parentesco_nieto, 
+          items.personas_hogar_parentesco_nuera, 
+          items.personas_hogar_parentesco_otros_no_parientes, 
+          items.personas_hogar_parentesco_otros_parientes, 
+          items.personas_hogar_parentesco_padrastro, 
+          items.personas_hogar_parentesco_padres, 
+          items.personas_hogar_parentesco_padres_adoptantes, 
+          items.personas_hogar_parentesco_rep_legal, 
+          items.personas_hogar_parentesco_sobrinos, 
+          items.personas_hogar_parentesco_suegros, 
+          items.personas_hogar_parentesco_tios, 
+          items.personas_hogar_parentesco_yerno, 
+          items.numero_personas_hogar_discapacidad, 
+          items.personas_hogar_ciclo_primera_infancia, 
+          items.personas_hogar_ciclo_infancia, 
+          items.personas_hogar_ciclo_primera_adolescencia, 
+          items.personas_hogar_ciclo_juventud, 
+          items.personas_hogar_ciclo_adultez, 
+          items.personas_hogar_ciclo_persona_mayor, 
+          items.personas_hogar_escolaridad_inicial, 
+          items.personas_hogar_escolaridad_ninguna, 
+          items.personas_hogar_escolaridad_posgrado, 
+          items.personas_hogar_escolaridad_preescolar, 
+          items.personas_hogar_escolaridad_pregrado_completo, 
+          items.personas_hogar_escolaridad_pregrado_incompleto, 
+          items.personas_hogar_escolaridad_primaria_completa, 
+          items.personas_hogar_escolaridad_primaria_incompleta, 
+          items.personas_hogar_escolaridad_secundaria_completa, 
+          items.personas_hogar_escolaridad_secundaria_incompleta, 
+          items.personas_hogar_escolaridad_tecnica_completa, 
+          items.personas_hogar_escolaridad_tecnica_incompleta, 
+          items.personas_hogar_escolaridad_tecnologia_completa, 
+          items.personas_hogar_escolaridad_tecnologia_incompleta, 
+          items.personas_hogar_escolaridad_sin_dato, 
+          items.personas_hogar_ocupacion_sobrevivencia, 
+          items.personas_hogar_ocupacion_ama_de_casa, 
+          items.personas_hogar_ocupacion_desempleado, 
+          items.personas_hogar_ocupacion_empleado, 
+          items.personas_hogar_ocupacion_estudiante, 
+          items.personas_hogar_ocupacion_independiente, 
+          items.personas_hogar_ocupacion_ninguna, 
+          items.personas_hogar_ocupacion_trabajador_informal
         ]);
-
-      const respSelect = db.exec(`SELECT * FROM "infraccion_conformacion_familiar" WHERE idfiu="${items.idfiu}";`);
+  
       setButtonDisabled(false);
       saveDatabase();
       alert('Datos Guardados con éxito');
@@ -181,18 +531,19 @@ const Tab9: React.FC = () => {
       console.error('Error al exportar los datos JSON:', err);
     }
   };
+  
 
   const columns = [
     {
       name: 'Editar',
-      selector: row => <button className='btn btn-success btn-sm' onClick={() => history.push(`/tabs/tabintegrantes/${params.ficha}?idintegrante=${`${row.idintegrante}`}`)}>Editar</button>,
+      selector: row => <button className='btn btn-success btn-sm' onClick={() => history.push(`/tabs/tabintegrantes/${params.ficha}?idintegrante=${`${row.integrantes || row.id_usuariociu}`}`)}>Editar</button>,
       sortable: true,
     },
-    {
-      name: 'Eliminar',
-      selector: row => <button className='btn btn-danger btn-sm' onClick={() => handleDelete(row.idintegrante)}>Eliminar</button>,
-      sortable: true,
-    },
+    // {
+    //   name: 'Eliminar',
+    //   selector: row => <button className='btn btn-danger btn-sm' onClick={() => handleDelete(row.idintegrante)}>Eliminar</button>,
+    //   sortable: true,
+    // },
     {
       name: 'Nombre',
       selector: row => `${row.nombre1} ${row.nombre2} ${row.apellido1} ${row.apellido2}`,
@@ -251,7 +602,7 @@ const Tab9: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle slot="start">6 - CONFORMACION DEL HOGAR</IonTitle>
+          <IonTitle slot="start">CAPITULO VIII. ASPECTOS SOCIO-FAMILIAR</IonTitle>
           <IonTitle slot="end">FICHA: <label style={{ color: '#17a2b8' }}>{params.ficha}</label> </IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -264,7 +615,7 @@ const Tab9: React.FC = () => {
         <div className=' shadow p-3 mb-5 bg-white rounded'>
           <IonList>
             <div className="alert alert-primary" role="alert">
-              <span className="badge badge-secondary text-dark">6 - CONFORMACION DEL HOGAR</span>
+              <span className="badge badge-secondary text-dark">CAPITULO VIII. ASPECTOS SOCIO-FAMILIAR</span>
             </div>
             <div className="row g-3 was-validated ">
               {/* <div className="col-sm">
@@ -521,7 +872,8 @@ const Tab9: React.FC = () => {
         <br />
 
         <div><IonButton color="success" onClick={enviar}>Guardar</IonButton>
-        <IonButton routerLink={`/tabs/tab13/${params.ficha}`} disabled={!jefe}>Siguiente</IonButton></div>
+        <IonButton routerLink={`/tabs/tab17/${params.ficha}`} disabled={buttonDisabled}>Siguiente</IonButton></div>
+        
 
       </IonContent>
     </IonPage>
@@ -529,3 +881,5 @@ const Tab9: React.FC = () => {
 };
 
 export default Tab9;
+
+
