@@ -10,18 +10,68 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface Person {
   id_usuario: number;
-  registre_relacion_familiar_con_persona_con_discapacidad: string;
-  la_famiilia_es_red_de_apoyo_para_la_pcd: string | null;
-  la_familia_acepta_el_diagnostico_de_la_pcd: string | null;
-  la_pcd_participa_en_la_toma_de_decisiones: string | null;
-  comunicacion_asertiva_en_el_hogar: string | null;
-  habitos_de_vida_saludables: string | null;
-  riesgo_por_violencia_intrafamiliar: string | null;
-  riesgo_por_desconocimiento_del_manejo_diagnostico: string | null;
-  riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar: string | null;
-  riesgo_en_el_territorio_por_dinamicas_del_contexto: string | null;
-  riesgo_por_presunta_vulneracion_de_derechos: string | null;
-  tiene_representante_legal: number | null;
+  actualmente_vive_en: string | null;
+  en_que_condicion_posee_vivienda: string | null;
+  otra_condicion_cual: string | null;
+  numero_de_espacios_vivienda_cocina: string | null;
+  numero_de_espacios_vivienda_comedor: string | null;
+  numero_de_espacios_vivienda_sala: string | null;
+  numero_de_espacios_vivienda_baño: string | null;
+  numero_de_espacios_vivienda_habitaciones: string | null;
+  numero_de_espacios_vivienda_balcon: string | null;
+  numero_de_espacios_vivienda_parqueadero: string | null;
+  numero_de_espacios_vivienda_otras: string | null;
+  cual_es_el_estrato_de_la_vivienda: string | null;
+  acceso_vivienda_por_trocha: string | null;
+  acceso_vivienda_por_medio_de_escalas: string | null;
+  acceso_vivienda_por_medio_de_callejon: string | null;
+  acceso_vivienda_por_via_pavimentada: string | null;
+  acceso_vivienda_por_via_sin_pavimentar: string | null;
+  condiciones_higienicas: string | null;
+  condiciones_enseres_basicos_adecuados: string | null;
+  condiciones_enseres_basicos_en_sobreuso: string | null;
+  condiciones_enseres_basicos_reducidos: string | null;
+  condiciones_ambientales_aireadas_iluminadas: string | null;
+  condiciones_ambientales_aireadas_poca_ilumi: string | null;
+  condiciones_ambientales_iluminacion_poco_airea: string | null;
+  condiciones_ambientales_vivienda_con_humedades: string | null;
+  vivienda_construida_en_adobe: string | null;
+  vivienda_construida_en_bareque: string | null;
+  vivienda_construida_en_madera_tabla: string | null;
+  vivienda_construida_en_piso_en_baldosa: string | null;
+  vivienda_construida_en_piso_obra_negra: string | null;
+  vivienda_construida_en_piso_en_tierra: string | null;
+  vivienda_construida_en_techo_teja_asbesto: string | null;
+  vivienda_construida_en_techo_teja_barro: string | null;
+  vivienda_construida_en_techo_teja_zinc: string | null;
+  vivienda_construida_en_techo_teja_plasticas: string | null;
+  vivienda_construida_en_techo_madera: string | null;
+  vivienda_construida_en_techo_plancha_cemento: string | null;
+  vivienda_construida_en_otro: string | null;
+  vivienda_construida_en_otro_cual: string | null;
+  vivienda_cuenta_servicios_publ_energia_elec: string | null;
+  vivienda_cuenta_servicios_publ_alcantarillado: string | null;
+  vivienda_cuenta_servicios_publ_telefono: string | null;
+  vivienda_cuenta_servicios_publ_acueducto: string | null;
+  vivienda_cuenta_servicios_publ_gas_natural: string | null;
+  vivienda_cuenta_servicios_publ_recoleccion_basura: string | null;
+  vivienda_cuenta_servicios_publ_internet: string | null;
+  vivienda_cuenta_servicios_publ_ninguno: string | null;
+  preparacion_alimentos_agua_potable: string | null;
+  dispositivos_tecnologicos_televisor: string | null;
+  dispositivos_tecnologicos_computador: string | null;
+  dispositivos_tecnologicos_tablet: string | null;
+  dispositivos_tecnologicos_celular: string | null;
+  dispositivos_tecnologicos_otros: string | null;
+  dispositivos_tecnologicos_otros_cuales: string | null;
+  dispositivos_tecnologicos_ninguno: string | null;
+  riesgos_vivienda_por_deslizamiento: string | null;
+  riesgos_vivienda_por_inundaciones: string | null;
+  riesgos_vivienda_por_techo_paredes_mal_estado: string | null;
+  riesgos_vivienda_por_fallas_geologicas: string | null;
+  riesgos_vivienda_por_otro: string | null;
+  riesgos_vivienda_por_otro_cual: string | null;
+  riesgos_vivienda_por_ninguno: string | null;
   fecharegistro: string | null;
   usuario: number | null;
   estado: number | null;
@@ -40,23 +90,74 @@ const Tab17: React.FC = () => {
   const [db, setDb] = useState<any>(null);
   const [items, setItems] = useState<Person>({
     id_usuario: Number(params.ficha),
-    registre_relacion_familiar_con_persona_con_discapacidad: '',
-    la_famiilia_es_red_de_apoyo_para_la_pcd: '1',
-    la_familia_acepta_el_diagnostico_de_la_pcd: '1',
-    la_pcd_participa_en_la_toma_de_decisiones: '1',
-    comunicacion_asertiva_en_el_hogar: '1',
-    habitos_de_vida_saludables: '1',
-    riesgo_por_violencia_intrafamiliar: '1',
-    riesgo_por_desconocimiento_del_manejo_diagnostico: '1',
-    riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar: '1',
-    riesgo_en_el_territorio_por_dinamicas_del_contexto: '1',
-    riesgo_por_presunta_vulneracion_de_derechos: '1',
-    tiene_representante_legal: 0,
+    actualmente_vive_en: '',
+    en_que_condicion_posee_vivienda: '',
+    otra_condicion_cual: '',
+    numero_de_espacios_vivienda_cocina: '',
+    numero_de_espacios_vivienda_comedor: '',
+    numero_de_espacios_vivienda_sala: '',
+    numero_de_espacios_vivienda_baño: '',
+    numero_de_espacios_vivienda_habitaciones: '',
+    numero_de_espacios_vivienda_balcon: '',
+    numero_de_espacios_vivienda_parqueadero: '',
+    numero_de_espacios_vivienda_otras: '',
+    cual_es_el_estrato_de_la_vivienda: '',
+    acceso_vivienda_por_trocha: '1',
+    acceso_vivienda_por_medio_de_escalas: '1',
+    acceso_vivienda_por_medio_de_callejon: '1',
+    acceso_vivienda_por_via_pavimentada: '1',
+    acceso_vivienda_por_via_sin_pavimentar: '1',
+    condiciones_higienicas: '1',
+    condiciones_enseres_basicos_adecuados: '1',
+    condiciones_enseres_basicos_en_sobreuso: '1',
+    condiciones_enseres_basicos_reducidos: '1',
+    condiciones_ambientales_aireadas_iluminadas: '1',
+    condiciones_ambientales_aireadas_poca_ilumi: '1',
+    condiciones_ambientales_iluminacion_poco_airea: '1',
+    condiciones_ambientales_vivienda_con_humedades: '1',
+    vivienda_construida_en_adobe: '1',
+    vivienda_construida_en_bareque: '1',
+    vivienda_construida_en_madera_tabla: '1',
+    vivienda_construida_en_piso_en_baldosa: '1',
+    vivienda_construida_en_piso_obra_negra: '1',
+    vivienda_construida_en_piso_en_tierra: '1',
+    vivienda_construida_en_techo_teja_asbesto: '1',
+    vivienda_construida_en_techo_teja_barro: '1',
+    vivienda_construida_en_techo_teja_zinc: '1',
+    vivienda_construida_en_techo_teja_plasticas: '1',
+    vivienda_construida_en_techo_madera: '1',
+    vivienda_construida_en_techo_plancha_cemento: '1',
+    vivienda_construida_en_otro: '1',
+    vivienda_construida_en_otro_cual: '',
+    vivienda_cuenta_servicios_publ_energia_elec: '1',
+    vivienda_cuenta_servicios_publ_alcantarillado: '1',
+    vivienda_cuenta_servicios_publ_telefono: '1',
+    vivienda_cuenta_servicios_publ_acueducto: '1',
+    vivienda_cuenta_servicios_publ_gas_natural: '1',
+    vivienda_cuenta_servicios_publ_recoleccion_basura: '1',
+    vivienda_cuenta_servicios_publ_internet: '1',
+    vivienda_cuenta_servicios_publ_ninguno: '1',
+    preparacion_alimentos_agua_potable: '1',
+    dispositivos_tecnologicos_televisor: '1',
+    dispositivos_tecnologicos_computador: '1',
+    dispositivos_tecnologicos_tablet: '1',
+    dispositivos_tecnologicos_celular: '1',
+    dispositivos_tecnologicos_otros: '1',
+    dispositivos_tecnologicos_otros_cuales: '',
+    dispositivos_tecnologicos_ninguno: '1',
+    riesgos_vivienda_por_deslizamiento: '1',
+    riesgos_vivienda_por_inundaciones: '1',
+    riesgos_vivienda_por_techo_paredes_mal_estado: '1',
+    riesgos_vivienda_por_fallas_geologicas: '1',
+    riesgos_vivienda_por_otro: '1',
+    riesgos_vivienda_por_otro_cual: '',
+    riesgos_vivienda_por_ninguno: '1',
     fecharegistro: getCurrentDateTime(),
-    usuario: localStorage.getItem('cedula') || '',
-    estado: '1',
-    tabla: 'discapacidad_capitulo_9',
+    usuario: Number(localStorage.getItem('cedula')) || 0,
+    estado: 1,
+    tabla: 'discapacidad_capitulo_11',
   });
+  
   
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
@@ -73,43 +174,94 @@ const Tab17: React.FC = () => {
       const data = people[0];
       setItems({
         id_usuario: data.id_usuario || Number(params.ficha),
-        registre_relacion_familiar_con_persona_con_discapacidad: data.registre_relacion_familiar_con_persona_con_discapacidad || '',
-        la_famiilia_es_red_de_apoyo_para_la_pcd: data.la_famiilia_es_red_de_apoyo_para_la_pcd || '0',
-        la_familia_acepta_el_diagnostico_de_la_pcd: data.la_familia_acepta_el_diagnostico_de_la_pcd || '0',
-        la_pcd_participa_en_la_toma_de_decisiones: data.la_pcd_participa_en_la_toma_de_decisiones || '0',
-        comunicacion_asertiva_en_el_hogar: data.comunicacion_asertiva_en_el_hogar || '0',
-        habitos_de_vida_saludables: data.habitos_de_vida_saludables || '0',
-        riesgo_por_violencia_intrafamiliar: data.riesgo_por_violencia_intrafamiliar || '0',
-        riesgo_por_desconocimiento_del_manejo_diagnostico: data.riesgo_por_desconocimiento_del_manejo_diagnostico || '0',
-        riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar: data.riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar || '0',
-        riesgo_en_el_territorio_por_dinamicas_del_contexto: data.riesgo_en_el_territorio_por_dinamicas_del_contexto || '0',
-        riesgo_por_presunta_vulneracion_de_derechos: data.riesgo_por_presunta_vulneracion_de_derechos || '0',
-        tiene_representante_legal: data.tiene_representante_legal || 0,
+        actualmente_vive_en: data.actualmente_vive_en || '',
+        en_que_condicion_posee_vivienda: data.en_que_condicion_posee_vivienda || '',
+        otra_condicion_cual: data.otra_condicion_cual || '',
+        numero_de_espacios_vivienda_cocina: data.numero_de_espacios_vivienda_cocina || '',
+        numero_de_espacios_vivienda_comedor: data.numero_de_espacios_vivienda_comedor || '',
+        numero_de_espacios_vivienda_sala: data.numero_de_espacios_vivienda_sala || '',
+        numero_de_espacios_vivienda_baño: data.numero_de_espacios_vivienda_baño || '',
+        numero_de_espacios_vivienda_habitaciones: data.numero_de_espacios_vivienda_habitaciones || '',
+        numero_de_espacios_vivienda_balcon: data.numero_de_espacios_vivienda_balcon || '',
+        numero_de_espacios_vivienda_parqueadero: data.numero_de_espacios_vivienda_parqueadero || '',
+        numero_de_espacios_vivienda_otras: data.numero_de_espacios_vivienda_otras || '',
+        cual_es_el_estrato_de_la_vivienda: data.cual_es_el_estrato_de_la_vivienda || '',
+        acceso_vivienda_por_trocha: data.acceso_vivienda_por_trocha || '0',
+        acceso_vivienda_por_medio_de_escalas: data.acceso_vivienda_por_medio_de_escalas || '0',
+        acceso_vivienda_por_medio_de_callejon: data.acceso_vivienda_por_medio_de_callejon || '0',
+        acceso_vivienda_por_via_pavimentada: data.acceso_vivienda_por_via_pavimentada || '0',
+        acceso_vivienda_por_via_sin_pavimentar: data.acceso_vivienda_por_via_sin_pavimentar || '0',
+        condiciones_higienicas: data.condiciones_higienicas || '0',
+        condiciones_enseres_basicos_adecuados: data.condiciones_enseres_basicos_adecuados || '0',
+        condiciones_enseres_basicos_en_sobreuso: data.condiciones_enseres_basicos_en_sobreuso || '0',
+        condiciones_enseres_basicos_reducidos: data.condiciones_enseres_basicos_reducidos || '0',
+        condiciones_ambientales_aireadas_iluminadas: data.condiciones_ambientales_aireadas_iluminadas || '0',
+        condiciones_ambientales_aireadas_poca_ilumi: data.condiciones_ambientales_aireadas_poca_ilumi || '0',
+        condiciones_ambientales_iluminacion_poco_airea: data.condiciones_ambientales_iluminacion_poco_airea || '0',
+        condiciones_ambientales_vivienda_con_humedades: data.condiciones_ambientales_vivienda_con_humedades || '0',
+        vivienda_construida_en_adobe: data.vivienda_construida_en_adobe || '0',
+        vivienda_construida_en_bareque: data.vivienda_construida_en_bareque || '0',
+        vivienda_construida_en_madera_tabla: data.vivienda_construida_en_madera_tabla || '0',
+        vivienda_construida_en_piso_en_baldosa: data.vivienda_construida_en_piso_en_baldosa || '0',
+        vivienda_construida_en_piso_obra_negra: data.vivienda_construida_en_piso_obra_negra || '0',
+        vivienda_construida_en_piso_en_tierra: data.vivienda_construida_en_piso_en_tierra || '0',
+        vivienda_construida_en_techo_teja_asbesto: data.vivienda_construida_en_techo_teja_asbesto || '0',
+        vivienda_construida_en_techo_teja_barro: data.vivienda_construida_en_techo_teja_barro || '0',
+        vivienda_construida_en_techo_teja_zinc: data.vivienda_construida_en_techo_teja_zinc || '0',
+        vivienda_construida_en_techo_teja_plasticas: data.vivienda_construida_en_techo_teja_plasticas || '0',
+        vivienda_construida_en_techo_madera: data.vivienda_construida_en_techo_madera || '0',
+        vivienda_construida_en_techo_plancha_cemento: data.vivienda_construida_en_techo_plancha_cemento || '0',
+        vivienda_construida_en_otro: data.vivienda_construida_en_otro || '0',
+        vivienda_construida_en_otro_cual: data.vivienda_construida_en_otro_cual || '',
+        vivienda_cuenta_servicios_publ_energia_elec: data.vivienda_cuenta_servicios_publ_energia_elec || '0',
+        vivienda_cuenta_servicios_publ_alcantarillado: data.vivienda_cuenta_servicios_publ_alcantarillado || '0',
+        vivienda_cuenta_servicios_publ_telefono: data.vivienda_cuenta_servicios_publ_telefono || '0',
+        vivienda_cuenta_servicios_publ_acueducto: data.vivienda_cuenta_servicios_publ_acueducto || '0',
+        vivienda_cuenta_servicios_publ_gas_natural: data.vivienda_cuenta_servicios_publ_gas_natural || '0',
+        vivienda_cuenta_servicios_publ_recoleccion_basura: data.vivienda_cuenta_servicios_publ_recoleccion_basura || '0',
+        vivienda_cuenta_servicios_publ_internet: data.vivienda_cuenta_servicios_publ_internet || '0',
+        vivienda_cuenta_servicios_publ_ninguno: data.vivienda_cuenta_servicios_publ_ninguno || '0',
+        preparacion_alimentos_agua_potable: data.preparacion_alimentos_agua_potable || '0',
+        dispositivos_tecnologicos_televisor: data.dispositivos_tecnologicos_televisor || '0',
+        dispositivos_tecnologicos_computador: data.dispositivos_tecnologicos_computador || '0',
+        dispositivos_tecnologicos_tablet: data.dispositivos_tecnologicos_tablet || '0',
+        dispositivos_tecnologicos_celular: data.dispositivos_tecnologicos_celular || '0',
+        dispositivos_tecnologicos_otros: data.dispositivos_tecnologicos_otros || '0',
+        dispositivos_tecnologicos_otros_cuales: data.dispositivos_tecnologicos_otros_cuales || '',
+        dispositivos_tecnologicos_ninguno: data.dispositivos_tecnologicos_ninguno || '0',
+        riesgos_vivienda_por_deslizamiento: data.riesgos_vivienda_por_deslizamiento || '0',
+        riesgos_vivienda_por_inundaciones: data.riesgos_vivienda_por_inundaciones || '0',
+        riesgos_vivienda_por_techo_paredes_mal_estado: data.riesgos_vivienda_por_techo_paredes_mal_estado || '0',
+        riesgos_vivienda_por_fallas_geologicas: data.riesgos_vivienda_por_fallas_geologicas || '0',
+        riesgos_vivienda_por_otro: data.riesgos_vivienda_por_otro || '0',
+        riesgos_vivienda_por_otro_cual: data.riesgos_vivienda_por_otro_cual || '',
+        riesgos_vivienda_por_ninguno: data.riesgos_vivienda_por_ninguno || '0',
         fecharegistro: data.fecharegistro || getCurrentDateTime(),
-        usuario: data.usuario || localStorage.getItem('cedula') || '',
-        estado: data.estado || '1',
-        tabla: data.tabla || 'discapacidad_capitulo_9',
+        usuario: data.usuario || Number(localStorage.getItem('cedula')) || 0,
+        estado: data.estado || 1,
+        tabla: data.tabla || 'discapacidad_capitulo_11',
       });
     }
   }, [people]);
   
+  
 
   const fetchUsers = async (database = db) => {
-      if (database) {
-        const res = await database.exec(`SELECT * FROM discapacidad_capitulo_9 WHERE id_usuario=${params.ficha}`);
-        if (res[0]?.values && res[0]?.columns) {
-          const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
-            return res[0].columns.reduce((obj, col, index) => {
-              obj[col] = row[index] !== '' ? row[index].toString() : '0'; // Convertir valores null a '0'
-              return obj;
-            }, {} as Person);
-          });
-          setPeople(transformedPeople);
-          setButtonDisabled(!transformedPeople[0].id_usuario);
-        }
+    if (database) {
+      const res = await database.exec(`SELECT * FROM discapacidad_capitulo_11 WHERE id_usuario=${params.ficha}`);
+      if (res[0]?.values && res[0]?.columns) {
+        const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
+          return res[0].columns.reduce((obj, col, index) => {
+            obj[col] = row[index] !== null && row[index] !== '' ? row[index].toString() : '0'; // Convertir valores null o vacíos a '0'
+            return obj;
+          }, {} as Person);
+        });
+        setPeople(transformedPeople);
+        setButtonDisabled(!transformedPeople[0].id_usuario);
       }
-    };
-
+    }
+  };
+  
   const saveDatabase = () => {
     if (db) {
       const data = db.export();
@@ -141,23 +293,56 @@ const Tab17: React.FC = () => {
     event.preventDefault();
   
     try {
-      await database.exec(`INSERT OR REPLACE INTO discapacidad_capitulo_9 (
-        id_usuario, registre_relacion_familiar_con_persona_con_discapacidad, la_famiilia_es_red_de_apoyo_para_la_pcd,
-        la_familia_acepta_el_diagnostico_de_la_pcd, la_pcd_participa_en_la_toma_de_decisiones, comunicacion_asertiva_en_el_hogar,
-        habitos_de_vida_saludables, riesgo_por_violencia_intrafamiliar, riesgo_por_desconocimiento_del_manejo_diagnostico,
-        riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar, riesgo_en_el_territorio_por_dinamicas_del_contexto,
-        riesgo_por_presunta_vulneracion_de_derechos, tiene_representante_legal, fecharegistro, usuario, estado, tabla
-      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+      await database.exec(`INSERT OR REPLACE INTO discapacidad_capitulo_11 (
+        id_usuario, actualmente_vive_en, en_que_condicion_posee_vivienda, otra_condicion_cual,
+        numero_de_espacios_vivienda_cocina, numero_de_espacios_vivienda_comedor, numero_de_espacios_vivienda_sala,
+        numero_de_espacios_vivienda_baño, numero_de_espacios_vivienda_habitaciones, numero_de_espacios_vivienda_balcon,
+        numero_de_espacios_vivienda_parqueadero, numero_de_espacios_vivienda_otras, cual_es_el_estrato_de_la_vivienda,
+        acceso_vivienda_por_trocha, acceso_vivienda_por_medio_de_escalas, acceso_vivienda_por_medio_de_callejon,
+        acceso_vivienda_por_via_pavimentada, acceso_vivienda_por_via_sin_pavimentar, condiciones_higienicas,
+        condiciones_enseres_basicos_adecuados, condiciones_enseres_basicos_en_sobreuso, condiciones_enseres_basicos_reducidos,
+        condiciones_ambientales_aireadas_iluminadas, condiciones_ambientales_aireadas_poca_ilumi,
+        condiciones_ambientales_iluminacion_poco_airea, condiciones_ambientales_vivienda_con_humedades,
+        vivienda_construida_en_adobe, vivienda_construida_en_bareque, vivienda_construida_en_madera_tabla,
+        vivienda_construida_en_piso_en_baldosa, vivienda_construida_en_piso_obra_negra, vivienda_construida_en_piso_en_tierra,
+        vivienda_construida_en_techo_teja_asbesto, vivienda_construida_en_techo_teja_barro, vivienda_construida_en_techo_teja_zinc,
+        vivienda_construida_en_techo_teja_plasticas, vivienda_construida_en_techo_madera, vivienda_construida_en_techo_plancha_cemento,
+        vivienda_construida_en_otro, vivienda_construida_en_otro_cual, vivienda_cuenta_servicios_publ_energia_elec,
+        vivienda_cuenta_servicios_publ_alcantarillado, vivienda_cuenta_servicios_publ_telefono, vivienda_cuenta_servicios_publ_acueducto,
+        vivienda_cuenta_servicios_publ_gas_natural, vivienda_cuenta_servicios_publ_recoleccion_basura, vivienda_cuenta_servicios_publ_internet,
+        vivienda_cuenta_servicios_publ_ninguno, preparacion_alimentos_agua_potable, dispositivos_tecnologicos_televisor,
+        dispositivos_tecnologicos_computador, dispositivos_tecnologicos_tablet, dispositivos_tecnologicos_celular,
+        dispositivos_tecnologicos_otros, dispositivos_tecnologicos_otros_cuales, dispositivos_tecnologicos_ninguno,
+        riesgos_vivienda_por_deslizamiento, riesgos_vivienda_por_inundaciones, riesgos_vivienda_por_techo_paredes_mal_estado,
+        riesgos_vivienda_por_fallas_geologicas, riesgos_vivienda_por_otro, riesgos_vivienda_por_otro_cual, riesgos_vivienda_por_ninguno,
+        fecharegistro, usuario, estado, tabla
+      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
         [
-          items.id_usuario, items.registre_relacion_familiar_con_persona_con_discapacidad, items.la_famiilia_es_red_de_apoyo_para_la_pcd,
-          items.la_familia_acepta_el_diagnostico_de_la_pcd, items.la_pcd_participa_en_la_toma_de_decisiones, items.comunicacion_asertiva_en_el_hogar,
-          items.habitos_de_vida_saludables, items.riesgo_por_violencia_intrafamiliar, items.riesgo_por_desconocimiento_del_manejo_diagnostico,
-          items.riesgo_por_consumo_de_sustancias_psicoactivas_en_hogar, items.riesgo_en_el_territorio_por_dinamicas_del_contexto,
-          items.riesgo_por_presunta_vulneracion_de_derechos, items.tiene_representante_legal, items.fecharegistro,
-          items.usuario, items.estado, items.tabla
+          items.id_usuario, items.actualmente_vive_en, items.en_que_condicion_posee_vivienda, items.otra_condicion_cual,
+          items.numero_de_espacios_vivienda_cocina, items.numero_de_espacios_vivienda_comedor, items.numero_de_espacios_vivienda_sala,
+          items.numero_de_espacios_vivienda_baño, items.numero_de_espacios_vivienda_habitaciones, items.numero_de_espacios_vivienda_balcon,
+          items.numero_de_espacios_vivienda_parqueadero, items.numero_de_espacios_vivienda_otras, items.cual_es_el_estrato_de_la_vivienda,
+          items.acceso_vivienda_por_trocha, items.acceso_vivienda_por_medio_de_escalas, items.acceso_vivienda_por_medio_de_callejon,
+          items.acceso_vivienda_por_via_pavimentada, items.acceso_vivienda_por_via_sin_pavimentar, items.condiciones_higienicas,
+          items.condiciones_enseres_basicos_adecuados, items.condiciones_enseres_basicos_en_sobreuso, items.condiciones_enseres_basicos_reducidos,
+          items.condiciones_ambientales_aireadas_iluminadas, items.condiciones_ambientales_aireadas_poca_ilumi,
+          items.condiciones_ambientales_iluminacion_poco_airea, items.condiciones_ambientales_vivienda_con_humedades,
+          items.vivienda_construida_en_adobe, items.vivienda_construida_en_bareque, items.vivienda_construida_en_madera_tabla,
+          items.vivienda_construida_en_piso_en_baldosa, items.vivienda_construida_en_piso_obra_negra, items.vivienda_construida_en_piso_en_tierra,
+          items.vivienda_construida_en_techo_teja_asbesto, items.vivienda_construida_en_techo_teja_barro, items.vivienda_construida_en_techo_teja_zinc,
+          items.vivienda_construida_en_techo_teja_plasticas, items.vivienda_construida_en_techo_madera, items.vivienda_construida_en_techo_plancha_cemento,
+          items.vivienda_construida_en_otro, items.vivienda_construida_en_otro_cual, items.vivienda_cuenta_servicios_publ_energia_elec,
+          items.vivienda_cuenta_servicios_publ_alcantarillado, items.vivienda_cuenta_servicios_publ_telefono, items.vivienda_cuenta_servicios_publ_acueducto,
+          items.vivienda_cuenta_servicios_publ_gas_natural, items.vivienda_cuenta_servicios_publ_recoleccion_basura, items.vivienda_cuenta_servicios_publ_internet,
+          items.vivienda_cuenta_servicios_publ_ninguno, items.preparacion_alimentos_agua_potable, items.dispositivos_tecnologicos_televisor,
+          items.dispositivos_tecnologicos_computador, items.dispositivos_tecnologicos_tablet, items.dispositivos_tecnologicos_celular,
+          items.dispositivos_tecnologicos_otros, items.dispositivos_tecnologicos_otros_cuales, items.dispositivos_tecnologicos_ninguno,
+          items.riesgos_vivienda_por_deslizamiento, items.riesgos_vivienda_por_inundaciones, items.riesgos_vivienda_por_techo_paredes_mal_estado,
+          items.riesgos_vivienda_por_fallas_geologicas, items.riesgos_vivienda_por_otro, items.riesgos_vivienda_por_otro_cual, items.riesgos_vivienda_por_ninguno,
+          items.fecharegistro, items.usuario, items.estado, items.tabla
         ]
       );
-      
+  
       saveDatabase();
       alert('Datos Guardados con éxito');
       fetchUsers(); // Actualiza los datos después de guardar
@@ -165,7 +350,7 @@ const Tab17: React.FC = () => {
       console.error('Error al exportar los datos JSON:', err);
     }
   };
-
+  
   const handleInputChange = (event, field) => {
     const { value } = event.target;
     setItems((prevItems) => ({
@@ -200,8 +385,8 @@ const Tab17: React.FC = () => {
   ];
 
   const t1_sino = [
-    { value: "1", label: "No" },
-    { value: "2", label: "Sí" }
+    { value: "1", label: "NO" },
+    { value: "2", label: "SI" }
   ];
 
 
@@ -214,7 +399,7 @@ const Tab17: React.FC = () => {
     <IonPage>
       <IonHeader><div className='col-12'>
         <IonToolbar>
-          <IonTitle slot="start">CAPITULO IX. DINÁMICA FAMILIAR</IonTitle>
+          <IonTitle slot="start">CAPITULO XI. TIPO Y CARACTERIZACIÓN DE LA VIVIENDA</IonTitle>
           <IonTitle slot="end">FICHA: <label style={{ color: '#17a2b8' }}>{params.ficha}</label> </IonTitle>
         </IonToolbar></div>
       </IonHeader>
@@ -1105,7 +1290,7 @@ const Tab17: React.FC = () => {
 
     <br />
        <div><button className='btn btn-success' type="submit" onClick={(e)=>(enviar(db,e))}>Guardar</button>&nbsp;
-       <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab10/${params.ficha}`;} }}> Siguiente</div>
+       <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab16/${params.ficha}`;} }}> Siguiente</div>
        </div> 
            </form>
       </IonContent>

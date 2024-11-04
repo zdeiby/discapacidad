@@ -487,7 +487,7 @@ const loadSQL = async (setDb, fetchUsers) => {
           participa_actividades_otras VARCHAR(45) DEFAULT NULL,
           participa_actividades_ninguna VARCHAR(45) DEFAULT NULL,
           participa_programas_del_inder VARCHAR(45) DEFAULT NULL,
-          participa_en_alguna_organizacion VARCHAR(45) DEFAULT NULL,
+          participa__en_alguna_organizacion VARCHAR(45) DEFAULT NULL,
           señale_porque_no_participa_en_organizacion VARCHAR(45) DEFAULT NULL,
           participa_en_org_personas_discapacidad VARCHAR(45) DEFAULT NULL,
           fecharegistro DATETIME DEFAULT NULL,
@@ -676,428 +676,117 @@ const loadSQL = async (setDb, fetchUsers) => {
           tabla VARCHAR(100) DEFAULT NULL
         );
       `);
-      
-      
-      
-
-      
-   
-      
-        
-
-        // tablas de otra app
-      database.run(`
-            CREATE TABLE IF NOT EXISTS infraccion_localizacion (
-            idfiu INTEGER PRIMARY KEY NOT NULL,
-            fechaentrevista DATE DEFAULT NULL,
-            codigosticker TEXT DEFAULT NULL,
-            solicitudrequerimiento TEXT DEFAULT NULL,
-            direccion TEXT DEFAULT NULL,
-            comuna INTEGER DEFAULT NULL,
-            barrio INTEGER DEFAULT NULL,
-            ruralurbano INTEGER DEFAULT NULL,
-            sector TEXT DEFAULT NULL,
-            telefono1 VARCHAR(25) DEFAULT NULL,
-            telefono2 VARCHAR(25) DEFAULT NULL,
-            correo VARCHAR(100) DEFAULT NULL,
-            estrato INTEGER DEFAULT NULL,
-            fecharegistro DATETIME DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla VARCHAR(100) DEFAULT NULL,
-            dirCampo1 VARCHAR(25) DEFAULT NULL,
-            dirCampo2 VARCHAR(25) DEFAULT NULL,
-            dirCampo3 VARCHAR(100) DEFAULT NULL,
-            dirCampo4 VARCHAR(10) DEFAULT NULL,
-            dirCampo5 VARCHAR(25) DEFAULT NULL,
-            dirCampo6 VARCHAR(100) DEFAULT NULL,
-            dirCampo7 VARCHAR(10) DEFAULT NULL,
-            dirCampo8 VARCHAR(25) DEFAULT NULL,
-            dirCampo9 TEXT DEFAULT NULL,
-            longitud VARCHAR(100) DEFAULT NULL,
-            latitud VARCHAR(100) DEFAULT NULL
-          );
-          `);
-      // database.run(`
-      //      CREATE TABLE IF NOT EXISTS c3_evacuacionydanos (
-      //       fichasocial INTEGER PRIMARY KEY NOT NULL,
-      //       tipoevacuacion INTEGER DEFAULT NULL,
-      //       danosvivienda INTEGER DEFAULT NULL,
-      //       danosenseres INTEGER DEFAULT NULL,
-      //       fecharegistro DATETIME DEFAULT NULL,
-      //       usuario INTEGER DEFAULT NULL,
-      //       estado INTEGER DEFAULT NULL,
-      //       tabla VARCHAR(100) DEFAULT NULL
-      //     );
-      //     `);
-          //  database.run(`
-          //   CREATE TABLE IF NOT EXISTS c4_datosdelavivienda (
-          //   fichasocial INTEGER PRIMARY KEY NOT NULL,
-          //   tipovivienda INTEGER DEFAULT NULL,
-          //   materialpisos INTEGER DEFAULT NULL,
-          //   materialpisosotro TEXT DEFAULT NULL,
-          //   materialparedes INTEGER DEFAULT NULL,
-          //   materialtechos INTEGER DEFAULT NULL,
-          //   fecharegistro DATETIME DEFAULT NULL,
-          //   usuario INTEGER DEFAULT NULL,
-          //   estado INTEGER DEFAULT NULL,
-          //   tabla VARCHAR(100) DEFAULT NULL
-          // );
-          // `);
-           database.run(`
-            CREATE TABLE IF NOT EXISTS infraccion_servicios_publicos (
-            idfiu INTEGER PRIMARY KEY NOT NULL,
-            energia INTEGER DEFAULT NULL,
-            acueducto INTEGER DEFAULT NULL,
-            alcantarillado INTEGER DEFAULT NULL,
-            gas INTEGER DEFAULT NULL,
-            telefono INTEGER DEFAULT NULL,
-            telefonofijo VARCHAR(25) DEFAULT NULL,
-            fecharegistro DATETIME DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla VARCHAR(100) DEFAULT NULL
-          );
-          `); database.run(`
-            CREATE TABLE IF NOT EXISTS  infraccion_tiempo_vivienda (
-            idfiu INTEGER PRIMARY KEY NOT NULL,
-            tiempovivienda INTEGER DEFAULT NULL,
-            tiempoviviendaunidad TEXT DEFAULT NULL,
-            tiempomedellin INTEGER DEFAULT NULL,
-            tiempomedellinunidad TEXT DEFAULT NULL,
-            dondeviviaantes INTEGER DEFAULT NULL,
-            otrodepartamento TEXT DEFAULT NULL,
-            otropais TEXT DEFAULT NULL,
-            otromunicipio TEXT DEFAULT NULL,
-            otracomuna TEXT DEFAULT NULL,
-            otrobarrio TEXT DEFAULT NULL,
-            fecharegistro TEXT DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla TEXT DEFAULT NULL
-          );
-          `); database.run(`
-            CREATE TABLE IF NOT EXISTS infraccion_tenencia_vivienda (
-            idfiu INTEGER PRIMARY KEY NOT NULL,
-            tenenciadelavivienda INTEGER DEFAULT NULL,
-            propietario TEXT DEFAULT NULL,
-            propietariotel1 VARCHAR(25) DEFAULT NULL,
-            propietariotel2 VARCHAR(25) DEFAULT NULL,
-            escritura INTEGER DEFAULT NULL,
-            compraventa INTEGER DEFAULT NULL,
-            promesa INTEGER DEFAULT NULL,
-            posesion INTEGER DEFAULT NULL,
-            impuestopredial INTEGER DEFAULT NULL,
-            serviciospublicos INTEGER DEFAULT NULL,
-            matriculapredial INTEGER DEFAULT NULL,
-            extrajuicio INTEGER DEFAULT NULL,
-            ninguno INTEGER DEFAULT NULL,
-            otro INTEGER DEFAULT NULL,
-            cualdocumentos TEXT DEFAULT NULL,
-            unidadproductuva INTEGER DEFAULT NULL,
-            cualunidadproductiva TEXT DEFAULT NULL,
-            fecharegistro DATETIME DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla VARCHAR(100) DEFAULT NULL
-          );
-          `); database.run(`
-            CREATE TABLE IF NOT EXISTS infraccion_conformacion_familiar (
-            idfiu INTEGER PRIMARY KEY NOT NULL,
-            tipodefamilia INTEGER DEFAULT NULL,
-            fecharegistro DATETIME DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla TEXT DEFAULT NULL,
-            observacion TEXT DEFAULT NULL,
-            nameFile TEXT DEFAULT NULL
-          );
-          `);
-        //    database.run(`
-        //    CREATE TABLE IF NOT EXISTS c10_datosgeneralesremisiones (
-        //      idintegrante INTEGER NOT NULL,
-        //       fichasocial INTEGER NOT NULL,
-        //       programa INTEGER NOT NULL,
-        //       fecharegistro DATETIME DEFAULT NULL,
-        //       usuario INTEGER DEFAULT NULL,
-        //       estado INTEGER DEFAULT NULL,
-        //       tabla VARCHAR(100) DEFAULT NULL,
-        //       observacion TEXT DEFAULT NULL,
-        //       motivo VARCHAR(25) DEFAULT NULL,
-        //       PRIMARY KEY (idintegrante, fichasocial, programa)
-        // );
-        //   `); 
-          database.run(`
-            CREATE TABLE IF NOT EXISTS infraccion_integrante_red_apoyo (
-            idredapoyo INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            idfiu INTEGER DEFAULT NULL,
-            ubicacion VARCHAR(25) DEFAULT NULL,
-            nombreauto TEXT DEFAULT NULL,
-            parentesco TEXT DEFAULT NULL,
-            direccion TEXT DEFAULT NULL,
-            comuna TEXT DEFAULT NULL,
-            barrio TEXT DEFAULT NULL,
-            ruralurbano VARCHAR(25) DEFAULT NULL,
-            sector TEXT DEFAULT NULL,
-            telefono1 VARCHAR(25) DEFAULT NULL,
-            telefono2 VARCHAR(25) DEFAULT NULL,
-            dirCampo1 VARCHAR(25) DEFAULT NULL,
-            dirCampo2 VARCHAR(25) DEFAULT NULL,
-            dirCampo3 VARCHAR(100) DEFAULT NULL,
-            dirCampo4 VARCHAR(10) DEFAULT NULL,
-            dirCampo5 VARCHAR(25) DEFAULT NULL,
-            dirCampo6 VARCHAR(100) DEFAULT NULL,
-            dirCampo7 VARCHAR(10) DEFAULT NULL,
-            dirCampo8 VARCHAR(25) DEFAULT NULL,
-            dirCampo9 TEXT DEFAULT NULL,
-            pais VARCHAR(25) DEFAULT NULL,
-            departamento VARCHAR(25) DEFAULT NULL,
-            municipio VARCHAR(25) DEFAULT NULL,
-            fecharegistro DATETIME DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla VARCHAR(100) DEFAULT NULL
-          );
-          `); 
-          // database.run(`
-          //   CREATE TABLE IF NOT EXISTS c12_ayudasentregadas (
-          //   idayudas INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-          //   fichasocial INTEGER NOT NULL,
-          //   paquetealimentario INTEGER DEFAULT NULL,
-          //   tipoa INTEGER DEFAULT NULL,
-          //   tipob INTEGER DEFAULT NULL,
-          //   tipoc INTEGER DEFAULT NULL,
-          //   noalimentarias INTEGER DEFAULT NULL,
-          //   quiendoa VARCHAR(25) DEFAULT NULL,
-          //   factura VARCHAR(25) DEFAULT NULL,
-          //   dcocina INTEGER DEFAULT NULL,
-          //   daseohogar INTEGER DEFAULT NULL,
-          //   daseofamiliar INTEGER DEFAULT NULL,
-          //   dasehombre INTEGER DEFAULT NULL,
-          //   daseomujer INTEGER DEFAULT NULL,
-          //   daseonna INTEGER DEFAULT NULL,
-          //   daseoinfantil INTEGER DEFAULT NULL,
-          //   daseoespecial INTEGER DEFAULT NULL,
-          //   dcolchonetas INTEGER DEFAULT NULL,
-          //   dcobijas INTEGER DEFAULT NULL,
-          //   dsabanas INTEGER DEFAULT NULL,
-          //   dalmohadas INTEGER DEFAULT NULL,
-          //   enitdad TEXT DEFAULT NULL,
-          //   otros INTEGER DEFAULT NULL,
-          //   cuales TEXT DEFAULT NULL,
-          //   entidadotros TEXT DEFAULT NULL,
-          //   fechadeentrega DATE DEFAULT NULL,
-          //   idintegrante VARCHAR(25) DEFAULT NULL,
-          //   fecharegistro DATETIME DEFAULT NULL,
-          //   usuario INTEGER DEFAULT NULL,
-          //   estado INTEGER DEFAULT NULL,
-          //   tabla VARCHAR(100) DEFAULT NULL,
-          //   tipoentraga INTEGER DEFAULT NULL,
-          //   ococina INTEGER DEFAULT NULL,
-          //   acocina INTEGER DEFAULT NULL,
-          //   oaseohogar INTEGER DEFAULT NULL,
-          //   aaseohogar INTEGER DEFAULT NULL,
-          //   oaseofamiliar INTEGER DEFAULT NULL,
-          //   aaseofamiliar INTEGER DEFAULT NULL,
-          //   oasehombre INTEGER DEFAULT NULL,
-          //   aasehombre INTEGER DEFAULT NULL,
-          //   oaseomujer INTEGER DEFAULT NULL,
-          //   aaseomujer INTEGER DEFAULT NULL,
-          //   oaseonna INTEGER DEFAULT NULL,
-          //   aaseonna INTEGER DEFAULT NULL,
-          //   oaseoinfantil INTEGER DEFAULT NULL,
-          //   aaseoinfantil INTEGER DEFAULT NULL,
-          //   oaseoespecial INTEGER DEFAULT NULL,
-          //   aaseoespecial INTEGER DEFAULT NULL,
-          //   ocolchonetas INTEGER DEFAULT NULL,
-          //   acolchonetas INTEGER DEFAULT NULL,
-          //   ocobijas INTEGER DEFAULT NULL,
-          //   acobijas INTEGER DEFAULT NULL,
-          //   osabanas INTEGER DEFAULT NULL,
-          //   asabanas INTEGER DEFAULT NULL,
-          //   oalmohadas INTEGER DEFAULT NULL,
-          //   aalmohadas INTEGER DEFAULT NULL,
-          //   quienpaq VARCHAR(25) DEFAULT NULL,
-          //   cualpaq TEXT DEFAULT NULL,
-          //   quienasis VARCHAR(25) DEFAULT NULL,
-          //   cualasis TEXT DEFAULT NULL,
-          //   asistencialiamentaria INTEGER DEFAULT NULL,
-          //   redentrega INTEGER DEFAULT NULL,
-          //   entregado INTEGER DEFAULT NULL,
-          //   observacion TEXT DEFAULT NULL,
-          //   paquete1 VARCHAR(25) DEFAULT NULL,
-          //   paquete2 VARCHAR(25) DEFAULT NULL,
-          //   paquete3 VARCHAR(25) DEFAULT NULL,
-          //   paquete4 VARCHAR(25) DEFAULT NULL,
-          //   documentorecibeayuda VARCHAR(25) DEFAULT NULL,
-          //   nombrerecibeayuda TEXT DEFAULT NULL,
-          //   nameFirma TEXT DEFAULT NULL,
-          //   draw_dataUrl BLOB DEFAULT NULL
-          // );
-         // `); 
-          database.run(`
-            CREATE TABLE IF NOT EXISTS infraccion_integrante_familiar (
-            idintegrante INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            idfiu INTEGER DEFAULT NULL,
-            codigosibis VARCHAR(25) DEFAULT NULL,
-            tipodedocumento INTEGER DEFAULT NULL,
-            nacionalidad INTEGER DEFAULT NULL,
-            condicionmigratoria  TEXT DEFAULT NULL,
-            numerodedocumento TEXT DEFAULT NULL,
-            nombre1 TEXT DEFAULT NULL,
-            nombre2 TEXT DEFAULT NULL,
-            apellido1 TEXT DEFAULT NULL,
-            apellido2 TEXT DEFAULT NULL,
-            fechadenacimiento DATE DEFAULT NULL,
-            sexo INTEGER DEFAULT NULL,
-            orientacionsexual INTEGER DEFAULT NULL,
-            identidaddegenero INTEGER DEFAULT NULL,
-            etnia INTEGER DEFAULT NULL,
-            estadocivil INTEGER DEFAULT NULL,
-            gestantelactante VARCHAR(25) DEFAULT NULL,
-            escolaridad INTEGER DEFAULT NULL,
-            parentesco INTEGER DEFAULT NULL,
-            discapacidad INTEGER DEFAULT NULL,
-            regimendesalud INTEGER DEFAULT NULL,
-            enfermedades INTEGER DEFAULT NULL,
-            actividad INTEGER DEFAULT NULL,
-            ocupacion INTEGER DEFAULT NULL,
-            estadousuario INTEGER DEFAULT NULL,
-            campesino INTEGER DEFAULT NULL,
-            desplazado INTEGER DEFAULT NULL,
-            sisbenizado INTEGER DEFAULT NULL,
-            victima INTEGER DEFAULT NULL,
-            fecharegistro DATETIME DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla VARCHAR(100) DEFAULT NULL,
-            origen VARCHAR(25) DEFAULT NULL,
-            condicionespecial VARCHAR(100) DEFAULT NULL,
-            otrocondicionespecial VARCHAR(25) DEFAULT NULL
-          );
-          `); database.run(`
-           CREATE TABLE IF NOT EXISTS infraccion_mascotas (
-            idfiu INTEGER PRIMARY KEY NOT NULL,
-            tienemascotas INTEGER DEFAULT NULL,
-            cuantos INTEGER DEFAULT NULL,
-            cuales TEXT DEFAULT NULL,
-            fecharegistro DATETIME DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla VARCHAR(100) DEFAULT NULL
-          );
-  
-          `); 
-          // database.run(`
-          //   CREATE TABLE IF NOT EXISTS c15_ubicacionposterioratencionsocial (
-          //   fichasocial INTEGER NOT NULL,
-          //   ubicacionposterior INTEGER NOT NULL,
-          //   cualtemporal TEXT DEFAULT NULL,
-          //   dondeauxilio TEXT DEFAULT NULL,
-          //   nombreauto TEXT DEFAULT NULL,
-          //   parentesco VARCHAR(25) DEFAULT NULL,
-          //   prestada VARCHAR(25) DEFAULT NULL,
-          //   cuallugardistinto TEXT DEFAULT NULL,
-          //   direccion TEXT DEFAULT NULL,
-          //   comuna VARCHAR(25) DEFAULT NULL,
-          //   barrio VARCHAR(25) DEFAULT NULL,
-          //   ruralurbano VARCHAR(25) DEFAULT NULL,
-          //   sector TEXT DEFAULT NULL,
-          //   telefono1 VARCHAR(25) DEFAULT NULL,
-          //   telefono2 VARCHAR(25) DEFAULT NULL,
-          //   dirCampo1 VARCHAR(25) DEFAULT NULL,
-          //   dirCampo2 VARCHAR(25) DEFAULT NULL,
-          //   dirCampo3 VARCHAR(100) DEFAULT NULL,
-          //   dirCampo4 VARCHAR(10) DEFAULT NULL,
-          //   dirCampo5 VARCHAR(25) DEFAULT NULL,
-          //   dirCampo6 VARCHAR(100) DEFAULT NULL,
-          //   dirCampo7 VARCHAR(10) DEFAULT NULL,
-          //   dirCampo8 VARCHAR(25) DEFAULT NULL,
-          //   dirCampo9 TEXT DEFAULT NULL,
-          //   ubicacion VARCHAR(25) DEFAULT NULL,
-          //   pais VARCHAR(25) DEFAULT NULL,
-          //   departamento VARCHAR(25) DEFAULT NULL,
-          //   municipio VARCHAR(25) DEFAULT NULL,
-          //   fecharegistro DATETIME DEFAULT NULL,
-          //   usuario INTEGER DEFAULT NULL,
-          //   estado INTEGER DEFAULT NULL,
-          //   tabla VARCHAR(100) DEFAULT NULL,
-          //   PRIMARY KEY (fichasocial, ubicacionposterior)
-          // );
-  
-          // `); 
-          // database.run(`
-          //   CREATE TABLE IF NOT EXISTS c151_integrantesubicaciopos (
-          //   idintegrante INTEGER NOT NULL,
-          //   fichasocial INTEGER NOT NULL,
-          //   ubicacionposterior INTEGER DEFAULT NULL,
-          //   fecharegistro DATETIME DEFAULT NULL,
-          //   usuario INTEGER DEFAULT NULL,
-          //   estado INTEGER DEFAULT NULL,
-          //   tabla VARCHAR(100) DEFAULT NULL,
-          //   PRIMARY KEY (idintegrante, fichasocial)
-          // );
-          // `);
 
       database.run(`
-            CREATE TABLE IF NOT EXISTS infraccion_observaciones (
-            idfiu INTEGER NOT NULL,
-            observacion LONGTEXT DEFAULT NULL,
-            fecharegistro DATETIME DEFAULT NULL,
-            usuario INTEGER DEFAULT NULL,
-            estado INTEGER DEFAULT NULL,
-            tabla VARCHAR(100) DEFAULT NULL,
-            PRIMARY KEY (idfiu)
-          );
-  
-          `);
-      database.run(`
-           CREATE TABLE IF NOT EXISTS infraccion_autorizacion (
-          idfiu INTEGER NOT NULL,
-          idintegrante INTEGER DEFAULT NULL,
-          entidad TEXT DEFAULT NULL,
-          diligenciadopor INTEGER DEFAULT NULL,
-          acepto VARCHAR(25) DEFAULT NULL,
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_11 (
+          id_usuario INTEGER NOT NULL,
+          actualmente_vive_en VARCHAR(45) DEFAULT NULL,
+          en_que_condicion_posee_vivienda VARCHAR(45) DEFAULT NULL,
+          otra_condicion_cual TEXT,
+          numero_de_espacios_vivienda_cocina VARCHAR(45) DEFAULT NULL,
+          numero_de_espacios_vivienda_comedor VARCHAR(45) DEFAULT NULL,
+          numero_de_espacios_vivienda_sala VARCHAR(45) DEFAULT NULL,
+          numero_de_espacios_vivienda_baño VARCHAR(45) DEFAULT NULL,
+          numero_de_espacios_vivienda_habitaciones VARCHAR(45) DEFAULT NULL,
+          numero_de_espacios_vivienda_balcon VARCHAR(45) DEFAULT NULL,
+          numero_de_espacios_vivienda_parqueadero VARCHAR(45) DEFAULT NULL,
+          numero_de_espacios_vivienda_otras VARCHAR(45) DEFAULT NULL,
+          cual_es_el_estrato_de_la_vivienda VARCHAR(45) DEFAULT NULL,
+          acceso_vivienda_por_trocha VARCHAR(45) DEFAULT NULL,
+          acceso_vivienda_por_medio_de_escalas VARCHAR(45) DEFAULT NULL,
+          acceso_vivienda_por_medio_de_callejon VARCHAR(45) DEFAULT NULL,
+          acceso_vivienda_por_via_pavimentada VARCHAR(45) DEFAULT NULL,
+          acceso_vivienda_por_via_sin_pavimentar VARCHAR(45) DEFAULT NULL,
+          condiciones_higienicas VARCHAR(45) DEFAULT NULL,
+          condiciones_enseres_basicos_adecuados VARCHAR(45) DEFAULT NULL,
+          condiciones_enseres_basicos_en_sobreuso VARCHAR(45) DEFAULT NULL,
+          condiciones_enseres_basicos_reducidos VARCHAR(45) DEFAULT NULL,
+          condiciones_ambientales_aireadas_iluminadas VARCHAR(45) DEFAULT NULL,
+          condiciones_ambientales_aireadas_poca_ilumi VARCHAR(45) DEFAULT NULL,
+          condiciones_ambientales_iluminacion_poco_airea VARCHAR(45) DEFAULT NULL,
+          condiciones_ambientales_vivienda_con_humedades VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_adobe VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_bareque VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_madera_tabla VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_piso_en_baldosa VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_piso_obra_negra VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_piso_en_tierra VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_techo_teja_asbesto VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_techo_teja_barro VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_techo_teja_zinc VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_techo_teja_plasticas VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_techo_madera VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_techo_plancha_cemento VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_otro VARCHAR(45) DEFAULT NULL,
+          vivienda_construida_en_otro_cual TEXT,
+          vivienda_cuenta_servicios_publ_energia_elec VARCHAR(45) DEFAULT NULL,
+          vivienda_cuenta_servicios_publ_alcantarillado VARCHAR(45) DEFAULT NULL,
+          vivienda_cuenta_servicios_publ_telefono VARCHAR(45) DEFAULT NULL,
+          vivienda_cuenta_servicios_publ_acueducto VARCHAR(45) DEFAULT NULL,
+          vivienda_cuenta_servicios_publ_gas_natural VARCHAR(45) DEFAULT NULL,
+          vivienda_cuenta_servicios_publ_recoleccion_basura VARCHAR(45) DEFAULT NULL,
+          vivienda_cuenta_servicios_publ_internet VARCHAR(45) DEFAULT NULL,
+          vivienda_cuenta_servicios_publ_ninguno VARCHAR(45) DEFAULT NULL,
+          preparacion_alimentos_agua_potable VARCHAR(45) DEFAULT NULL,
+          dispositivos_tecnologicos_televisor VARCHAR(45) DEFAULT NULL,
+          dispositivos_tecnologicos_computador VARCHAR(45) DEFAULT NULL,
+          dispositivos_tecnologicos_tablet VARCHAR(45) DEFAULT NULL,
+          dispositivos_tecnologicos_celular VARCHAR(45) DEFAULT NULL,
+          dispositivos_tecnologicos_otros VARCHAR(45) DEFAULT NULL,
+          dispositivos_tecnologicos_otros_cuales TEXT,
+          dispositivos_tecnologicos_ninguno VARCHAR(45) DEFAULT NULL,
+          riesgos_vivienda_por_deslizamiento VARCHAR(45) DEFAULT NULL,
+          riesgos_vivienda_por_inundaciones VARCHAR(45) DEFAULT NULL,
+          riesgos_vivienda_por_techo_paredes_mal_estado VARCHAR(45) DEFAULT NULL,
+          riesgos_vivienda_por_fallas_geologicas VARCHAR(45) DEFAULT NULL,
+          riesgos_vivienda_por_otro VARCHAR(45) DEFAULT NULL,
+          riesgos_vivienda_por_otro_cual TEXT,
+          riesgos_vivienda_por_ninguno VARCHAR(45) DEFAULT NULL,
           fecharegistro DATETIME DEFAULT NULL,
           usuario INTEGER DEFAULT NULL,
           estado INTEGER DEFAULT NULL,
           tabla VARCHAR(100) DEFAULT NULL,
-          draw_dataUrlImage BLOB DEFAULT NULL,
-          nameFile TEXT DEFAULT NULL,
-          apoyosocial TEXT DEFAULT NULL,
-          draw_dataUrl BLOB DEFAULT NULL,
-          nameFirma TEXT DEFAULT NULL,
-          autorizofirma VARCHAR(25) DEFAULT NULL,
-          idseguimiento INTEGER DEFAULT NULL,
-          firmatitular VARCHAR(25) DEFAULT NULL,
-          PRIMARY KEY (idfiu)
+          PRIMARY KEY (id_usuario)
         );
-          `);
-       database.run(`
-            CREATE TABLE IF NOT EXISTS infraccion_no_integrantes (
-              id INTEGER NOT NULL, 
-              idfiu INTEGER   NOT NULL,
-              tipodefamilia TEXT,
-              nacionalidad TEXT,
-              condicionmigrante TEXT,
-              etpv TEXT,
-              tipodedocumento TEXT,
-              numerodedocumento TEXT,
-              nombre1 TEXT,
-              nombre2 TEXT,
-              apellido1 TEXT,
-              apellido2 TEXT,
-              fechadenacimiento DATE,
-              telefono TEXT,
-              relacion TEXT,
-              fecharegistro DATETIME,
-              usuario INTEGER,
-              estado INTEGER,
-              tabla TEXT,
-              PRIMARY KEY (idfiu, id) 
-            );
-      
-             `);
+      `);
+
+      database.run(`
+        CREATE TABLE IF NOT EXISTS discapacidad_capitulo_12 (
+          id_usuario INTEGER NOT NULL,
+          conclusiones_y_observaciones TEXT,
+          necesidades_alimentacion_vivienda_satisfechas INTEGER DEFAULT NULL,
+          presenta_discapacidad INTEGER DEFAULT NULL,
+          requiere_ser_analizada INTEGER DEFAULT NULL,
+          requiere_activar_rutas INTEGER DEFAULT NULL,
+          se_orienta_a TEXT,
+          se_remite_a TEXT,
+          firma_persona_discapacidad LONGTEXT,
+          documento_persona_discapacidad TEXT,
+          firma_cuidador LONGTEXT,
+          documento_ciudador TEXT,
+          parentesco_cuidador TEXT,
+          nombre_completo_profesional TEXT,
+          profesion_profesional TEXT,
+          numero_tarjeta_profesional TEXT,
+          proyecto TEXT,
+          firma_profesional TEXT,
+          fecharegistro DATETIME DEFAULT NULL,
+          usuario INTEGER DEFAULT NULL,
+          estado INTEGER DEFAULT NULL,
+          tabla VARCHAR(100) DEFAULT NULL,
+          es_prioritario INTEGER DEFAULT NULL,
+          firma TEXT,
+          dondeadjunto TEXT,
+          id_profesional VARCHAR(45) DEFAULT NULL,
+          draw_dataUrl BLOB,
+          draw_dataUrl2 BLOB,
+          draw_dataUrl3 BLOB,
+          nameFirma VARCHAR(255) DEFAULT NULL,
+          nameFirma2 VARCHAR(255) DEFAULT NULL,
+          nameFirma3 VARCHAR(255) DEFAULT NULL,
+          PRIMARY KEY (id_usuario)
+        );
+      `);
 
       database.run(`
             CREATE TABLE IF NOT EXISTS t1_programas (
@@ -1110,18 +799,7 @@ const loadSQL = async (setDb, fetchUsers) => {
               fecharegistro DATE
             );
               `);
-      database.run(`
-                CREATE TABLE IF NOT EXISTS infraccion_red_apoyo (
-                  idfiu int(11) NOT NULL,
-                  reddeapoyo int(11) DEFAULT NULL,
-                  fecharegistro datetime DEFAULT NULL,
-                  usuario int(11) DEFAULT NULL,
-                  estado int(11) DEFAULT NULL,
-                  tabla varchar(100) DEFAULT NULL,
-                  PRIMARY KEY (idfiu)
-                )
-                  `);
-
+    
 
       database.run(`
                     CREATE TABLE IF NOT EXISTS t1_parentesco (
@@ -1155,16 +833,6 @@ const loadSQL = async (setDb, fetchUsers) => {
                           estado INTEGER DEFAULT NULL
                         );
                             `);
-
-                      database.run(`
-                        CREATE TABLE IF NOT EXISTS t1_ubicacionposterior (
-                          id INTEGER PRIMARY KEY AUTOINCREMENT,
-                          descripcion TEXT DEFAULT NULL,
-                          estado INTEGER DEFAULT NULL
-                        );
-                            `);
-
-
     }
 
     setDb(database);

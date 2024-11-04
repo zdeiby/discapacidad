@@ -25,7 +25,7 @@ interface Person {
   participa_actividades_otras: string | null;
   participa_actividades_ninguna: string | null;
   participa_programas_del_inder: string | null;
-  participa_en_alguna_organizacion: string | null;
+  participa__en_alguna_organizacion: string | null;
   señale_porque_no_participa_en_organizacion: string | null;
   participa_en_org_personas_discapacidad: string | null;
   fecharegistro: string | null;
@@ -76,7 +76,7 @@ const Tab1: React.FC = () => {
     participa_actividades_otras: '',
     participa_actividades_ninguna: '',
     participa_programas_del_inder: '',
-    participa_en_alguna_organizacion: '',
+    participa__en_alguna_organizacion: '',
     señale_porque_no_participa_en_organizacion: '',
     participa_en_org_personas_discapacidad: '',
     fecharegistro: getCurrentDateTime(),
@@ -156,7 +156,7 @@ const Tab1: React.FC = () => {
           participa_actividades_otras: '1',
           participa_actividades_ninguna: '1',
           participa_programas_del_inder: '',
-          participa_en_alguna_organizacion: '1',
+          participa__en_alguna_organizacion: '1',
           señale_porque_no_participa_en_organizacion: '',
           participa_en_org_personas_discapacidad: '1',
           fecharegistro: getCurrentDateTime(),
@@ -187,7 +187,7 @@ const Tab1: React.FC = () => {
         participa_actividades_otras: data.participa_actividades_otras || '',
         participa_actividades_ninguna: data.participa_actividades_ninguna || '',
         participa_programas_del_inder: data.participa_programas_del_inder || '',
-        participa_en_alguna_organizacion: data.participa_en_alguna_organizacion || '',
+        participa__en_alguna_organizacion: data.participa__en_alguna_organizacion || '',
         señale_porque_no_participa_en_organizacion: data.señale_porque_no_participa_en_organizacion || '',
         participa_en_org_personas_discapacidad: data.participa_en_org_personas_discapacidad || '',
         fecharegistro: data.fecharegistro || getCurrentDateTime(),
@@ -277,7 +277,7 @@ useEffect(() => {
       (id_usuario, participa_actividades_con_familia_amigos, participa_actividades_con_comunidad, participa_actividades_religiosas, 
       participa_actividades_productivas, participa_actividades_deportivas_recreacion, participa_actividades_culturales, 
       participa_actividades_trabajo_des_humano, participa_actividades_ciudadanas, participa_actividades_otras, 
-      participa_actividades_ninguna, participa_programas_del_inder, participa_en_alguna_organizacion, 
+      participa_actividades_ninguna, participa_programas_del_inder, participa__en_alguna_organizacion, 
       señale_porque_no_participa_en_organizacion, participa_en_org_personas_discapacidad, fecharegistro, usuario, estado, tabla)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
@@ -293,7 +293,7 @@ useEffect(() => {
         items.participa_actividades_otras,
         items.participa_actividades_ninguna,
         items.participa_programas_del_inder,
-        items.participa_en_alguna_organizacion,
+        items.participa__en_alguna_organizacion,
         items.señale_porque_no_participa_en_organizacion,
         items.participa_en_org_personas_discapacidad,
         items.fecharegistro,

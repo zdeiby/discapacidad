@@ -91,6 +91,14 @@ const MenuLat: React.FC = () => {
       <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>10&nbsp;</IonBadge>
       <IonLabel>INGRESOS Y EGRESOS MENSUALES</IonLabel>
       </IonItem>
+      <IonItem button routerLink={`/tabs/tab11/${ficha2}`}>
+      <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>11&nbsp;</IonBadge>
+      <IonLabel>TIPO Y CARACTERIZACIÓN DE LA VIVIENDA</IonLabel>
+      </IonItem>
+      <IonItem button routerLink={`/tabs/tab16/${ficha2}`}>
+      <IonBadge slot="start" color="ligth" style={{ fontSize: '22px', color:'gray'}}>12&nbsp;</IonBadge>
+      <IonLabel>CONCEPTO DEL PROFESIONAL QUE REALIZÓ LA VISITA</IonLabel>
+      </IonItem>
       {/* <IonItem button routerLink={`/tabs/tab10/${ficha2}`}>
         <IonIcon slot="start" icon={clipboard} />
         <IonLabel>10 - DATOS GENERALES (REMISIONES)</IonLabel>
@@ -100,8 +108,8 @@ const MenuLat: React.FC = () => {
       </IonItem><IonItem button routerLink={`/tabs/tab12/${ficha2}`}>
         <IonIcon slot="start" icon={heart} />
         <IonLabel>12 - AYUDAS HUMANITARIAS ENTREGADAS</IonLabel>
-      </IonItem> */}
-      <IonItem button routerLink={`/tabs/tab13/${ficha2}`}>
+      </IonItem> 
+     <IonItem button routerLink={`/tabs/tab13/${ficha2}`}>
         <IonIcon slot="start" icon={logoOctocat} />
         <IonLabel>7 - MASCOTAS</IonLabel>
       </IonItem>
@@ -109,14 +117,14 @@ const MenuLat: React.FC = () => {
         <IonIcon slot="start" icon={peopleCircle} />
         <IonLabel>8 - RED DE APOYO</IonLabel>
       </IonItem>
-      {/* <IonItem button routerLink={`/tabs/tab17/${ficha2}`}>
+       <IonItem button routerLink={`/tabs/tab17/${ficha2}`}>
         <IonIcon slot="start" icon={home} />
         <IonLabel>10 - ASPECTOS SOCIOECONÓMICOS DEL GRUPO FAMILIAR</IonLabel>
-      </IonItem>  */}
-      {/* <IonItem button routerLink={`/tabs/tab14/${ficha2}`}>
+      </IonItem>  
+      <IonItem button routerLink={`/tabs/tab14/${ficha2}`}>
         <IonIcon slot="start" icon={home} />
         <IonLabel>15 - UBICACION DE LA FAMILIA POSTERIOR A LA ATENCION SOCIAL</IonLabel>
-      </IonItem> */}
+      </IonItem> 
       <IonItem button routerLink={`/tabs/tab15/${ficha2}`}>
         <IonIcon slot="start" icon={text} />
         <IonLabel>11 - OBSERVACIONES</IonLabel>
@@ -128,7 +136,7 @@ const MenuLat: React.FC = () => {
       <IonItem button routerLink={`/tabs/tab16/${ficha2}`}>
         <IonIcon slot="start" icon={information} />
         <IonLabel>13 - INFORMACION DE QUIEN RESPONDE LA ENCUENTA</IonLabel>
-      </IonItem>
+      </IonItem> */}
 
     </IonMenuToggle>
   </IonList>
