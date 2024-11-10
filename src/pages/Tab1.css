@@ -1,3 +1,6 @@
+
+
+
 .social-card {
     background-color: #ffe5e5; /* Color de fondo rosado */
     padding: 16px; /* Espaciado interno */
@@ -47,3 +50,9 @@
     width: auto; /* Ajusta el ancho si es necesario */
   }
   
+
+  body {
+    font-family: 'Poppins', sans-serif;
+}
+
+

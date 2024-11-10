@@ -339,9 +339,7 @@ const Tab8: React.FC = () => {
               </div>
               <div className="col-sm-6">
                 <label className="form-label">Otros ¿Cuáles?:</label>
-                <select onChange={(e) => handleInputChange(e, 'otro_cuales')} value={items.otro_cuales} className="form-control form-control-sm" id="pregunta2_3" aria-describedby="validationServer04Feedback" >
-                <option value="1"> NO </option><option value="2"> SI </option>
-                </select>
+                <input type="text" className="form-control form-control-sm" id="otro_cuales" onChange={(e) => handleInputChange(e, 'otro_cuales')} value={items.otro_cuales} ></input>
               </div>
            
               

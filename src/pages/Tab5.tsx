@@ -1,5 +1,5 @@
 import ExploreContainer from '../components/ExploreContainer';
-import './Tab4.css';
+import './Tab1.css';
 import React,{useEffect, useState} from 'react';
 import EmployeeItem from '../components/EmployeeItem';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, 
@@ -9,6 +9,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
 import { useHistory, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import loadSQL from '../models/database';
+
 
 interface Person {
   id_usuario: string | null;
@@ -124,6 +125,7 @@ const Tab5: React.FC = () => {
   const params = useParams();
   const [people, setPeople] = useState<Person[]>([]);
   const [db, setDb] = useState<any>(null);
+  const [isAtencionDisabled, setIsAtencionDisabled] = useState(false);
   const [items, setItems] = useState({
     id_usuario: params.ficha,
     oportunamente_diagnosticada: '',
@@ -268,85 +270,85 @@ const Tab5: React.FC = () => {
         });
         setPeople(transformedPeople);
         setButtonDisabled((transformedPeople[0].oportunamente_diagnosticada) ? false : true);
+        setIsAtencionDisabled (transformedPeople[0].ninguna_atencion_ultimo_año === "2");
       } else {
         setItems({
           id_usuario: params.ficha,
-          oportunamente_diagnosticada: '',
-          orientacion_sobre_discapacidad: '',
-          atencion_general_ultimo_año: '',
-          atencion_discapacidad_ultimo_año: '',
-          ninguna_atencion_ultimo_año: '',
-          tiempo_sin_revision_general: '',
-          requiere_atencion_a_causa_discapacidad: '',
-          debe_usar_silla_de_ruedas: '',
-          debe_usar_caminador: '',
-          debe_usar_muletas: '',
-          debe_usar_baston_de_apoyo: '',
-          debe_usar_baston_guia: '',
-          debe_usar_audifonos: '',
-          debe_usar_insumos_medicos: '',
-          debe_usar_protesis: '',
-          debe_usar_otros_productos_de_apoyo: '',
-          debe_usar_ninguno: '',
-          utiliza_actualmente_silla_de_ruedas: '',
-          utiliza_actualmente_caminador: '',
-          utiliza_actualmente_muletas: '',
-          utiliza_actualmente_baston_de_apoyo: '',
-          utiliza_actualmente_baston_guia: '',
-          utiliza_actualmente_audifonos: '',
-          utiliza_actualmente_insumos_medicos: '',
-          utiliza_actualmente_protesis: '',
-          utiliza_actualmente_otros_productos_de_apoyo: '',
-          utiliza_actualmente_ninguno: '',
-          cree_necesita_silla_de_ruedas: '',
-          cree_necesita_caminador: '',
-          cree_necesita_muletas: '',
-          cree_necesita_baston_de_apoyo: '',
-          cree_necesita_baston_guia: '',
-          cree_necesita_audifonos: '',
-          cree_necesita_insumos_medicos: '',
-          cree_necesita_protesis: '',
-          cree_necesita_otros_productos_de_apoyo: '',
-          cree_necesita_ninguno: '',
-          otras_condiciones_usa_medicamentos: '',
+          oportunamente_diagnosticada: '1',
+          orientacion_sobre_discapacidad: '1',
+          atencion_general_ultimo_año: '1',
+          atencion_discapacidad_ultimo_año: '1',
+          ninguna_atencion_ultimo_año: '1',
+          requiere_atencion_a_causa_discapacidad: '1',
+          debe_usar_silla_de_ruedas: '1',
+          debe_usar_caminador: '1',
+          debe_usar_muletas: '1',
+          debe_usar_baston_de_apoyo: '1',
+          debe_usar_baston_guia: '1',
+          debe_usar_audifonos: '1',
+          debe_usar_insumos_medicos: '1',
+          debe_usar_protesis: '1',
+          debe_usar_otros_productos_de_apoyo: '1',
+          debe_usar_ninguno: '1',
+          utiliza_actualmente_silla_de_ruedas: '1',
+          utiliza_actualmente_caminador: '1',
+          utiliza_actualmente_muletas: '1',
+          utiliza_actualmente_baston_de_apoyo: '1',
+          utiliza_actualmente_baston_guia: '1',
+          utiliza_actualmente_audifonos: '1',
+          utiliza_actualmente_insumos_medicos: '1',
+          utiliza_actualmente_protesis: '1',
+          utiliza_actualmente_otros_productos_de_apoyo: '1',
+          utiliza_actualmente_ninguno: '1',
+          cree_necesita_silla_de_ruedas: '1',
+          cree_necesita_caminador: '1',
+          cree_necesita_muletas: '1',
+          cree_necesita_baston_de_apoyo: '1',
+          cree_necesita_baston_guia: '1',
+          cree_necesita_audifonos: '1',
+          cree_necesita_insumos_medicos: '1',
+          cree_necesita_protesis: '1',
+          cree_necesita_otros_productos_de_apoyo: '1',
+          cree_necesita_ninguno: '1',
+          otras_condiciones_usa_medicamentos: '1',
           cuales_medicamentos: '',
-          otras_condiciones_tiene_escaras: '',
-          otras_condiciones_tiene_traqueotomia: '',
-          otras_condiciones_tiene_gastrostomia: '',
-          otras_condiciones_requiere_uso_de_pañal: '',
-          otras_condiciones_oxigeno_dependiente: '',
-          otras_condiciones_dialisis_permanente: '',
-          ha_presentado_covid19: '',
+          otras_condiciones_tiene_escaras: '1',
+          otras_condiciones_tiene_traqueotomia: '1',
+          otras_condiciones_tiene_gastrostomia: '1',
+          otras_condiciones_requiere_uso_de_pañal: '1',
+          otras_condiciones_oxigeno_dependiente: '1',
+          otras_condiciones_dialisis_permanente: '1',
+          ha_presentado_covid19: '1',
           cuantas_veces_covid19: '',
           fecha_ultimo_contagio: '',
-          esta_vacunado_contra_covid19: '',
+          esta_vacunado_contra_covid19: '1',
           numero_dosis_aplicadas: '',
           fecha_ultima_dosis_aplicada: '',
           fabricante_de_la_vacuna: '',
           otro_fabricante_cual: '',
-          tiene_esquema_de_vacunas_completo: '',
-          requiere_apoyo_para_actividades_diarias: '',
+          tiene_esquema_de_vacunas_completo: '1',
+          requiere_apoyo_para_actividades_diarias: '1',
           persona_que_ayuda_actividades_diarias: '',
           sexo_persona_que_mas_ayuda: '',
-          rehabilitacion_ordenada_fisioterapia: '',
-          rehabilitacion_ordenada_fonoaudiologia: '',
-          rehabilitacion_ordenada_medic_permanen: '',
-          rehabilitacion_ordenada_medici_fisica: '',
-          rehabilitacion_ordenada_optometria: '',
-          rehabilitacion_ordenada_psicologia: '',
-          rehabilitacion_ordenada_psiquiatria: '',
-          rehabilitacion_ordenada_terapia_ocupa: '',
-          rehabilitacion_ordenada_trabajo_social: '',
-          rehabilitacion_ordenada_otro_tipo: '',
-          rehabilitacion_ordenada_ninguno: '',
-          actualmente_esta_en_rehabilitacion: '',
+          rehabilitacion_ordenada_fisioterapia: '1',
+          rehabilitacion_ordenada_fonoaudiologia: '1',
+          rehabilitacion_ordenada_medic_permanen: '1',
+          rehabilitacion_ordenada_medici_fisica: '1',
+          rehabilitacion_ordenada_optometria: '1',
+          rehabilitacion_ordenada_psicologia: '1',
+          rehabilitacion_ordenada_psiquiatria: '1',
+          rehabilitacion_ordenada_terapia_ocupa: '1',
+          rehabilitacion_ordenada_trabajo_social: '1',
+          rehabilitacion_ordenada_otro_tipo: '1',
+          rehabilitacion_ordenada_ninguno: '1',
+          actualmente_esta_en_rehabilitacion: '1',
           quien_paga_rehabilitacion: '',
           quien_paga_rehabilitacion_otro_quien: '',
           establecimiento_rehabilitacion_es: '',
           porque_no_recibe_rehabilitacion: '',
           porque_no_recibe_rehabilitacion_otro: '',
           cuanto_tiempo_sin_rehabilitacion: '',
-          conoce_prestadores_rehabilitacion: '',
+          conoce_prestadores_rehabilitacion: '1',
           a_que_regimen_de_salud_pertenece: '',
           cual_regimen_de_salud: '',
           cual_es_su_eps: '',
@@ -355,11 +357,12 @@ const Tab5: React.FC = () => {
           ultima_hospitalizacion_motivo: '',
           hace_cuanto_ultima_hospitalizacion: '',
           tiempo_de_hospitalizacion: '',
+          tiempo_sin_revision_general: '',
+          tiempo_sin_revision_general_meses: '',
           fecharegistro: getCurrentDateTime(),
           usuario: localStorage.getItem('cedula'),
           estado: '1',
           tabla: 'discapacidad_capitulo_3',
-          tiempo_sin_revision_general_meses: null,
         });
       }
     }
@@ -372,82 +375,81 @@ const Tab5: React.FC = () => {
       let data = people[0] || {};
       setItems({
         id_usuario: data.id_usuario || params.ficha,
-        oportunamente_diagnosticada: data.oportunamente_diagnosticada || '',
-        orientacion_sobre_discapacidad: data.orientacion_sobre_discapacidad || '',
-        atencion_general_ultimo_año: data.atencion_general_ultimo_año || '',
-        atencion_discapacidad_ultimo_año: data.atencion_discapacidad_ultimo_año || '',
-        ninguna_atencion_ultimo_año: data.ninguna_atencion_ultimo_año || '',
-        tiempo_sin_revision_general: data.tiempo_sin_revision_general || '',
-        requiere_atencion_a_causa_discapacidad: data.requiere_atencion_a_causa_discapacidad || '',
-        debe_usar_silla_de_ruedas: data.debe_usar_silla_de_ruedas || '',
-        debe_usar_caminador: data.debe_usar_caminador || '',
-        debe_usar_muletas: data.debe_usar_muletas || '',
-        debe_usar_baston_de_apoyo: data.debe_usar_baston_de_apoyo || '',
-        debe_usar_baston_guia: data.debe_usar_baston_guia || '',
-        debe_usar_audifonos: data.debe_usar_audifonos || '',
-        debe_usar_insumos_medicos: data.debe_usar_insumos_medicos || '',
-        debe_usar_protesis: data.debe_usar_protesis || '',
-        debe_usar_otros_productos_de_apoyo: data.debe_usar_otros_productos_de_apoyo || '',
-        debe_usar_ninguno: data.debe_usar_ninguno || '',
-        utiliza_actualmente_silla_de_ruedas: data.utiliza_actualmente_silla_de_ruedas || '',
-        utiliza_actualmente_caminador: data.utiliza_actualmente_caminador || '',
-        utiliza_actualmente_muletas: data.utiliza_actualmente_muletas || '',
-        utiliza_actualmente_baston_de_apoyo: data.utiliza_actualmente_baston_de_apoyo || '',
-        utiliza_actualmente_baston_guia: data.utiliza_actualmente_baston_guia || '',
-        utiliza_actualmente_audifonos: data.utiliza_actualmente_audifonos || '',
-        utiliza_actualmente_insumos_medicos: data.utiliza_actualmente_insumos_medicos || '',
-        utiliza_actualmente_protesis: data.utiliza_actualmente_protesis || '',
-        utiliza_actualmente_otros_productos_de_apoyo: data.utiliza_actualmente_otros_productos_de_apoyo || '',
-        utiliza_actualmente_ninguno: data.utiliza_actualmente_ninguno || '',
-        cree_necesita_silla_de_ruedas: data.cree_necesita_silla_de_ruedas || '',
-        cree_necesita_caminador: data.cree_necesita_caminador || '',
-        cree_necesita_muletas: data.cree_necesita_muletas || '',
-        cree_necesita_baston_de_apoyo: data.cree_necesita_baston_de_apoyo || '',
-        cree_necesita_baston_guia: data.cree_necesita_baston_guia || '',
-        cree_necesita_audifonos: data.cree_necesita_audifonos || '',
-        cree_necesita_insumos_medicos: data.cree_necesita_insumos_medicos || '',
-        cree_necesita_protesis: data.cree_necesita_protesis || '',
-        cree_necesita_otros_productos_de_apoyo: data.cree_necesita_otros_productos_de_apoyo || '',
-        cree_necesita_ninguno: data.cree_necesita_ninguno || '',
-        otras_condiciones_usa_medicamentos: data.otras_condiciones_usa_medicamentos || '',
+        oportunamente_diagnosticada: data.oportunamente_diagnosticada || '1',
+        orientacion_sobre_discapacidad: data.orientacion_sobre_discapacidad || '1',
+        atencion_general_ultimo_año: data.atencion_general_ultimo_año || '1',
+        atencion_discapacidad_ultimo_año: data.atencion_discapacidad_ultimo_año || '1',
+        ninguna_atencion_ultimo_año: data.ninguna_atencion_ultimo_año || '1',
+        requiere_atencion_a_causa_discapacidad: data.requiere_atencion_a_causa_discapacidad || '1',
+        debe_usar_silla_de_ruedas: data.debe_usar_silla_de_ruedas || '1',
+        debe_usar_caminador: data.debe_usar_caminador || '1',
+        debe_usar_muletas: data.debe_usar_muletas || '1',
+        debe_usar_baston_de_apoyo: data.debe_usar_baston_de_apoyo || '1',
+        debe_usar_baston_guia: data.debe_usar_baston_guia || '1',
+        debe_usar_audifonos: data.debe_usar_audifonos || '1',
+        debe_usar_insumos_medicos: data.debe_usar_insumos_medicos || '1',
+        debe_usar_protesis: data.debe_usar_protesis || '1',
+        debe_usar_otros_productos_de_apoyo: data.debe_usar_otros_productos_de_apoyo || '1',
+        debe_usar_ninguno: data.debe_usar_ninguno || '1',
+        utiliza_actualmente_silla_de_ruedas: data.utiliza_actualmente_silla_de_ruedas || '1',
+        utiliza_actualmente_caminador: data.utiliza_actualmente_caminador || '1',
+        utiliza_actualmente_muletas: data.utiliza_actualmente_muletas || '1',
+        utiliza_actualmente_baston_de_apoyo: data.utiliza_actualmente_baston_de_apoyo || '1',
+        utiliza_actualmente_baston_guia: data.utiliza_actualmente_baston_guia || '1',
+        utiliza_actualmente_audifonos: data.utiliza_actualmente_audifonos || '1',
+        utiliza_actualmente_insumos_medicos: data.utiliza_actualmente_insumos_medicos || '1',
+        utiliza_actualmente_protesis: data.utiliza_actualmente_protesis || '1',
+        utiliza_actualmente_otros_productos_de_apoyo: data.utiliza_actualmente_otros_productos_de_apoyo || '1',
+        utiliza_actualmente_ninguno: data.utiliza_actualmente_ninguno || '1',
+        cree_necesita_silla_de_ruedas: data.cree_necesita_silla_de_ruedas || '1',
+        cree_necesita_caminador: data.cree_necesita_caminador || '1',
+        cree_necesita_muletas: data.cree_necesita_muletas || '1',
+        cree_necesita_baston_de_apoyo: data.cree_necesita_baston_de_apoyo || '1',
+        cree_necesita_baston_guia: data.cree_necesita_baston_guia || '1',
+        cree_necesita_audifonos: data.cree_necesita_audifonos || '1',
+        cree_necesita_insumos_medicos: data.cree_necesita_insumos_medicos || '1',
+        cree_necesita_protesis: data.cree_necesita_protesis || '1',
+        cree_necesita_otros_productos_de_apoyo: data.cree_necesita_otros_productos_de_apoyo || '1',
+        cree_necesita_ninguno: data.cree_necesita_ninguno || '1',
+        otras_condiciones_usa_medicamentos: data.otras_condiciones_usa_medicamentos || '1',
         cuales_medicamentos: data.cuales_medicamentos || '',
-        otras_condiciones_tiene_escaras: data.otras_condiciones_tiene_escaras || '',
-        otras_condiciones_tiene_traqueotomia: data.otras_condiciones_tiene_traqueotomia || '',
-        otras_condiciones_tiene_gastrostomia: data.otras_condiciones_tiene_gastrostomia || '',
-        otras_condiciones_requiere_uso_de_pañal: data.otras_condiciones_requiere_uso_de_pañal || '',
-        otras_condiciones_oxigeno_dependiente: data.otras_condiciones_oxigeno_dependiente || '',
-        otras_condiciones_dialisis_permanente: data.otras_condiciones_dialisis_permanente || '',
-        ha_presentado_covid19: data.ha_presentado_covid19 || '',
+        otras_condiciones_tiene_escaras: data.otras_condiciones_tiene_escaras || '1',
+        otras_condiciones_tiene_traqueotomia: data.otras_condiciones_tiene_traqueotomia || '1',
+        otras_condiciones_tiene_gastrostomia: data.otras_condiciones_tiene_gastrostomia || '1',
+        otras_condiciones_requiere_uso_de_pañal: data.otras_condiciones_requiere_uso_de_pañal || '1',
+        otras_condiciones_oxigeno_dependiente: data.otras_condiciones_oxigeno_dependiente || '1',
+        otras_condiciones_dialisis_permanente: data.otras_condiciones_dialisis_permanente || '1',
+        ha_presentado_covid19: data.ha_presentado_covid19 || '1',
         cuantas_veces_covid19: data.cuantas_veces_covid19 || '',
         fecha_ultimo_contagio: data.fecha_ultimo_contagio || '',
-        esta_vacunado_contra_covid19: data.esta_vacunado_contra_covid19 || '',
+        esta_vacunado_contra_covid19: data.esta_vacunado_contra_covid19 || '1',
         numero_dosis_aplicadas: data.numero_dosis_aplicadas || '',
         fecha_ultima_dosis_aplicada: data.fecha_ultima_dosis_aplicada || '',
         fabricante_de_la_vacuna: data.fabricante_de_la_vacuna || '',
         otro_fabricante_cual: data.otro_fabricante_cual || '',
-        tiene_esquema_de_vacunas_completo: data.tiene_esquema_de_vacunas_completo || '',
-        requiere_apoyo_para_actividades_diarias: data.requiere_apoyo_para_actividades_diarias || '',
+        tiene_esquema_de_vacunas_completo: data.tiene_esquema_de_vacunas_completo || '1',
+        requiere_apoyo_para_actividades_diarias: data.requiere_apoyo_para_actividades_diarias || '1',
         persona_que_ayuda_actividades_diarias: data.persona_que_ayuda_actividades_diarias || '',
         sexo_persona_que_mas_ayuda: data.sexo_persona_que_mas_ayuda || '',
-        rehabilitacion_ordenada_fisioterapia: data.rehabilitacion_ordenada_fisioterapia || '',
-        rehabilitacion_ordenada_fonoaudiologia: data.rehabilitacion_ordenada_fonoaudiologia || '',
-        rehabilitacion_ordenada_medic_permanen: data.rehabilitacion_ordenada_medic_permanen || '',
-        rehabilitacion_ordenada_medici_fisica: data.rehabilitacion_ordenada_medici_fisica || '',
-        rehabilitacion_ordenada_optometria: data.rehabilitacion_ordenada_optometria || '',
-        rehabilitacion_ordenada_psicologia: data.rehabilitacion_ordenada_psicologia || '',
-        rehabilitacion_ordenada_psiquiatria: data.rehabilitacion_ordenada_psiquiatria || '',
-        rehabilitacion_ordenada_terapia_ocupa: data.rehabilitacion_ordenada_terapia_ocupa || '',
-        rehabilitacion_ordenada_trabajo_social: data.rehabilitacion_ordenada_trabajo_social || '',
-        rehabilitacion_ordenada_otro_tipo: data.rehabilitacion_ordenada_otro_tipo || '',
-        rehabilitacion_ordenada_ninguno: data.rehabilitacion_ordenada_ninguno || '',
-        actualmente_esta_en_rehabilitacion: data.actualmente_esta_en_rehabilitacion || '',
+        rehabilitacion_ordenada_fisioterapia: data.rehabilitacion_ordenada_fisioterapia || '1',
+        rehabilitacion_ordenada_fonoaudiologia: data.rehabilitacion_ordenada_fonoaudiologia || '1',
+        rehabilitacion_ordenada_medic_permanen: data.rehabilitacion_ordenada_medic_permanen || '1',
+        rehabilitacion_ordenada_medici_fisica: data.rehabilitacion_ordenada_medici_fisica || '1',
+        rehabilitacion_ordenada_optometria: data.rehabilitacion_ordenada_optometria || '1',
+        rehabilitacion_ordenada_psicologia: data.rehabilitacion_ordenada_psicologia || '1',
+        rehabilitacion_ordenada_psiquiatria: data.rehabilitacion_ordenada_psiquiatria || '1',
+        rehabilitacion_ordenada_terapia_ocupa: data.rehabilitacion_ordenada_terapia_ocupa || '1',
+        rehabilitacion_ordenada_trabajo_social: data.rehabilitacion_ordenada_trabajo_social || '1',
+        rehabilitacion_ordenada_otro_tipo: data.rehabilitacion_ordenada_otro_tipo || '1',
+        rehabilitacion_ordenada_ninguno: data.rehabilitacion_ordenada_ninguno || '1',
+        actualmente_esta_en_rehabilitacion: data.actualmente_esta_en_rehabilitacion || '1',
         quien_paga_rehabilitacion: data.quien_paga_rehabilitacion || '',
         quien_paga_rehabilitacion_otro_quien: data.quien_paga_rehabilitacion_otro_quien || '',
         establecimiento_rehabilitacion_es: data.establecimiento_rehabilitacion_es || '',
         porque_no_recibe_rehabilitacion: data.porque_no_recibe_rehabilitacion || '',
         porque_no_recibe_rehabilitacion_otro: data.porque_no_recibe_rehabilitacion_otro || '',
         cuanto_tiempo_sin_rehabilitacion: data.cuanto_tiempo_sin_rehabilitacion || '',
-        conoce_prestadores_rehabilitacion: data.conoce_prestadores_rehabilitacion || '',
+        conoce_prestadores_rehabilitacion: data.conoce_prestadores_rehabilitacion || '1',
         a_que_regimen_de_salud_pertenece: data.a_que_regimen_de_salud_pertenece || '',
         cual_regimen_de_salud: data.cual_regimen_de_salud || '',
         cual_es_su_eps: data.cual_es_su_eps || '',
@@ -456,14 +458,16 @@ const Tab5: React.FC = () => {
         ultima_hospitalizacion_motivo: data.ultima_hospitalizacion_motivo || '',
         hace_cuanto_ultima_hospitalizacion: data.hace_cuanto_ultima_hospitalizacion || '',
         tiempo_de_hospitalizacion: data.tiempo_de_hospitalizacion || '',
+        tiempo_sin_revision_general: data.tiempo_sin_revision_general || '',
+        tiempo_sin_revision_general_meses: data.tiempo_sin_revision_general_meses || '',
         fecharegistro: data.fecharegistro || getCurrentDateTime(),
         usuario: data.usuario || localStorage.getItem('cedula'),
         estado: data.estado || '1',
         tabla: data.tabla || 'discapacidad_capitulo_3',
-        tiempo_sin_revision_general_meses: data.tiempo_sin_revision_general_meses || '',
       });
     }
   }, [people]);
+  
   
 
   useEffect(() => {
@@ -472,13 +476,102 @@ const Tab5: React.FC = () => {
 
   const handleInputChange = (event, field) => {
     const { value } = event.target;
-    setItems((prevItems) => {
-      const newState = { ...prevItems, [field]: value };
-      // if (field === 'materialpisos') {
-      //   newState.materialpisosotro = value === '6' ? '' : 'NO APLICA';
-      // }
-      return newState;
-    });
+
+    if (field === 'ninguna_atencion_ultimo_año') {
+      setIsAtencionDisabled(value === "2"); // Desactiva si `ninguna_atencion_ultimo_año` es "SI" (valor "2")
+    }
+
+    setItems((prevItems) => ({
+    ...prevItems,
+    [field]: value,
+    ...(field === 'ninguna_atencion_ultimo_año' && value === "2" ? { 
+      atencion_general_ultimo_año: '',  // Reinicia este campo si `ninguna_atencion_ultimo_año` es "SI"
+      atencion_discapacidad_ultimo_año: '',                   // Reinicia cualquier otro campo relacionado que necesites
+    } : {}),
+    ...(field === 'requiere_atencion_a_causa_discapacidad' ? { 
+      debe_usar_ninguno: value === "2" ? "1" : "2", // Si `requiere_atencion_a_causa_discapacidad` es "2" (SI), establece `debe_usar_ninguno` en "1" (NO); si es "1" (NO), establece `debe_usar_ninguno` en "2" (SI)
+      debe_usar_silla_de_ruedas: "1",
+      debe_usar_caminador: "1",
+      debe_usar_muletas: "1",
+      debe_usar_baston_de_apoyo: "1",
+      debe_usar_baston_guia: "1",
+      debe_usar_audifonos: "1",
+      debe_usar_insumos_medicos: "1",
+      debe_usar_protesis: "1",
+      debe_usar_otros_productos_de_apoyo: "1",
+    } : {}),
+    ...(field === 'debe_usar_ninguno' && value === "2" ? { // Si "Ninguno" es "SI"
+      debe_usar_silla_de_ruedas: "1",
+      debe_usar_caminador: "1",
+      debe_usar_muletas: "1",
+      debe_usar_baston_de_apoyo: "1",
+      debe_usar_baston_guia: "1",
+      debe_usar_audifonos: "1",
+      debe_usar_insumos_medicos: "1",
+      debe_usar_protesis: "1",
+      debe_usar_otros_productos_de_apoyo: "1",
+    } : {}) ,
+    ...(field === 'utiliza_actualmente_ninguno' && value === "2" ? { // Si "Ninguno" es "SI"
+      utiliza_actualmente_silla_de_ruedas: "1",
+      utiliza_actualmente_caminador: "1",
+      utiliza_actualmente_muletas: "1",
+      utiliza_actualmente_baston_de_apoyo: "1",
+      utiliza_actualmente_baston_guia: "1",
+      utiliza_actualmente_audifonos: "1",
+      utiliza_actualmente_insumos_medicos: "1",
+      utiliza_actualmente_protesis: "1",
+      utiliza_actualmente_otros_productos_de_apoyo: "1",
+    } : {}), // Reinicia los otros campos si "Ninguno" cambia a "SI" o "NO"
+    ...(field === 'otras_condiciones_usa_medicamentos' && value === "1" ? {
+      cuales_medicamentos: ""
+    } : {}),
+    ...(field === 'ha_presentado_covid19' && value === "1" ? {
+      cuantas_veces_covid19: "",
+      fecha_ultimo_contagio: ""
+    } : {}),
+    ...(field === 'esta_vacunado_contra_covid19' && value === "1" ? { // Si NO está vacunado, restablece los siguientes campos
+      numero_dosis_aplicadas: "",
+      fecha_ultima_dosis_aplicada: "",
+      fabricante_de_la_vacuna: "",
+      otro_fabricante_cual: "",
+    } : {}),
+    ...(field === 'requiere_apoyo_para_actividades_diarias' && value === "1" ? { // Si NO requiere apoyo
+      persona_que_ayuda_actividades_diarias: "",
+      sexo_persona_que_mas_ayuda: "",
+    } : {}),
+    ...(field === 'rehabilitacion_ordenada_ninguno' && value === "2" ? { // Si 'Ninguno' es 'SI'
+      rehabilitacion_ordenada_fisioterapia: "1",
+      rehabilitacion_ordenada_fonoaudiologia: "1",
+      rehabilitacion_ordenada_medic_permanen: "1",
+      rehabilitacion_ordenada_medici_fisica: "1",
+      rehabilitacion_ordenada_optometria: "1",
+      rehabilitacion_ordenada_psicologia: "1",
+      rehabilitacion_ordenada_psiquiatria: "1",
+      rehabilitacion_ordenada_terapia_ocupa: "1",
+      rehabilitacion_ordenada_trabajo_social: "1",
+      rehabilitacion_ordenada_otro_tipo: "1",
+    } : {}),
+    ...(field === 'actualmente_esta_en_rehabilitacion' && value === "1" ? { // Si actualmente no está asistiendo a la rehabilitación
+      quien_paga_rehabilitacion: "",
+      establecimiento_rehabilitacion_es: "",
+      quien_paga_rehabilitacion_otro_quien:""
+    } : {}),
+    ...(field === 'actualmente_esta_en_rehabilitacion' && value === "2" ? { // Si actualmente no está asistiendo a la rehabilitación
+      porque_no_recibe_rehabilitacion: "",
+      porque_no_recibe_rehabilitacion_otro: "",
+      cuanto_tiempo_sin_rehabilitacion:""
+    } : {}),
+    ...(field === 'quien_paga_rehabilitacion' && value !== "6" ? { // Si "Quién paga la rehabilitación?" no es "Otro"
+      quien_paga_rehabilitacion_otro_quien: "",
+    } : {}),
+    ...(field === 'porque_no_recibe_rehabilitacion' && value !== "8" ? { // Si "Por qué no recibe el servicio de rehabilitación?" no es "Otro"
+      porque_no_recibe_rehabilitacion_otro: "",
+    } : {}),
+    ...(field === 'tipo_afiliacion' && value !== "5" ? { // Si "Tipo de afiliación" no es "OTRO"
+      otro_tipo_afiliacion_cual: "",
+    } : {}),
+
+  }));
   };
 
   useEffect(() => {
@@ -642,9 +735,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'oportunamente_diagnosticada')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -657,9 +751,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'orientacion_sobre_discapacidad')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -679,10 +774,10 @@ const Tab5: React.FC = () => {
       value={items.atencion_general_ultimo_año}
       onChange={(e) => handleInputChange(e, 'atencion_general_ultimo_año')}
       required
+      disabled={isAtencionDisabled}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      <option value="1">NO</option>
+      <option value="2">SI</option>
     </select>
   </div>
 </div>
@@ -696,10 +791,12 @@ const Tab5: React.FC = () => {
       value={items.atencion_discapacidad_ultimo_año}
       onChange={(e) => handleInputChange(e, 'atencion_discapacidad_ultimo_año')}
       required
+      disabled={isAtencionDisabled}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -712,9 +809,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'ninguna_atencion_ultimo_año')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -761,9 +859,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'requiere_atencion_a_causa_discapacidad')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -783,10 +882,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_silla_de_ruedas}
       onChange={(e) => handleInputChange(e, 'debe_usar_silla_de_ruedas')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -798,10 +899,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_caminador}
       onChange={(e) => handleInputChange(e, 'debe_usar_caminador')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -815,10 +918,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_muletas}
       onChange={(e) => handleInputChange(e, 'debe_usar_muletas')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -830,10 +935,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_baston_de_apoyo}
       onChange={(e) => handleInputChange(e, 'debe_usar_baston_de_apoyo')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -847,10 +954,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_baston_guia}
       onChange={(e) => handleInputChange(e, 'debe_usar_baston_guia')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -862,10 +971,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_audifonos}
       onChange={(e) => handleInputChange(e, 'debe_usar_audifonos')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -879,10 +990,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_insumos_medicos}
       onChange={(e) => handleInputChange(e, 'debe_usar_insumos_medicos')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -894,10 +1007,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_protesis}
       onChange={(e) => handleInputChange(e, 'debe_usar_protesis')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -911,10 +1026,12 @@ const Tab5: React.FC = () => {
       value={items.debe_usar_otros_productos_de_apoyo}
       onChange={(e) => handleInputChange(e, 'debe_usar_otros_productos_de_apoyo')}
       required
+      disabled={items.debe_usar_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -927,9 +1044,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'debe_usar_ninguno')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -949,10 +1067,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_silla_de_ruedas}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_silla_de_ruedas')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -964,10 +1084,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_caminador}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_caminador')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -980,10 +1102,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_muletas}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_muletas')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -995,10 +1119,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_baston_de_apoyo}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_baston_de_apoyo')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1012,10 +1138,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_baston_guia}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_baston_guia')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1027,10 +1155,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_audifonos}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_audifonos')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1044,10 +1174,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_insumos_medicos}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_insumos_medicos')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1059,10 +1191,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_protesis}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_protesis')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1076,10 +1210,12 @@ const Tab5: React.FC = () => {
       value={items.utiliza_actualmente_otros_productos_de_apoyo}
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_otros_productos_de_apoyo')}
       required
+      disabled={items.utiliza_actualmente_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1092,9 +1228,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'utiliza_actualmente_ninguno')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1114,10 +1251,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_silla_de_ruedas}
       onChange={(e) => handleInputChange(e, 'cree_necesita_silla_de_ruedas')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1129,10 +1268,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_caminador}
       onChange={(e) => handleInputChange(e, 'cree_necesita_caminador')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1146,10 +1287,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_muletas}
       onChange={(e) => handleInputChange(e, 'cree_necesita_muletas')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1161,10 +1304,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_baston_de_apoyo}
       onChange={(e) => handleInputChange(e, 'cree_necesita_baston_de_apoyo')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1178,10 +1323,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_baston_guia}
       onChange={(e) => handleInputChange(e, 'cree_necesita_baston_guia')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1193,10 +1340,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_audifonos}
       onChange={(e) => handleInputChange(e, 'cree_necesita_audifonos')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1210,10 +1359,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_insumos_medicos}
       onChange={(e) => handleInputChange(e, 'cree_necesita_insumos_medicos')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1225,10 +1376,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_protesis}
       onChange={(e) => handleInputChange(e, 'cree_necesita_protesis')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1242,10 +1395,12 @@ const Tab5: React.FC = () => {
       value={items.cree_necesita_otros_productos_de_apoyo}
       onChange={(e) => handleInputChange(e, 'cree_necesita_otros_productos_de_apoyo')}
       required
+      disabled={items.cree_necesita_ninguno === '2'}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1258,9 +1413,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'cree_necesita_ninguno')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1276,9 +1432,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otras_condiciones_usa_medicamentos')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1292,6 +1449,7 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'cuales_medicamentos')}
       style={{ textTransform: 'uppercase' }}
       required
+      disabled={items.otras_condiciones_usa_medicamentos !== '2'}
     />
   </div>
 </div>
@@ -1306,9 +1464,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otras_condiciones_tiene_escaras')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1321,9 +1480,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otras_condiciones_tiene_traqueotomia')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1338,9 +1498,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otras_condiciones_tiene_gastrostomia')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1353,9 +1514,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otras_condiciones_requiere_uso_de_pañal')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1370,9 +1532,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otras_condiciones_oxigeno_dependiente')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1385,9 +1548,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otras_condiciones_dialisis_permanente')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1402,9 +1566,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'ha_presentado_covid19')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1417,6 +1582,7 @@ const Tab5: React.FC = () => {
       value={items.cuantas_veces_covid19}
       onChange={(e) => handleInputChange(e, 'cuantas_veces_covid19')}
       required
+      disabled={items.ha_presentado_covid19 !== "2"}
     />
   </div>
 </div>
@@ -1431,6 +1597,7 @@ const Tab5: React.FC = () => {
       value={items.fecha_ultimo_contagio}
       onChange={(e) => handleInputChange(e, 'fecha_ultimo_contagio')}
       required
+      disabled={items.ha_presentado_covid19 !== "2"}
     />
   </div>
 
@@ -1443,9 +1610,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'esta_vacunado_contra_covid19')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1460,6 +1628,7 @@ const Tab5: React.FC = () => {
       value={items.numero_dosis_aplicadas}
       onChange={(e) => handleInputChange(e, 'numero_dosis_aplicadas')}
       required
+      disabled={items.esta_vacunado_contra_covid19 !== "2"}
     />
   </div>
 
@@ -1472,6 +1641,8 @@ const Tab5: React.FC = () => {
       value={items.fecha_ultima_dosis_aplicada}
       onChange={(e) => handleInputChange(e, 'fecha_ultima_dosis_aplicada')}
       required
+      disabled={items.esta_vacunado_contra_covid19 !== "2"}
+
     />
   </div>
 </div>
@@ -1485,6 +1656,8 @@ const Tab5: React.FC = () => {
       value={items.fabricante_de_la_vacuna}
       onChange={(e) => handleInputChange(e, 'fabricante_de_la_vacuna')}
       required
+      disabled={items.esta_vacunado_contra_covid19 !== "2"}
+
     >
       <option value=""> SELECCIONE </option><option value="4"> ASTRA ZENECA </option><option value="5"> JOHNSON Y JOHNSON (JANSSEN) </option><option value="3"> MODERNA </option><option value="6"> OTRO </option><option value="1"> PFIZER </option><option value="2"> SINOVAC </option>    </select>
   </div>
@@ -1499,6 +1672,8 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otro_fabricante_cual')}
       style={{ textTransform: 'uppercase' }}
       required
+      disabled={items.esta_vacunado_contra_covid19 !== "2"}
+
     />
   </div>
 </div>
@@ -1514,9 +1689,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'tiene_esquema_de_vacunas_completo')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1529,9 +1705,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'requiere_apoyo_para_actividades_diarias')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1545,6 +1722,7 @@ const Tab5: React.FC = () => {
       value={items.persona_que_ayuda_actividades_diarias}
       onChange={(e) => handleInputChange(e, 'persona_que_ayuda_actividades_diarias')}
       required
+      disabled={items.requiere_apoyo_para_actividades_diarias !== "2"}
     >
       <option value=""> SELECCIONE </option><option value="1"> ALGÚN MIEMBRO DEL HOGAR </option><option value="5"> NINGUNA </option><option value="4"> OTRA </option><option value="3"> PERSONA EXTERNA EMPLEADA PARA AYUDARLO </option><option value="2"> PERSONA EXTERNA NO EMPLEADA </option>
     </select>
@@ -1558,6 +1736,7 @@ const Tab5: React.FC = () => {
       value={items.sexo_persona_que_mas_ayuda}
       onChange={(e) => handleInputChange(e, 'sexo_persona_que_mas_ayuda')}
       required
+      disabled={items.requiere_apoyo_para_actividades_diarias !== "2"}
     >
       <option value=""> SELECCIONE </option><option value="1"> HOMBRE </option><option value="2"> MUJER </option>
     </select>
@@ -1580,10 +1759,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_fisioterapia}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_fisioterapia')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1595,10 +1776,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_fonoaudiologia}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_fonoaudiologia')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1612,10 +1795,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_medic_permanen}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_medic_permanen')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1627,10 +1812,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_medici_fisica}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_medici_fisica')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1644,10 +1831,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_optometria}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_optometria')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1659,10 +1848,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_psicologia}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_psicologia')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1676,10 +1867,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_psiquiatria}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_psiquiatria')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1691,10 +1884,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_terapia_ocupa}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_terapia_ocupa')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1708,10 +1903,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_trabajo_social}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_trabajo_social')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 
@@ -1723,10 +1920,12 @@ const Tab5: React.FC = () => {
       value={items.rehabilitacion_ordenada_otro_tipo}
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_otro_tipo')}
       required
+      disabled={items.rehabilitacion_ordenada_ninguno === "2"}
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1741,9 +1940,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'rehabilitacion_ordenada_ninguno')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1760,9 +1960,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'actualmente_esta_en_rehabilitacion')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1777,6 +1978,7 @@ const Tab5: React.FC = () => {
       value={items.quien_paga_rehabilitacion}
       onChange={(e) => handleInputChange(e, 'quien_paga_rehabilitacion')}
       required
+      disabled={items.actualmente_esta_en_rehabilitacion === "1"}
     >
         <option value=""> SELECCIONE </option><option value="5"> EL EMPLEADOR </option><option value="1"> EL SISTEMA GENERAL DE SALUD </option><option value="2"> LA FAMILIA </option><option value="6"> OTRO. ¿QUIEN? </option><option value="3"> PERSONALMENTE </option><option value="4"> UNA ONG </option> 
     </select>
@@ -1792,6 +1994,7 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'quien_paga_rehabilitacion_otro_quien')}
       style={{ textTransform: 'uppercase' }}
       required
+      disabled={items.quien_paga_rehabilitacion !== "6"}
     />
   </div>
 </div>
@@ -1805,6 +2008,7 @@ const Tab5: React.FC = () => {
       value={items.establecimiento_rehabilitacion_es}
       onChange={(e) => handleInputChange(e, 'establecimiento_rehabilitacion_es')}
       required
+      disabled={items.actualmente_esta_en_rehabilitacion === "1"}
     >
       <option value=""> SELECCIONE </option><option value="3"> NO SABE (PASE A 3.22) </option><option value="2"> PRIVADO (PASE A 3.22) </option><option value="1"> PÚBLICO (PASE A 3.22) </option>
     </select>
@@ -1820,6 +2024,7 @@ const Tab5: React.FC = () => {
       value={items.porque_no_recibe_rehabilitacion}
       onChange={(e) => handleInputChange(e, 'porque_no_recibe_rehabilitacion')}
       required
+      disabled={items.actualmente_esta_en_rehabilitacion === "2"}
     >
       <option value=""> SELECCIONE </option><option value="2"> CREE QUE YA NO LO NECESITA </option><option value="5"> EL CENTRO DE ATENCIÓN QUEDA MUY LEJOS </option><option value="4"> FALTA DE DINERO </option><option value="7"> NO HA SIDO AUTORIZADO POR EL ASEGURADOR </option><option value="6"> NO HAY QUIÉN LO LLEVE </option><option value="3"> NO LE GUSTA </option><option value="8"> OTRO. ¿CÚAL? </option><option value="1"> YA TERMINÓ EL SERVICIO DE REHABILITACIÓN </option>
     </select>
@@ -1835,6 +2040,7 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'porque_no_recibe_rehabilitacion_otro')}
       style={{ textTransform: 'uppercase' }}
       required
+      disabled={items.porque_no_recibe_rehabilitacion !== "8"}
     />
   </div>
 </div>
@@ -1848,6 +2054,7 @@ const Tab5: React.FC = () => {
       value={items.cuanto_tiempo_sin_rehabilitacion}
       onChange={(e) => handleInputChange(e, 'cuanto_tiempo_sin_rehabilitacion')}
       required
+      disabled={items.actualmente_esta_en_rehabilitacion === "2"}
     >
         <option value=""> SELECCIONE </option><option value="3"> 1 A 3 AÑOS </option><option value="4"> 4 A 6 AÑOS </option><option value="2"> 7 A 11 MESES </option><option value="1"> ENTRE 0 Y 6 MESES </option><option value="5"> MÁS DE 6 AÑOS </option><option value="6"> NUNCA RECIBIÓ REHABILITACIÓN </option>
     </select>
@@ -1862,9 +2069,10 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'conoce_prestadores_rehabilitacion')}
       required
     >
-      <option value="">SELECCIONE</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
+      
+            <option value="1">NO</option>
+      <option value="2">SI</option>
+
     </select>
   </div>
 </div>
@@ -1923,6 +2131,7 @@ const Tab5: React.FC = () => {
       onChange={(e) => handleInputChange(e, 'otro_tipo_afiliacion_cual')}
       style={{ textTransform: 'uppercase' }}
       required
+      disabled={items.tipo_afiliacion !== "5"}
     />
   </div>
 </div>

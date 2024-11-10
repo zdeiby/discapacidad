@@ -71,6 +71,7 @@ const Ciudadano: React.FC = () => {
     return date.getFullYear();
   };
   const [people, setPeople] = useState<Person[]>([]);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const params = useParams();
   const [db, setDb] = useState<any>(null);
   const [items, setItems] = useState<Person>({
@@ -178,7 +179,7 @@ const Ciudadano: React.FC = () => {
               return obj;
             }, {} as Person);
           });
-          
+          setButtonDisabled((transformedPeople[0].id_usuario) ? false : true);
           if (transformedPeople.length > 0) {
             setItems(transformedPeople[0]); // Guardar el primer objeto en items
             console.log('Datos obtenidos:', transformedPeople[0]); // Verifica los datos
@@ -318,6 +319,7 @@ const Ciudadano: React.FC = () => {
         items.telcontactodos, items.fechadenacimiento_verificada, items.fecharegistro, items.tabla, items.usuario, items.estado  // Añadido 'usuario' y 'estado'
       ]);
       saveDatabase();
+      setButtonDisabled(false);
       alert('Datos guardados correctamente');
     } catch (err) {
       console.error('Error al guardar los datos:', err);
@@ -485,7 +487,7 @@ const Ciudadano: React.FC = () => {
               </div>
               <div className="col-sm">
                 <label className="form-label" >Teléfono de contacto 2:</label>
-                <input type="text" onChange={(e) => handleInputChange(e, 'telcontactodos')} value={items.telcontactodos} placeholder="" className="form-control form-control-sm  " required />
+                <input type="text" onChange={(e) => handleInputChange(e, 'telcontactodos')} value={items.telcontactodos} placeholder="" className="form-control form-control-sm  "  />
               </div>
               <div className="col-sm">
                 <label className="form-label" >Correo electrónico:</label>
@@ -728,7 +730,7 @@ const Ciudadano: React.FC = () => {
         <br />
 
         <div><button className='btn btn-success' type="submit" onClick={(e)=>(enviar(db,e))}>Guardar</button>&nbsp;
-          <div className="btn btn-primary" onClick={() => window.location.href = `/tabs/tab3/${params.ficha}`}>Siguiente</div>
+        <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab3/${params.ficha}`;} }}> Siguiente</div>
         </div>
          </form> 
 

@@ -112,6 +112,8 @@ const Tab4: React.FC = () => {
 
   const [people, setPeople] = useState<Person[]>([]);
   const [db, setDb] = useState<any>(null);
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const [items, setItems] = useState({
     id_usuario: '', 
     cual_es_el_diagnostico: '', 
@@ -208,6 +210,23 @@ const Tab4: React.FC = () => {
   });
   
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [isOriginKnown, setIsOriginKnown] = useState(false);
+  const [isLocationDisabled, setIsLocationDisabled] = useState(false);
+  const [consequenceSections, setConsequenceSections] = useState({
+    showAccident: false,
+    showComplications: false,
+    showHealthConditions: false,
+    showArmedConflict: false,
+    showSubstanceUse: false,
+    showNaturalDisaster: false,
+    showServiceDifficulty: false,
+    showGeneralIllness: false,
+    showProfessionalIllness: false,
+    showGenetic: false,
+    showSelfHarm: false,
+    showOtherCause: false,
+    showViolence: false,
+  });
 
   useEffect(() => {
     loadSQL(setDb, fetchUsers);
@@ -258,7 +277,29 @@ const Tab4: React.FC = () => {
           }, {} as Person);
         });
         setPeople(transformedPeople);
-        setButtonDisabled((transformedPeople[0].estado)?false:true);  
+        setIsDisabled(transformedPeople[0].permanentes_ninguno === "2");
+        setIsOriginKnown(transformedPeople[0].origen_discapacidad === "2");
+        setIsLocationDisabled(transformedPeople[0].lugares_barreras_ninguno == 2);   
+        
+        const consequenceValue = transformedPeople[0].consecuencia_discapacidad;
+        setConsequenceSections({
+            showAccident: consequenceValue === '9',
+            showComplications: consequenceValue === '2',
+            showHealthConditions: consequenceValue === '1',
+            showArmedConflict: consequenceValue === '11',
+            showSubstanceUse: consequenceValue === '7',
+            showNaturalDisaster: consequenceValue === '8',
+            showServiceDifficulty: consequenceValue === '12',
+            showGeneralIllness: consequenceValue === '3',
+            showProfessionalIllness: consequenceValue === '6',
+            showGenetic: consequenceValue === '4',
+            showSelfHarm: consequenceValue === '5',
+            showOtherCause: consequenceValue === '13',
+            showViolence: consequenceValue === '10',
+        });
+        
+    
+        setButtonDisabled(transformedPeople[0].estado ? false : true);
       } else {
         setItems({
           id_usuario: params.ficha,
@@ -477,11 +518,181 @@ const Tab4: React.FC = () => {
 
   const handleInputChange = (event, field) => {
     const { value } = event.target;
+    if (field === 'permanentes_ninguno') {
+      setIsDisabled(value === "2"); // Desactiva si `value` es "2" (SI)
+      
+    }
+
+    if (field === 'origen_discapacidad') {
+      setIsOriginKnown(value === '2'); // "SI" habilita
+    }
+
+    
+  
+    // Si estamos en el campo de "consecuencia_discapacidad" (2.6)
+    if (field === 'consecuencia_discapacidad') {
+      const sections = {
+        showAccident: value === '9',
+        showComplications: value === '2',
+        showHealthConditions: value === '1',
+        showArmedConflict: value === '11',
+        showSubstanceUse: value === '7',
+        showNaturalDisaster: value === '8',
+        showServiceDifficulty: value === '12',
+        showGeneralIllness: value === '3',
+        showProfessionalIllness: value === '6',
+        showGenetic: value === '4',
+        showSelfHarm: value === '5',
+        showOtherCause: value === '13',
+        showViolence: value === '10',
+      };
+        setItems((prevItems) => ({
+            ...prevItems,
+            consecuencia_discapacidad: '',
+            enfermedad_profesional: '',
+            consumo_psicoactivos: '',
+            desastres_naturales: '',
+            por_accidente: '',
+            victima_de_violencia: '',
+            del_conflicto_armado_por: '',
+            dificultades_prestacion_servicios: '',
+            en_la_familia_existen_personas_con_discapacidad:''
+        }));
+    
+      setConsequenceSections(sections);
+    }
+    
     setItems((prevItems) => ({
       ...prevItems,
       [field]: value,
+      
+      ...(field === 'permanentes_ninguno' && value === "2" ? { 
+        cual_es_el_diagnostico:'',
+        consecuencia_discapacidad_cual:'',
+        permanentes_sistema_nervioso: '1',
+        permanentes_los_ojos: '1',
+        permanentes_los_oidos: '1',
+        permanentes_demas_sentidos: '1',
+        permanentes_la_voz_el_habla: '1',
+        permanentes_cardiorrespiratorio_defensas: '1',
+        permanentes_digestion_metabolismo: '1',
+        permanentes_sistema_genital: '1',
+        permanentes_movimiento_del_cuerpo: '1',
+        permanentes_la_piel_unas_cabello: '1',
+        cual_afecta_mas: '',
+        hace_cuanto_años: '',
+        hace_cuantos_meses: '',
+        origen_discapacidad: '',
+        consecuencia_discapacidad: '',
+        enfermedad_profesional: '',
+        consumo_psicoactivos: '',
+        desastres_naturales: '',
+        por_accidente: '',
+        victima_de_violencia: '',
+        del_conflicto_armado_por: '',
+        dificultades_prestacion_servicios: '',
+        en_la_familia_existen_personas_con_discapacidad: '',
+        en_cual_pais_adquirio_discapacidad: '',
+        en_cual_departamento_adquirio_discapacidad: '',
+        en_cual_municipio_adquirio_discapacidad: '',
+        discapacidad_auditiva: '1',
+        discapacidad_fisica: '1',
+        discapacidad_intelectual: '1',
+        discapacidad_mental: '1',
+        discapacidad_sordoceguera: '1',
+        discapacidad_visual: '1',
+        discapacidad_multiple: '1',
+        adicionales_a_las_anteriores: '',
+        grado_discapacidad_intelectual: '',
+        actividades_dificultades_pensar: '1',
+        actividades_dificultades_percibir_luz: '1',
+        actividades_dificultades_oir: '1',
+        actividades_dificultades_sabores: '1',
+        actividades_dificultades_hablar: '1',
+        actividades_dificultades_desplazarse: '1',
+        actividades_dificultades_masticar: '1',
+        actividades_dificultades_retener_expulsar: '1',
+        actividades_dificultades_caminar: '1',
+        actividades_dificultades_piel_sana: '1',
+        actividades_dificultades_relacionarse: '1',
+        actividades_dificultades_mover_objetos: '1',
+        actividades_dificultades_posturas: '1',
+        actividades_dificultades_alimentarse: '1',
+        actividades_dificultades_otra: '1',
+        actitudes_negativos_familiares: '1',
+        actitudes_negativos_vecinos: '1',
+        actitudes_negativos_amigos: '1',
+        actitudes_negativos_empleados: '1',
+        actitudes_negativos_otras: '1',
+        actitudes_negativos_nadie: '1',
+        lugares_barreras_dormitorio: '1',
+        lugares_barreras_sala: '1',
+        lugares_barreras_baño: '1',
+        lugares_barreras_escaleras: '1',
+        lugares_barreras_pasillos: '1',
+        lugares_barreras_andenes: '1',
+        lugares_barreras_calles: '1',
+        lugares_barreras_centros_edu: '1',
+        lugares_barreras_lug_trabajo: '1',
+        lugares_barreras_parques: '1',
+        lugares_barreras_paraderos: '1',
+        lugares_barreras_trans_publico: '1',
+        lugares_barreras_hospitales: '1',
+        lugares_barreras_tiendas: '1',
+        lugares_barreras_otros: '1',
+        lugares_barreras_ninguno: '1',
+        medios_comunicacion_escritos: '1',
+        medios_comunicacion_radio: '1',
+        medios_comunicacion_television: '1',
+        medios_comunicacion_senas: '1',
+        medios_comunicacion_senas_naturales: '1',
+        medios_comunicacion_telefono: '1',
+        medios_comunicacion_internet: '1',
+        medios_comunicacion_braille: '1',
+        medios_comunicacion_ninguno: '1',
+        derechos_deberes_pcd: '',
+        derechos_deberes_pcd_cuales: '',
+        certificado_discapacidad: ''
+      } : {}), 
+      ...(field === 'consecuencia_discapacidad' ? {
+        consecuencia_discapacidad_cual: value !== '13' ? "NO APLICA" : ''
+      } : {}),
+      ...(field === 'origen_discapacidad' && value === "1" ? { 
+        consecuencia_discapacidad: '',
+        enfermedad_profesional: '',
+        consumo_psicoactivos: '',
+        desastres_naturales: '',
+        por_accidente: '',
+        victima_de_violencia: '',
+        del_conflicto_armado_por: '',
+        dificultades_prestacion_servicios: ''
+      } : {}),
+      ...(field === 'lugares_barreras_ninguno' && value === "2" ? {
+        lugares_barreras_dormitorio: '1',
+        lugares_barreras_sala: '1',
+        lugares_barreras_baño: '1',
+        lugares_barreras_escaleras: '1',
+        lugares_barreras_pasillos: '1',
+        lugares_barreras_andenes: '1',
+        lugares_barreras_calles: '1',
+        lugares_barreras_centros_edu: '1',
+        lugares_barreras_lug_trabajo: '1',
+        lugares_barreras_parques: '1',
+        lugares_barreras_paraderos: '1',
+        lugares_barreras_trans_publico: '1',
+        lugares_barreras_hospitales: '1',
+        lugares_barreras_tiendas: '1',
+        lugares_barreras_otros: '1'
+      } : {}),
+      ...(field === 'derechos_deberes_pcd' ? {
+        derechos_deberes_pcd_cuales: value !== '2' ? "NO APLICA" : ''
+      } : {})
     }));
     console.log(items);
+
+    if (field === 'lugares_barreras_ninguno') {
+      setIsLocationDisabled(value === "2");
+    }
   };
 
   // useEffect(() => {
@@ -600,7 +811,7 @@ const Tab4: React.FC = () => {
           rows="5"
           required
           value={items.cual_es_el_diagnostico}
-          onChange={(e) => handleInputChange(e, 'cual_es_el_diagnostico')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'cual_es_el_diagnostico')}
         />
       </div>
     </div>
@@ -621,7 +832,7 @@ const Tab4: React.FC = () => {
           id="permanentes_sistema_nervioso"
           required
           value={items.permanentes_sistema_nervioso}
-          onChange={(e) => handleInputChange(e, 'permanentes_sistema_nervioso')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_sistema_nervioso')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -633,7 +844,7 @@ const Tab4: React.FC = () => {
           id="permanentes_los_ojos"
           required
           value={items.permanentes_los_ojos}
-          onChange={(e) => handleInputChange(e, 'permanentes_los_ojos')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_los_ojos')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -647,7 +858,7 @@ const Tab4: React.FC = () => {
           id="permanentes_los_oidos"
           required
           value={items.permanentes_los_oidos}
-          onChange={(e) => handleInputChange(e, 'permanentes_los_oidos')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_los_oidos')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -659,7 +870,7 @@ const Tab4: React.FC = () => {
           id="permanentes_demas_sentidos"
           required
           value={items.permanentes_demas_sentidos}
-          onChange={(e) => handleInputChange(e, 'permanentes_demas_sentidos')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_demas_sentidos')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -673,7 +884,7 @@ const Tab4: React.FC = () => {
           id="permanentes_la_voz_el_habla"
           required
           value={items.permanentes_la_voz_el_habla}
-          onChange={(e) => handleInputChange(e, 'permanentes_la_voz_el_habla')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_la_voz_el_habla')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -685,7 +896,7 @@ const Tab4: React.FC = () => {
           id="permanentes_cardiorrespiratorio_defensas"
           required
           value={items.permanentes_cardiorrespiratorio_defensas}
-          onChange={(e) => handleInputChange(e, 'permanentes_cardiorrespiratorio_defensas')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_cardiorrespiratorio_defensas')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -699,7 +910,7 @@ const Tab4: React.FC = () => {
           id="permanentes_digestion_metabolismo"
           required
           value={items.permanentes_digestion_metabolismo}
-          onChange={(e) => handleInputChange(e, 'permanentes_digestion_metabolismo')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_digestion_metabolismo')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -711,7 +922,7 @@ const Tab4: React.FC = () => {
           id="permanentes_sistema_genital"
           required
           value={items.permanentes_sistema_genital}
-          onChange={(e) => handleInputChange(e, 'permanentes_sistema_genital')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_sistema_genital')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -725,7 +936,7 @@ const Tab4: React.FC = () => {
           id="permanentes_movimiento_del_cuerpo"
           required
           value={items.permanentes_movimiento_del_cuerpo}
-          onChange={(e) => handleInputChange(e, 'permanentes_movimiento_del_cuerpo')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_movimiento_del_cuerpo')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -737,7 +948,7 @@ const Tab4: React.FC = () => {
           id="permanentes_la_piel_unas_cabello"
           required
           value={items.permanentes_la_piel_unas_cabello}
-          onChange={(e) => handleInputChange(e, 'permanentes_la_piel_unas_cabello')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'permanentes_la_piel_unas_cabello')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -745,13 +956,13 @@ const Tab4: React.FC = () => {
     </div>
     <div className="row ">
       <div className=" col-sm">
-        <label htmlFor="permanentes_ninguno">Ninguno (Persona sin discapacidad)</label>
+        <label htmlFor="permanentes_ninguno">Ninguno (Persona sin discapacidad)  (pase al capítulo XII)</label>
         <select
           className="form-control form-control-sm"
           id="permanentes_ninguno"
           required
           value={items.permanentes_ninguno}
-          onChange={(e) => handleInputChange(e, 'permanentes_ninguno')}
+            onChange={(e) => handleInputChange(e, 'permanentes_ninguno')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -768,7 +979,7 @@ const Tab4: React.FC = () => {
           rows="5"
           required
           value={items.cual_afecta_mas}
-          onChange={(e) => handleInputChange(e, 'cual_afecta_mas')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'cual_afecta_mas')}
         />
       </div>
     </div>
@@ -787,7 +998,7 @@ const Tab4: React.FC = () => {
           id="hace_cuanto_años"
           required
           value={items.hace_cuanto_años}
-          onChange={(e) => handleInputChange(e, 'hace_cuanto_años')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'hace_cuanto_años')}
         />
       </div>
       <div className=" col-sm">
@@ -798,7 +1009,7 @@ const Tab4: React.FC = () => {
           id="hace_cuantos_meses"
           required
           value={items.hace_cuantos_meses}
-          onChange={(e) => handleInputChange(e, 'hace_cuantos_meses')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'hace_cuantos_meses')}
         />
       </div>
     </div>
@@ -811,7 +1022,7 @@ const Tab4: React.FC = () => {
           id="origen_discapacidad"
           required
           value={items.origen_discapacidad}
-          onChange={(e) => handleInputChange(e, 'origen_discapacidad')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'origen_discapacidad')}
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
@@ -823,11 +1034,12 @@ const Tab4: React.FC = () => {
           id="consecuencia_discapacidad"
           required
           value={items.consecuencia_discapacidad}
-          onChange={(e) => handleInputChange(e, 'consecuencia_discapacidad')}
+           disabled={isDisabled || !isOriginKnown} onChange={(e) => handleInputChange(e, 'consecuencia_discapacidad')}
         >
         <option value=""> SELECCIONE </option><option value="9"> ACCIDENTE (PASE A 2.10) </option><option value="2"> COMPLICACIONES DURANTE EL PARTO (PASE A 2.14) </option><option value="1"> CONDICIONES DE SALUD DE LA MADRE DURANTE EL EMBARAZO (PASE A 2.14) </option><option value="11"> CONFLICTO ARMADO (PASE A 2.12) </option><option value="7"> CONSUMO DE PSICOACTIVOS (PASE A 2.8) </option><option value="8"> DESASTRE NATURAL (PASE A 2.9) </option><option value="12"> DIFICULTADES DE SERVICIOS (PASE A 2.13) </option><option value="3"> ENFERMEDAD GENERAL (PASE A 2.14) </option><option value="6"> ENFERMEDAD PROFESIONAL (PASE A 2.7) </option><option value="4"> GENÉTICA, HEREDITARIA (PASE A 2.14) </option><option value="5"> LESIÓN AUTOINFLIGIDA (PASE A 2.14) </option><option value="13"> OTRA CAUSA (PASE A 2.14) ¿CUÁL? </option><option value="10"> VICTIMA DE VIOLENCIA (PASE A 2.11) </option>        </select>
       </div>
     </div>
+    {(items.consecuencia_discapacidad == '13')?
     <div className="row pb-3">
       <div className=" col-sm">
         <label htmlFor="consecuencia_discapacidad_cual">Informa cuál:</label>
@@ -837,10 +1049,10 @@ const Tab4: React.FC = () => {
           id="consecuencia_discapacidad_cual"
           style={{ textTransform: 'uppercase' }}
           value={items.consecuencia_discapacidad_cual}
-          onChange={(e) => handleInputChange(e, 'consecuencia_discapacidad_cual')}
+           disabled={isDisabled || !isOriginKnown} onChange={(e) => handleInputChange(e, 'consecuencia_discapacidad_cual')}
         />
       </div>
-    </div>
+    </div>:''}
     <hr />
     <div className="row pb-3">
       <div className=" col-sm">
@@ -850,7 +1062,7 @@ const Tab4: React.FC = () => {
           id="enfermedad_profesional"
           required
           value={items.enfermedad_profesional}
-          onChange={(e) => handleInputChange(e, 'enfermedad_profesional')}
+           disabled={isDisabled || !isOriginKnown || !consequenceSections.showProfessionalIllness} onChange={(e) => handleInputChange(e, 'enfermedad_profesional')}
         >
         <option value=""> SELECCIONE </option><option value="4"> CARGA DE TRABAJO FÍSICA O MENTAL </option><option value="2"> CONDICIONES DE SEGURIDAD </option><option value="3"> CONTAMINANTES (QUÍMICOS, BIOLÓGICOS) </option><option value="1"> MEDIO AMBIENTE DEL LUGAR DE TRABAJO </option><option value="5"> ORGANIZACIÓN DEL TRABAJO </option><option value="6"> OTRA CAUSA </option>        </select>
       </div>
@@ -861,7 +1073,7 @@ const Tab4: React.FC = () => {
           id="consumo_psicoactivos"
           required
           value={items.consumo_psicoactivos}
-          onChange={(e) => handleInputChange(e, 'consumo_psicoactivos')}
+           disabled={isDisabled || !isOriginKnown || !consequenceSections.showSubstanceUse} onChange={(e) => handleInputChange(e, 'consumo_psicoactivos')}
         >
           <option value=""> SELECCIONE </option><option value="1"> PSICOACTIVOS ACEPTADOS SOCIALMENTE </option><option value="2"> PSICOACTIVOS SOCIALMENTE NO ACEPTADOS </option>        </select>
       </div>
@@ -874,7 +1086,7 @@ const Tab4: React.FC = () => {
           id="desastres_naturales"
           required
           value={items.desastres_naturales}
-          onChange={(e) => handleInputChange(e, 'desastres_naturales')}
+           disabled={isDisabled || !isOriginKnown || !consequenceSections.showNaturalDisaster} onChange={(e) => handleInputChange(e, 'desastres_naturales')}
         >
         <option value=""> SELECCIONE </option><option value="3"> DESLIZAMIENTO </option><option value="2"> INUNDACIÓN </option><option value="4"> OTRO DESASTRE NATURAL </option><option value="1"> TERREMOTO </option>        </select>
       </div>
@@ -885,7 +1097,7 @@ const Tab4: React.FC = () => {
           id="por_accidente"
           required
           value={items.por_accidente}
-          onChange={(e) => handleInputChange(e, 'por_accidente')}
+           disabled={isDisabled || !isOriginKnown || !consequenceSections.showAccident} onChange={(e) => handleInputChange(e, 'por_accidente')}
         >
           <option value=""> SELECCIONE </option><option value="1"> DE TRABAJO </option><option value="2"> DE TRÁNSITO </option><option value="3"> DEPORTIVO </option><option value="4"> EN EL CENTRO EDUCATIVO </option><option value="5"> EN EL HOGAR </option><option value="6"> OTRO TIPO DE ACCIDENTE </option>         </select>
       </div>
@@ -898,7 +1110,7 @@ const Tab4: React.FC = () => {
           id="victima_de_violencia"
           required
           value={items.victima_de_violencia}
-          onChange={(e) => handleInputChange(e, 'victima_de_violencia')}
+           disabled={isDisabled || !isOriginKnown || !consequenceSections.showViolence} onChange={(e) => handleInputChange(e, 'victima_de_violencia')}
         >
           <option value=""> SELECCIONE </option><option value="1"> AL INTERIOR DEL HOGAR </option><option value="2"> DELICUENCIA COMÚN </option><option value="4"> OTRA </option><option value="3"> SOCIAL </option>        </select>
       </div>
@@ -909,7 +1121,7 @@ const Tab4: React.FC = () => {
           id="del_conflicto_armado_por"
           required
           value={items.del_conflicto_armado_por}
-          onChange={(e) => handleInputChange(e, 'del_conflicto_armado_por')}
+           disabled={isDisabled || !isOriginKnown || !consequenceSections.showArmedConflict} onChange={(e) => handleInputChange(e, 'del_conflicto_armado_por')}
         >
           <option value=""> SELECCIONE </option><option value="1"> ARMA DE FUEGO </option><option value="5"> ARTEFACTOS EXPLOSIVOS IMPROVISADOS AEI  </option><option value="2"> BOMBA </option><option value="3"> MINAS ANTIPERSONALES MAP </option><option value="4"> MUNICIONES SIN EXPLOTAR MUSE </option><option value="6"> OTRO TIPO DE ARMA </option>        </select>
       </div>
@@ -922,7 +1134,7 @@ const Tab4: React.FC = () => {
           id="dificultades_prestacion_servicios"
           required
           value={items.dificultades_prestacion_servicios}
-          onChange={(e) => handleInputChange(e, 'dificultades_prestacion_servicios')}
+           disabled={isDisabled || !isOriginKnown || !consequenceSections.showServiceDifficulty} onChange={(e) => handleInputChange(e, 'dificultades_prestacion_servicios')}
         >
           <option value=""> SELECCIONE </option><option value="1"> ATENCIÓN MÉDICA INOPORTUNA </option><option value="4"> DEFICIENCIAS EN LA CALIDAD DE LA ATENCIÓN </option><option value="2"> EQUIVOCACIONES EN EL DIAGNÓSTICO </option><option value="3"> FORMULACIÓN O APLICACIÓN MALA DE MEDICAMENTOS </option><option value="5"> OTRA </option>        </select>
       </div>
@@ -933,7 +1145,7 @@ const Tab4: React.FC = () => {
           id="en_la_familia_existen_personas_con_discapacidad"
           required
           value={items.en_la_familia_existen_personas_con_discapacidad}
-          onChange={(e) => handleInputChange(e, 'en_la_familia_existen_personas_con_discapacidad')}
+           disabled={isDisabled || !isOriginKnown} onChange={(e) => handleInputChange(e, 'en_la_familia_existen_personas_con_discapacidad')}
         >
         <option value=""> SELECCIONE </option><option value="2"> NO </option><option value="3"> NO SABE </option><option value="1"> SI </option>        </select>
       </div>
@@ -947,7 +1159,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="en_cual_pais_adquirio_discapacidad"
           value={items.en_cual_pais_adquirio_discapacidad}
-          onChange={(e) => handleInputChange(e, 'en_cual_pais_adquirio_discapacidad')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'en_cual_pais_adquirio_discapacidad')}
           required
         />
       </div>
@@ -958,7 +1170,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="en_cual_departamento_adquirio_discapacidad"
           value={items.en_cual_departamento_adquirio_discapacidad}
-          onChange={(e) => handleInputChange(e, 'en_cual_departamento_adquirio_discapacidad')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'en_cual_departamento_adquirio_discapacidad')}
           required
         />
       </div>
@@ -972,7 +1184,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="en_cual_municipio_adquirio_discapacidad"
           value={items.en_cual_municipio_adquirio_discapacidad}
-          onChange={(e) => handleInputChange(e, 'en_cual_municipio_adquirio_discapacidad')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'en_cual_municipio_adquirio_discapacidad')}
           required
         />
       </div>
@@ -987,7 +1199,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="discapacidad_auditiva"
           value={items.discapacidad_auditiva}
-          onChange={(e) => handleInputChange(e, 'discapacidad_auditiva')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'discapacidad_auditiva')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -999,7 +1211,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="discapacidad_fisica"
           value={items.discapacidad_fisica}
-          onChange={(e) => handleInputChange(e, 'discapacidad_fisica')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'discapacidad_fisica')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1014,7 +1226,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="discapacidad_intelectual"
           value={items.discapacidad_intelectual}
-          onChange={(e) => handleInputChange(e, 'discapacidad_intelectual')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'discapacidad_intelectual')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1026,7 +1238,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="discapacidad_mental"
           value={items.discapacidad_mental}
-          onChange={(e) => handleInputChange(e, 'discapacidad_mental')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'discapacidad_mental')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1041,7 +1253,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="discapacidad_sordoceguera"
           value={items.discapacidad_sordoceguera}
-          onChange={(e) => handleInputChange(e, 'discapacidad_sordoceguera')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'discapacidad_sordoceguera')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1053,7 +1265,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="discapacidad_visual"
           value={items.discapacidad_visual}
-          onChange={(e) => handleInputChange(e, 'discapacidad_visual')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'discapacidad_visual')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1068,7 +1280,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="discapacidad_multiple"
           value={items.discapacidad_multiple}
-          onChange={(e) => handleInputChange(e, 'discapacidad_multiple')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'discapacidad_multiple')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1085,7 +1297,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="adicionales_a_las_anteriores"
           value={items.adicionales_a_las_anteriores}
-          onChange={(e) => handleInputChange(e, 'adicionales_a_las_anteriores')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'adicionales_a_las_anteriores')}
           required
         >
         <option value=""> SELECCIONE </option><option value="2"> GRAVE </option><option value="1"> LEVE </option><option value="3"> MODERADA </option><option value="4"> PROFUNDA </option>         </select>
@@ -1096,7 +1308,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="grado_discapacidad_intelectual"
           value={items.grado_discapacidad_intelectual}
-          onChange={(e) => handleInputChange(e, 'grado_discapacidad_intelectual')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'grado_discapacidad_intelectual')}
           required
         >
           <option value=""> SELECCIONE </option><option value="2"> GRAVE </option><option value="1"> LEVE </option><option value="3"> MODERADA </option><option value="4"> PROFUNDA </option>         </select>
@@ -1112,7 +1324,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_pensar"
           value={items.actividades_dificultades_pensar}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_pensar')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_pensar')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1124,7 +1336,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_percibir_luz"
           value={items.actividades_dificultades_percibir_luz}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_percibir_luz')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_percibir_luz')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1139,7 +1351,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_oir"
           value={items.actividades_dificultades_oir}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_oir')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_oir')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1151,7 +1363,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_sabores"
           value={items.actividades_dificultades_sabores}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_sabores')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_sabores')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1166,7 +1378,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_hablar"
           value={items.actividades_dificultades_hablar}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_hablar')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_hablar')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1178,7 +1390,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_desplazarse"
           value={items.actividades_dificultades_desplazarse}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_desplazarse')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_desplazarse')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1192,7 +1404,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_masticar"
           value={items.actividades_dificultades_masticar}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_masticar')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_masticar')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1204,7 +1416,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_retener_expulsar"
           value={items.actividades_dificultades_retener_expulsar}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_retener_expulsar')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_retener_expulsar')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1219,7 +1431,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_caminar"
           value={items.actividades_dificultades_caminar}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_caminar')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_caminar')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1231,7 +1443,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_piel_sana"
           value={items.actividades_dificultades_piel_sana}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_piel_sana')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_piel_sana')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1246,7 +1458,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_relacionarse"
           value={items.actividades_dificultades_relacionarse}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_relacionarse')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_relacionarse')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1258,7 +1470,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_mover_objetos"
           value={items.actividades_dificultades_mover_objetos}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_mover_objetos')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_mover_objetos')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1273,7 +1485,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_posturas"
           value={items.actividades_dificultades_posturas}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_posturas')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_posturas')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1285,7 +1497,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_alimentarse"
           value={items.actividades_dificultades_alimentarse}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_alimentarse')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_alimentarse')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1300,7 +1512,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actividades_dificultades_otra"
           value={items.actividades_dificultades_otra}
-          onChange={(e) => handleInputChange(e, 'actividades_dificultades_otra')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actividades_dificultades_otra')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1317,7 +1529,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actitudes_negativos_familiares"
           value={items.actitudes_negativos_familiares}
-          onChange={(e) => handleInputChange(e, 'actitudes_negativos_familiares')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actitudes_negativos_familiares')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1329,7 +1541,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actitudes_negativos_vecinos"
           value={items.actitudes_negativos_vecinos}
-          onChange={(e) => handleInputChange(e, 'actitudes_negativos_vecinos')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actitudes_negativos_vecinos')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1344,7 +1556,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actitudes_negativos_amigos"
           value={items.actitudes_negativos_amigos}
-          onChange={(e) => handleInputChange(e, 'actitudes_negativos_amigos')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actitudes_negativos_amigos')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1356,7 +1568,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actitudes_negativos_empleados"
           value={items.actitudes_negativos_empleados}
-          onChange={(e) => handleInputChange(e, 'actitudes_negativos_empleados')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actitudes_negativos_empleados')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1371,7 +1583,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actitudes_negativos_otras"
           value={items.actitudes_negativos_otras}
-          onChange={(e) => handleInputChange(e, 'actitudes_negativos_otras')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actitudes_negativos_otras')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1383,7 +1595,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="actitudes_negativos_nadie"
           value={items.actitudes_negativos_nadie}
-          onChange={(e) => handleInputChange(e, 'actitudes_negativos_nadie')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'actitudes_negativos_nadie')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1400,7 +1612,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_dormitorio"
           value={items.lugares_barreras_dormitorio}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_dormitorio')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_dormitorio')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1412,7 +1624,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_sala"
           value={items.lugares_barreras_sala}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_sala')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_sala')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1427,7 +1639,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_baño"
           value={items.lugares_barreras_baño}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_baño')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_baño')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1439,7 +1651,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_escaleras"
           value={items.lugares_barreras_escaleras}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_escaleras')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_escaleras')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1455,7 +1667,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_pasillos"
           value={items.lugares_barreras_pasillos}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_pasillos')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_pasillos')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1467,7 +1679,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_andenes"
           value={items.lugares_barreras_andenes}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_andenes')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_andenes')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1482,7 +1694,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_calles"
           value={items.lugares_barreras_calles}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_calles')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_calles')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1494,7 +1706,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_centros_edu"
           value={items.lugares_barreras_centros_edu}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_centros_edu')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_centros_edu')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1509,7 +1721,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_lug_trabajo"
           value={items.lugares_barreras_lug_trabajo}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_lug_trabajo')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_lug_trabajo')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1521,7 +1733,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_parques"
           value={items.lugares_barreras_parques}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_parques')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_parques')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1536,7 +1748,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_paraderos"
           value={items.lugares_barreras_paraderos}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_paraderos')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_paraderos')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1548,7 +1760,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_trans_publico"
           value={items.lugares_barreras_trans_publico}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_trans_publico')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_trans_publico')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1563,7 +1775,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_hospitales"
           value={items.lugares_barreras_hospitales}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_hospitales')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_hospitales')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1575,7 +1787,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_tiendas"
           value={items.lugares_barreras_tiendas}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_tiendas')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_tiendas')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1590,7 +1802,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_otros"
           value={items.lugares_barreras_otros}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_otros')}
+           disabled={isDisabled || isLocationDisabled} onChange={(e) => handleInputChange(e, 'lugares_barreras_otros')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1602,7 +1814,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="lugares_barreras_ninguno"
           value={items.lugares_barreras_ninguno}
-          onChange={(e) => handleInputChange(e, 'lugares_barreras_ninguno')}
+           disabled={isDisabled } onChange={(e) => handleInputChange(e, 'lugares_barreras_ninguno')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1619,7 +1831,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_escritos"
           value={items.medios_comunicacion_escritos}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_escritos')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_escritos')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1631,7 +1843,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_radio"
           value={items.medios_comunicacion_radio}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_radio')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_radio')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1646,7 +1858,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_television"
           value={items.medios_comunicacion_television}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_television')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_television')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1658,7 +1870,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_senas"
           value={items.medios_comunicacion_senas}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_senas')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_senas')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1673,7 +1885,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_senas_naturales"
           value={items.medios_comunicacion_senas_naturales}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_senas_naturales')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_senas_naturales')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1685,7 +1897,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_telefono"
           value={items.medios_comunicacion_telefono}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_telefono')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_telefono')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1700,7 +1912,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_internet"
           value={items.medios_comunicacion_internet}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_internet')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_internet')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1712,7 +1924,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_braille"
           value={items.medios_comunicacion_braille}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_braille')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_braille')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1727,7 +1939,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="medios_comunicacion_ninguno"
           value={items.medios_comunicacion_ninguno}
-          onChange={(e) => handleInputChange(e, 'medios_comunicacion_ninguno')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'medios_comunicacion_ninguno')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
@@ -1744,12 +1956,13 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="derechos_deberes_pcd"
           value={items.derechos_deberes_pcd}
-          onChange={(e) => handleInputChange(e, 'derechos_deberes_pcd')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'derechos_deberes_pcd')}
           required
         >
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
+      {items.derechos_deberes_pcd == '2' ? 
       <div className="form-group col-sm">
         <label htmlFor="derechos_deberes_pcd_cuales">¿Cuáles?:</label>
         <input
@@ -1757,10 +1970,11 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="derechos_deberes_pcd_cuales"
           value={items.derechos_deberes_pcd_cuales}
-          onChange={(e) => handleInputChange(e, 'derechos_deberes_pcd_cuales')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'derechos_deberes_pcd_cuales')}
           style={{ textTransform: 'uppercase' }}
+          required
         />
-      </div>
+      </div>: ''}
     </div>
 
     <hr />
@@ -1772,7 +1986,7 @@ const Tab4: React.FC = () => {
           className="form-control form-control-sm"
           id="certificado_discapacidad"
           value={items.certificado_discapacidad}
-          onChange={(e) => handleInputChange(e, 'certificado_discapacidad')}
+           disabled={isDisabled} onChange={(e) => handleInputChange(e, 'certificado_discapacidad')}
           required
         >
         <option value=""> SELECCIONE </option><option value="3"> EN PROCESO </option><option value="2"> NO </option><option value="1"> SI </option>        </select>
@@ -1792,7 +2006,18 @@ const Tab4: React.FC = () => {
 
     {/* <div><IonButton color="success" onClick={enviar}>Guardar</IonButton><IonButton disabled={buttonDisabled} routerLink={`/tabs/tab5/${params.ficha}`}>Siguiente</IonButton></div> */}
     <div><button className='btn btn-success' type="submit" onClick={(e)=>(enviar(db,e))}>Guardar</button>&nbsp;
-       <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab5/${params.ficha}`;} }}> Siguiente</div>
+    {isDisabled ? 
+      <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab16/${params.ficha}`;} }}> 
+        Siguiente
+      </div> 
+      : 
+      <div className={`btn btn-primary ${buttonDisabled ? 'disabled' : ''}`} onClick={() => { if (!buttonDisabled) {  window.location.href = `/tabs/tab5/${params.ficha}`;} }}> 
+        Siguiente
+      </div>
+    }
+
+
+       
        </div>   
     </form>
     </IonContent>
