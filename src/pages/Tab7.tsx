@@ -70,61 +70,63 @@ interface Person {
 const Tab7: React.FC = () => {
   const params = useParams();
   const [people, setPeople] = useState<Person[]>([]);
+  const [edad, setEdad] = useState<any>(null);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [db, setDb] = useState<any>(null);
   const [items, setItems] = useState({
-    id_usuario: '',
-  sabe_leer_y_escribir_solo_mayores_de_5_años: '',
-  asiste_actualmente_a_establecimiento_educativo: '',
-  el_establecimiento_donde_estudia_es: '',
-  el_establecimiento_cuenta_con_ayuda_pedagogica: '',
-  el_establecimiento_cuenta_con_ayuda_tecnologicas: '',
-  el_establecimiento_cuenta_con_ayuda_terapeuticas: '',
-  el_establecimiento_cuenta_con_ayuda_comunicativos: '',
-  el_establecimiento_cuenta_con_ayuda_administrativos: '',
-  el_establecimiento_cuenta_con_ayuda_financieros: '',
-  el_establecimiento_cuenta_con_ayuda_ninguno: '',
-  los_docentes_atienden_adecuadamente_necesidades_educ: '',
-  la_educacion_que_recibe_responde_a_sus_necesidades: '',
-  hace_cuantos_años_estudio: '',
-  repitio_algun_año_escolar: '',
-  repitio_grado_0: '',
-  repitio_grado_0_numero_veces: '',
-  repitio_grado_1: '',
-  repitio_grado_1_numero_veces: '',
-  repitio_grado_2: '',
-  repitio_grado_2_numero_veces: '',
-  repitio_grado_3: '',
-  repitio_grado_3_numero_veces: '',
-  repitio_grado_4: '',
-  repitio_grado_4_numero_veces: '',
-  repitio_grado_5: '',
-  repitio_grado_5_numero_veces: '',
-  repitio_grado_6: '',
-  repitio_grado_6_numero_veces: '',
-  repitio_grado_7: '',
-  repitio_grado_7_numero_veces: '',
-  repitio_grado_8: '',
-  repitio_grado_8_numero_veces: '',
-  repitio_grado_9: '',
-  repitio_grado_9_numero_veces: '',
-  repitio_grado_10: '',
-  repitio_grado_10_numero_veces: '',
-  repitio_grado_11: '',
-  repitio_grado_11_numero_veces: '',
-  cual_es_la_causa_principal_la_cual_no_estudia: '',
-  si_le_dieran_la_oportunidad_de_estudiar_lo_haria: '',
-  que_estudiaria: '',
-  sabe_utilizar_herramientas_tecnologicas: '',
-  cuales_herramientas_tecnologicas_maneja_computador: '',
-  cuales_herramientas_tecnologicas_maneja_tablet: '',
-  cuales_herramientas_tecnologicas_maneja_celular: '',
-  cuales_herramientas_tecnologicas_maneja_otro: '',
-  cuales_herramientas_tecnologicas_maneja_otro_cual: '',
-  fecharegistro: '',
-  usuario: '',
-  estado: '',
-  tabla: '',
-  ultimo_nivel_educacion_aprobado: '',
+  id_usuario: params.ficha,
+          sabe_leer_y_escribir_solo_mayores_de_5_años: '1',
+          asiste_actualmente_a_establecimiento_educativo: '1',
+          el_establecimiento_donde_estudia_es: '',
+          ultimo_nivel_educacion_aprobado: '',
+          el_establecimiento_cuenta_con_ayuda_pedagogica: '1',
+          el_establecimiento_cuenta_con_ayuda_tecnologicas: '1',
+          el_establecimiento_cuenta_con_ayuda_terapeuticas: '1',
+          el_establecimiento_cuenta_con_ayuda_comunicativos: '1',
+          el_establecimiento_cuenta_con_ayuda_administrativos: '1',
+          el_establecimiento_cuenta_con_ayuda_financieros: '1',
+          el_establecimiento_cuenta_con_ayuda_ninguno: '1',
+          los_docentes_atienden_adecuadamente_necesidades_educ: '1',
+          la_educacion_que_recibe_responde_a_sus_necesidades: '1',
+          hace_cuantos_años_estudio: '',
+          repitio_algun_año_escolar: '1',
+          repitio_grado_0: '1',
+          repitio_grado_0_numero_veces: '0',
+          repitio_grado_1: '1',
+          repitio_grado_1_numero_veces: '0',
+          repitio_grado_2: '1',
+          repitio_grado_2_numero_veces: '0',
+          repitio_grado_3: '1',
+          repitio_grado_3_numero_veces: '0',
+          repitio_grado_4: '1',
+          repitio_grado_4_numero_veces: '0',
+          repitio_grado_5: '1',
+          repitio_grado_5_numero_veces: '0',
+          repitio_grado_6: '1',
+          repitio_grado_6_numero_veces: '0',
+          repitio_grado_7: '1',
+          repitio_grado_7_numero_veces: '0',
+          repitio_grado_8: '1',
+          repitio_grado_8_numero_veces: '0',
+          repitio_grado_9: '1',
+          repitio_grado_9_numero_veces: '0',
+          repitio_grado_10: '1',
+          repitio_grado_10_numero_veces: '0',
+          repitio_grado_11: '1',
+          repitio_grado_11_numero_veces: '0',
+          cual_es_la_causa_principal_la_cual_no_estudia: '',
+          si_le_dieran_la_oportunidad_de_estudiar_lo_haria: '',
+          que_estudiaria: '',
+          sabe_utilizar_herramientas_tecnologicas: '1',
+          cuales_herramientas_tecnologicas_maneja_computador: '1',
+          cuales_herramientas_tecnologicas_maneja_tablet: '1',
+          cuales_herramientas_tecnologicas_maneja_celular: '1',
+          cuales_herramientas_tecnologicas_maneja_otro: '1',
+          cuales_herramientas_tecnologicas_maneja_otro_cual: '',
+          fecharegistro: '',
+          usuario: parseInt(localStorage.getItem('cedula') || '0'),
+          estado: 1,
+          tabla: 'discapacidad_capitulo_5',
   });
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
@@ -168,9 +170,22 @@ const Tab7: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (edad <= 5) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [edad]);
+
   const fetchUsers = async (database = db) => {
     if (db) {
       const res = await database.exec(`SELECT * FROM discapacidad_capitulo_5 WHERE id_usuario=${params.ficha}`);
+      const edadU = await database.exec(`
+        SELECT fechadenacimiento 
+        FROM inclusion_ciudadano 
+        WHERE id_usuario=${params.ficha}
+      `)
       if (res[0]?.values && res[0]?.columns) {
         const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
           return res[0].columns.reduce((obj, col, index) => {
@@ -180,7 +195,22 @@ const Tab7: React.FC = () => {
         });
         setPeople(transformedPeople);
         setButtonDisabled((transformedPeople[0].sabe_leer_y_escribir_solo_mayores_de_5_años) ? false : true);
-      } else {
+      } 
+      if (edadU[0]?.values?.length) {
+           const fechaNacimiento = new Date(edadU[0].values[0][0]);
+           const hoy = new Date();
+           let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+           const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+          
+           // Ajustar la edad si el cumpleaños aún no ha sucedido este año
+           if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+             edad--;
+           }
+           setEdad(edad);
+           //console.log(edad, 'esta es la edad');
+          }
+
+      else {
         setItems({
           id_usuario: params.ficha,
           sabe_leer_y_escribir_solo_mayores_de_5_años: '1',
@@ -287,61 +317,62 @@ const Tab7: React.FC = () => {
       let data = people[0] || {};
       setItems({
         id_usuario: data.id_usuario || parseInt(params.ficha),
-        sabe_leer_y_escribir_solo_mayores_de_5_años: data.sabe_leer_y_escribir_solo_mayores_de_5_años || '',
-        asiste_actualmente_a_establecimiento_educativo: data.asiste_actualmente_a_establecimiento_educativo || '',
+        sabe_leer_y_escribir_solo_mayores_de_5_años: data.sabe_leer_y_escribir_solo_mayores_de_5_años || '1',
+        asiste_actualmente_a_establecimiento_educativo: data.asiste_actualmente_a_establecimiento_educativo || '1',
         el_establecimiento_donde_estudia_es: data.el_establecimiento_donde_estudia_es || '',
-        el_establecimiento_cuenta_con_ayuda_pedagogica: data.el_establecimiento_cuenta_con_ayuda_pedagogica || '',
-        el_establecimiento_cuenta_con_ayuda_tecnologicas: data.el_establecimiento_cuenta_con_ayuda_tecnologicas || '',
-        el_establecimiento_cuenta_con_ayuda_terapeuticas: data.el_establecimiento_cuenta_con_ayuda_terapeuticas || '',
-        el_establecimiento_cuenta_con_ayuda_comunicativos: data.el_establecimiento_cuenta_con_ayuda_comunicativos || '',
-        el_establecimiento_cuenta_con_ayuda_administrativos: data.el_establecimiento_cuenta_con_ayuda_administrativos || '',
-        el_establecimiento_cuenta_con_ayuda_financieros: data.el_establecimiento_cuenta_con_ayuda_financieros || '',
-        el_establecimiento_cuenta_con_ayuda_ninguno: data.el_establecimiento_cuenta_con_ayuda_ninguno || '',
-        los_docentes_atienden_adecuadamente_necesidades_educ: data.los_docentes_atienden_adecuadamente_necesidades_educ || '',
-        la_educacion_que_recibe_responde_a_sus_necesidades: data.la_educacion_que_recibe_responde_a_sus_necesidades || '',
+        ultimo_nivel_educacion_aprobado: data.ultimo_nivel_educacion_aprobado || '',
+        el_establecimiento_cuenta_con_ayuda_pedagogica: data.el_establecimiento_cuenta_con_ayuda_pedagogica || '1',
+        el_establecimiento_cuenta_con_ayuda_tecnologicas: data.el_establecimiento_cuenta_con_ayuda_tecnologicas || '1',
+        el_establecimiento_cuenta_con_ayuda_terapeuticas: data.el_establecimiento_cuenta_con_ayuda_terapeuticas || '1',
+        el_establecimiento_cuenta_con_ayuda_comunicativos: data.el_establecimiento_cuenta_con_ayuda_comunicativos || '1',
+        el_establecimiento_cuenta_con_ayuda_administrativos: data.el_establecimiento_cuenta_con_ayuda_administrativos || '1',
+        el_establecimiento_cuenta_con_ayuda_financieros: data.el_establecimiento_cuenta_con_ayuda_financieros || '1',
+        el_establecimiento_cuenta_con_ayuda_ninguno: data.el_establecimiento_cuenta_con_ayuda_ninguno || '1',
+        los_docentes_atienden_adecuadamente_necesidades_educ: data.los_docentes_atienden_adecuadamente_necesidades_educ || '1',
+        la_educacion_que_recibe_responde_a_sus_necesidades: data.la_educacion_que_recibe_responde_a_sus_necesidades || '1',
         hace_cuantos_años_estudio: data.hace_cuantos_años_estudio || '',
-        repitio_algun_año_escolar: data.repitio_algun_año_escolar || '',
-        repitio_grado_0: data.repitio_grado_0 || '',
-        repitio_grado_0_numero_veces: data.repitio_grado_0_numero_veces || null,
-        repitio_grado_1: data.repitio_grado_1 || '',
-        repitio_grado_1_numero_veces: data.repitio_grado_1_numero_veces || null,
-        repitio_grado_2: data.repitio_grado_2 || '',
-        repitio_grado_2_numero_veces: data.repitio_grado_2_numero_veces || null,
-        repitio_grado_3: data.repitio_grado_3 || '',
-        repitio_grado_3_numero_veces: data.repitio_grado_3_numero_veces || null,
-        repitio_grado_4: data.repitio_grado_4 || '',
-        repitio_grado_4_numero_veces: data.repitio_grado_4_numero_veces || null,
-        repitio_grado_5: data.repitio_grado_5 || '',
-        repitio_grado_5_numero_veces: data.repitio_grado_5_numero_veces || null,
-        repitio_grado_6: data.repitio_grado_6 || '',
-        repitio_grado_6_numero_veces: data.repitio_grado_6_numero_veces || null,
-        repitio_grado_7: data.repitio_grado_7 || '',
-        repitio_grado_7_numero_veces: data.repitio_grado_7_numero_veces || null,
-        repitio_grado_8: data.repitio_grado_8 || '',
-        repitio_grado_8_numero_veces: data.repitio_grado_8_numero_veces || null,
-        repitio_grado_9: data.repitio_grado_9 || '',
-        repitio_grado_9_numero_veces: data.repitio_grado_9_numero_veces || null,
-        repitio_grado_10: data.repitio_grado_10 || '',
-        repitio_grado_10_numero_veces: data.repitio_grado_10_numero_veces || null,
-        repitio_grado_11: data.repitio_grado_11 || '',
-        repitio_grado_11_numero_veces: data.repitio_grado_11_numero_veces || null,
+        repitio_algun_año_escolar: data.repitio_algun_año_escolar || '1',
+        repitio_grado_0: data.repitio_grado_0 || '1',
+        repitio_grado_0_numero_veces: data.repitio_grado_0_numero_veces || '0',
+        repitio_grado_1: data.repitio_grado_1 || '1',
+        repitio_grado_1_numero_veces: data.repitio_grado_1_numero_veces || '0',
+        repitio_grado_2: data.repitio_grado_2 || '1',
+        repitio_grado_2_numero_veces: data.repitio_grado_2_numero_veces || '0',
+        repitio_grado_3: data.repitio_grado_3 || '1',
+        repitio_grado_3_numero_veces: data.repitio_grado_3_numero_veces || '0',
+        repitio_grado_4: data.repitio_grado_4 || '1',
+        repitio_grado_4_numero_veces: data.repitio_grado_4_numero_veces || '0',
+        repitio_grado_5: data.repitio_grado_5 || '1',
+        repitio_grado_5_numero_veces: data.repitio_grado_5_numero_veces || '0',
+        repitio_grado_6: data.repitio_grado_6 || '1',
+        repitio_grado_6_numero_veces: data.repitio_grado_6_numero_veces || '0',
+        repitio_grado_7: data.repitio_grado_7 || '1',
+        repitio_grado_7_numero_veces: data.repitio_grado_7_numero_veces || '0',
+        repitio_grado_8: data.repitio_grado_8 || '1',
+        repitio_grado_8_numero_veces: data.repitio_grado_8_numero_veces || '0',
+        repitio_grado_9: data.repitio_grado_9 || '1',
+        repitio_grado_9_numero_veces: data.repitio_grado_9_numero_veces || '0',
+        repitio_grado_10: data.repitio_grado_10 || '1',
+        repitio_grado_10_numero_veces: data.repitio_grado_10_numero_veces || '0',
+        repitio_grado_11: data.repitio_grado_11 || '1',
+        repitio_grado_11_numero_veces: data.repitio_grado_11_numero_veces || '0',
         cual_es_la_causa_principal_la_cual_no_estudia: data.cual_es_la_causa_principal_la_cual_no_estudia || '',
         si_le_dieran_la_oportunidad_de_estudiar_lo_haria: data.si_le_dieran_la_oportunidad_de_estudiar_lo_haria || '',
         que_estudiaria: data.que_estudiaria || '',
-        sabe_utilizar_herramientas_tecnologicas: data.sabe_utilizar_herramientas_tecnologicas || '',
-        cuales_herramientas_tecnologicas_maneja_computador: data.cuales_herramientas_tecnologicas_maneja_computador || '',
-        cuales_herramientas_tecnologicas_maneja_tablet: data.cuales_herramientas_tecnologicas_maneja_tablet || '',
-        cuales_herramientas_tecnologicas_maneja_celular: data.cuales_herramientas_tecnologicas_maneja_celular || '',
-        cuales_herramientas_tecnologicas_maneja_otro: data.cuales_herramientas_tecnologicas_maneja_otro || '',
+        sabe_utilizar_herramientas_tecnologicas: data.sabe_utilizar_herramientas_tecnologicas || '1',
+        cuales_herramientas_tecnologicas_maneja_computador: data.cuales_herramientas_tecnologicas_maneja_computador || '1',
+        cuales_herramientas_tecnologicas_maneja_tablet: data.cuales_herramientas_tecnologicas_maneja_tablet || '1',
+        cuales_herramientas_tecnologicas_maneja_celular: data.cuales_herramientas_tecnologicas_maneja_celular || '1',
+        cuales_herramientas_tecnologicas_maneja_otro: data.cuales_herramientas_tecnologicas_maneja_otro || '1',
         cuales_herramientas_tecnologicas_maneja_otro_cual: data.cuales_herramientas_tecnologicas_maneja_otro_cual || '',
-        fecharegistro: data.fecharegistro || '',
-        usuario: data.usuario || null,
-        estado: data.estado || null,
-        tabla: data.tabla || '',
-        ultimo_nivel_educacion_aprobado: data.ultimo_nivel_educacion_aprobado || '',
+        fecharegistro: data.fecharegistro || getCurrentDateTime(),
+        usuario: data.usuario || parseInt(localStorage.getItem('cedula') || '0'),
+        estado: data.estado || 1,
+        tabla: data.tabla || 'discapacidad_capitulo_5',
       });
     }
   }, [people]);
+  
   
 
   useEffect(() => {
@@ -350,20 +381,100 @@ const Tab7: React.FC = () => {
     // fetchComunas();
   }, [db]);
 
-  const handleInputChange = (event, field) => {
-    const { value } = event.target;
-    setItems((prevItems) => {
-      const newState = { ...prevItems, [field]: value };
-      // if (field === 'dondeviviaantes') {
-      //   newState.otrodepartamento = value === '5' ? '' : newState.otrodepartamento;
-      //   newState.otropais = value === '6' ? '' : newState.otropais;
-      //   newState.otromunicipio = value === '4' ? '' : newState.otromunicipio;
-      //   newState.otrobarrio = value === '2' ? '' : newState.otrobarrio;
-      //   newState.otracomuna = value === '2' ? '' : newState.otracomuna;
-      // }
-      return newState;
-    });
+  const handleInputChange = (e, fieldName) => {
+    const value = e.target.value;
+    setItems((prevItems) => ({
+      ...prevItems,
+      [fieldName]: value,
+      ...(fieldName === 'asiste_actualmente_a_establecimiento_educativo' && value === '1' && {
+        el_establecimiento_donde_estudia_es: '',
+        ultimo_nivel_educacion_aprobado: '',
+        el_establecimiento_cuenta_con_ayuda_pedagogica: '1',
+        el_establecimiento_cuenta_con_ayuda_tecnologicas: '1',
+        el_establecimiento_cuenta_con_ayuda_terapeuticas: '1',
+        el_establecimiento_cuenta_con_ayuda_comunicativos: '1',
+        el_establecimiento_cuenta_con_ayuda_administrativos: '1',
+        el_establecimiento_cuenta_con_ayuda_financieros: '1',
+        el_establecimiento_cuenta_con_ayuda_ninguno: '1',
+        los_docentes_atienden_adecuadamente_necesidades_educ: '1',
+        la_educacion_que_recibe_responde_a_sus_necesidades: '1',
+        hace_cuantos_años_estudio: '',
+        repitio_algun_año_escolar: '1',
+        repitio_grado_0: '1',
+        repitio_grado_0_numero_veces: '0',
+        repitio_grado_1: '1',
+        repitio_grado_1_numero_veces: '0',
+        repitio_grado_2: '1',
+        repitio_grado_2_numero_veces: '0',
+        repitio_grado_3: '1',
+        repitio_grado_3_numero_veces: '0',
+        repitio_grado_4: '1',
+        repitio_grado_4_numero_veces: '0',
+        repitio_grado_5: '1',
+        repitio_grado_5_numero_veces: '0',
+        repitio_grado_6: '1',
+        repitio_grado_6_numero_veces: '0',
+        repitio_grado_7: '1',
+        repitio_grado_7_numero_veces: '0',
+        repitio_grado_8: '1',
+        repitio_grado_8_numero_veces: '0',
+        repitio_grado_9: '1',
+        repitio_grado_9_numero_veces: '0',
+        repitio_grado_10: '1',
+        repitio_grado_10_numero_veces: '0',
+        repitio_grado_11: '1',
+        repitio_grado_11_numero_veces: '0',
+      }),
+      ...(fieldName === 'el_establecimiento_cuenta_con_ayuda_ninguno' && value === '2' && {
+        el_establecimiento_cuenta_con_ayuda_pedagogica: '1',
+        el_establecimiento_cuenta_con_ayuda_tecnologicas: '1',
+        el_establecimiento_cuenta_con_ayuda_terapeuticas: '1',
+        el_establecimiento_cuenta_con_ayuda_comunicativos: '1',
+        el_establecimiento_cuenta_con_ayuda_administrativos: '1',
+        el_establecimiento_cuenta_con_ayuda_financieros: '1',
+      }),
+      ...(fieldName === 'repitio_algun_año_escolar' && value === '1' && {
+        repitio_grado_0: '1',
+        repitio_grado_0_numero_veces: '0',
+        repitio_grado_1: '1',
+        repitio_grado_1_numero_veces: '0',
+        repitio_grado_2: '1',
+        repitio_grado_2_numero_veces: '0',
+        repitio_grado_3: '1',
+        repitio_grado_3_numero_veces: '0',
+        repitio_grado_4: '1',
+        repitio_grado_4_numero_veces: '0',
+        repitio_grado_5: '1',
+        repitio_grado_5_numero_veces: '0',
+        repitio_grado_6: '1',
+        repitio_grado_6_numero_veces: '0',
+        repitio_grado_7: '1',
+        repitio_grado_7_numero_veces: '0',
+        repitio_grado_8: '1',
+        repitio_grado_8_numero_veces: '0',
+        repitio_grado_9: '1',
+        repitio_grado_9_numero_veces: '0',
+        repitio_grado_10: '1',
+        repitio_grado_10_numero_veces: '0',
+        repitio_grado_11: '1',
+        repitio_grado_11_numero_veces: '0',
+      }),
+      ...(fieldName === 'si_le_dieran_la_oportunidad_de_estudiar_lo_haria' && value === '1' && {
+        que_estudiaria: '',
+      }),
+      ...(fieldName === 'sabe_utilizar_herramientas_tecnologicas' && value === '1' && {
+        cuales_herramientas_tecnologicas_maneja_computador: '1',
+        cuales_herramientas_tecnologicas_maneja_tablet: '1',
+        cuales_herramientas_tecnologicas_maneja_celular: '1',
+        cuales_herramientas_tecnologicas_maneja_otro: '1',
+        cuales_herramientas_tecnologicas_maneja_otro_cual: '',
+      }),
+      ...(fieldName === 'cuales_herramientas_tecnologicas_maneja_otro' && value === '1' && {
+        cuales_herramientas_tecnologicas_maneja_otro_cual: '',
+      }),
+    }));
   };
+  
   
 
   useEffect(() => {
@@ -560,8 +671,12 @@ const Tab7: React.FC = () => {
       <IonList>
     <div className="alert alert-primary" role="alert">
       <span className="badge badge-secondary text-dark">CAPÍTULO V. EDUCACIÓN</span>
-    </div>
-    
+    </div>          
+                <div className="col-sm">
+                  <div className="alert alert-warning" role="alert">
+                    <b>IMPORTANTE:</b> Este capítulo aplica para mayores de <strong> 5 años </strong>, si el ciudadano es menor, todos los campos estarán deshabilitados y debes dar clic en guardar para continuar. La edad del ciudadano es de <strong>{edad}</strong>
+                  </div>
+                </div>
     {/* Primer bloque de preguntas */}
     <div className="row g-3 was-validated">
       <div className="col-sm-6 pb-2 pt-2">
@@ -572,6 +687,7 @@ const Tab7: React.FC = () => {
           className="form-control form-control-sm"
           id="sabe_leer_y_escribir_solo_mayores_de_5_años"
           required
+          disabled={isDisabled}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -585,6 +701,7 @@ const Tab7: React.FC = () => {
           className="form-control form-control-sm"
           id="asiste_actualmente_a_establecimiento_educativo"
           required
+          disabled={isDisabled}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -601,9 +718,9 @@ const Tab7: React.FC = () => {
           value={items.el_establecimiento_donde_estudia_es}
           className="form-control form-control-sm"
           id="el_establecimiento_donde_estudia_es"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
         >
-          <option value="1">Público</option>
-          <option value="2">Privado</option>
+          <option value=""> SELECCIONE </option><option value="2"> PRIVADO </option><option value="1"> PÚBLICO </option>
         </select>
       </div>
       <div className="col-sm-6 pb-2 pt-2">
@@ -614,11 +731,9 @@ const Tab7: React.FC = () => {
           className="form-control form-control-sm"
           id="ultimo_nivel_educacion_aprobado"
           required
+          disabled={isDisabled}
         >
-          <option value="1">Primaria</option>
-          <option value="2">Secundaria</option>
-          <option value="3">Bachillerato</option>
-          <option value="4">Universidad</option>
+          <option value=""> SELECCIONE </option><option value="2"> Básica Primaria </option><option value="3"> Básica Secundaria </option><option value="8"> Ninguno </option><option value="7"> Posgrado </option><option value="4"> Técnico </option><option value="5"> Tecnológico </option><option value="1"> Transición </option><option value="6"> Universitario </option>   
         </select>
       </div>
     </div>
@@ -639,6 +754,8 @@ const Tab7: React.FC = () => {
           value={items.el_establecimiento_cuenta_con_ayuda_pedagogica}
           className="form-control form-control-sm"
           id="el_establecimiento_cuenta_con_ayuda_pedagogica"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -651,6 +768,8 @@ const Tab7: React.FC = () => {
           value={items.el_establecimiento_cuenta_con_ayuda_tecnologicas}
           className="form-control form-control-sm"
           id="el_establecimiento_cuenta_con_ayuda_tecnologicas"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -666,6 +785,8 @@ const Tab7: React.FC = () => {
           value={items.el_establecimiento_cuenta_con_ayuda_terapeuticas}
           className="form-control form-control-sm"
           id="el_establecimiento_cuenta_con_ayuda_terapeuticas"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -678,6 +799,8 @@ const Tab7: React.FC = () => {
           value={items.el_establecimiento_cuenta_con_ayuda_comunicativos}
           className="form-control form-control-sm"
           id="el_establecimiento_cuenta_con_ayuda_comunicativos"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -693,6 +816,8 @@ const Tab7: React.FC = () => {
           value={items.el_establecimiento_cuenta_con_ayuda_administrativos}
           className="form-control form-control-sm"
           id="el_establecimiento_cuenta_con_ayuda_administrativos"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -705,6 +830,8 @@ const Tab7: React.FC = () => {
           value={items.el_establecimiento_cuenta_con_ayuda_financieros}
           className="form-control form-control-sm"
           id="el_establecimiento_cuenta_con_ayuda_financieros"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -721,6 +848,8 @@ const Tab7: React.FC = () => {
           value={items.el_establecimiento_cuenta_con_ayuda_ninguno}
           className="form-control form-control-sm"
           id="el_establecimiento_cuenta_con_ayuda_ninguno"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -733,6 +862,8 @@ const Tab7: React.FC = () => {
           value={items.los_docentes_atienden_adecuadamente_necesidades_educ}
           className="form-control form-control-sm"
           id="los_docentes_atienden_adecuadamente_necesidades_educ"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -749,6 +880,8 @@ const Tab7: React.FC = () => {
           value={items.la_educacion_que_recibe_responde_a_sus_necesidades}
           className="form-control form-control-sm"
           id="la_educacion_que_recibe_responde_a_sus_necesidades"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -764,6 +897,8 @@ const Tab7: React.FC = () => {
           id="hace_cuantos_años_estudio"
           style={{ textTransform: 'uppercase' }}
           required
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         />
       </div>
     </div>
@@ -776,6 +911,8 @@ const Tab7: React.FC = () => {
           value={items.repitio_algun_año_escolar}
           className="form-control form-control-sm"
           id="repitio_algun_año_escolar"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1"}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -792,6 +929,8 @@ const Tab7: React.FC = () => {
           value={items.repitio_grado_0}
           className="form-control form-control-sm"
           id="repitio_grado_0"
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1" || items.repitio_algun_año_escolar === '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -807,6 +946,8 @@ const Tab7: React.FC = () => {
           id="repitio_grado_0_numero_veces"
           style={{ textTransform: 'uppercase' }}
           required
+          disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1" || items.repitio_algun_año_escolar === '1'}
+
         />
       </div>
     </div>
@@ -821,6 +962,8 @@ const Tab7: React.FC = () => {
             value={items[`repitio_grado_${grado}`]}
             className="form-control form-control-sm"
             id={`repitio_grado_${grado}`}
+            disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1" || items.repitio_algun_año_escolar === '1'}
+
           >
             <option value="1">NO</option>
             <option value="2">SÍ</option>
@@ -836,6 +979,8 @@ const Tab7: React.FC = () => {
             id={`repitio_grado_${grado}_numero_veces`}
             style={{ textTransform: 'uppercase' }}
             required
+            disabled={isDisabled || items.asiste_actualmente_a_establecimiento_educativo == "1" || items.repitio_algun_año_escolar === '1'}
+
           />
         </div>
       </div>
@@ -863,12 +1008,10 @@ const Tab7: React.FC = () => {
           value={items.cual_es_la_causa_principal_la_cual_no_estudia}
           className="form-control form-control-sm"
           id="cual_es_la_causa_principal_la_cual_no_estudia"
+          disabled={isDisabled }
         >
           {/* Aquí puedes agregar las opciones específicas que corresponden a esta pregunta */}
-          <option value="1">Falta de recursos económicos</option>
-          <option value="2">Problemas de salud</option>
-          <option value="3">Desinterés en estudiar</option>
-          <option value="4">Otras razones</option>
+          <option value=""> SELECCIONE </option><option value="3"> COSTOS EDUCATIVAS ELEVADOS O FALTA DE DINERO </option><option value="6"> FALTA DE CUPOS </option><option value="9"> NECESITA TRABAJAR </option><option value="7"> NEGACIÓN DE CUPO </option><option value="5"> NO APROBÓ EL EXAMEN DE INGRESO </option><option value="8"> NO EXISTE CENTRO EDUCATIVO CERCANO </option><option value="10"> NO LE GUSTA O NO LE INTERESA EL ESTUDIO </option><option value="14"> OTRA RAZÓN </option><option value="11"> PERDIÓ EL AÑO O FUE EXPULSADO </option><option value="4"> POR FALTA DE TIEMPO </option><option value="13"> POR SU DISCAPACIDAD </option><option value="2"> PORQUE CONSIDERA QUE NO ESTÁ EN EDAD ESCOLAR </option><option value="1"> PORQUE YA TERMINÓ </option><option value="12"> SU FAMILIA NO QUIERE QUE ESTUDIE </option>
         </select>
       </div>
       <div className="col-sm-6 pb-2 pt-2">
@@ -878,6 +1021,7 @@ const Tab7: React.FC = () => {
           value={items.si_le_dieran_la_oportunidad_de_estudiar_lo_haria}
           className="form-control form-control-sm"
           id="si_le_dieran_la_oportunidad_de_estudiar_lo_haria"
+          disabled={isDisabled}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -896,9 +1040,14 @@ const Tab7: React.FC = () => {
           id="que_estudiaria"
           style={{ textTransform: 'uppercase' }}
           required
+          disabled={isDisabled || items.si_le_dieran_la_oportunidad_de_estudiar_lo_haria == '1'}
         />
       </div>
     </div>
+
+
+
+
 
     <div className="row g-3">
       <div className="col-sm-6 pb-2 pt-2">
@@ -908,6 +1057,7 @@ const Tab7: React.FC = () => {
           value={items.sabe_utilizar_herramientas_tecnologicas}
           className="form-control form-control-sm"
           id="sabe_utilizar_herramientas_tecnologicas"
+          disabled={isDisabled}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -924,6 +1074,7 @@ const Tab7: React.FC = () => {
           value={items.cuales_herramientas_tecnologicas_maneja_computador}
           className="form-control form-control-sm"
           id="cuales_herramientas_tecnologicas_maneja_computador"
+          disabled={isDisabled || items.sabe_utilizar_herramientas_tecnologicas === '1'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -936,6 +1087,7 @@ const Tab7: React.FC = () => {
           value={items.cuales_herramientas_tecnologicas_maneja_tablet}
           className="form-control form-control-sm"
           id="cuales_herramientas_tecnologicas_maneja_tablet"
+          disabled={isDisabled || items.sabe_utilizar_herramientas_tecnologicas === '1'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -951,6 +1103,7 @@ const Tab7: React.FC = () => {
           value={items.cuales_herramientas_tecnologicas_maneja_celular}
           className="form-control form-control-sm"
           id="cuales_herramientas_tecnologicas_maneja_celular"
+          disabled={isDisabled || items.sabe_utilizar_herramientas_tecnologicas === '1'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -963,6 +1116,7 @@ const Tab7: React.FC = () => {
           value={items.cuales_herramientas_tecnologicas_maneja_otro}
           className="form-control form-control-sm"
           id="cuales_herramientas_tecnologicas_maneja_otro"
+          disabled={isDisabled || items.sabe_utilizar_herramientas_tecnologicas === '1'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -981,6 +1135,7 @@ const Tab7: React.FC = () => {
           id="cuales_herramientas_tecnologicas_maneja_otro_cual"
           style={{ textTransform: 'uppercase' }}
           required
+          disabled={isDisabled || items.sabe_utilizar_herramientas_tecnologicas === '1'}
         />
       </div>
     </div>

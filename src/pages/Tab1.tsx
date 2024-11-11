@@ -209,36 +209,30 @@ useEffect(() => {
 
 
 
-  const handleInputChange = (event, field) => {
-    const { value } = event.target;
-
-    setItems((prevItems) => {
-      const newState = { ...prevItems, [field]: value };
-
-      // Lógica para manejar el campo 'persona_brinda_informacion'
-      // if (field === 'persona_brinda_informacion') {
-      //   if (value === '3') {
-      //     // Si 'persona_brinda_informacion' es '3', no cambiamos los valores de 'nombre_persona_brinda_informacion' y 'relacion_persona_discapacidad'
-      //   } else {
-      //     // Si no es '3', limpiamos los campos
-      //     newState.nombre_persona_brinda_informacion = '';
-      //     newState.relacion_persona_discapacidad = '';
-      //   }
-      // }
-
-      // // Lógica para manejar el campo 'origen_visita'
-      // if (field === 'origen_visita') {
-      //   if (value === '3') {
-      //     // Si 'origen_visita' es '3', no cambiamos el valor de 'otro_origen_visita'
-      //   } else {
-      //     // Si no es '3', limpiamos el campo 'otro_origen_visita'
-      //     newState.otro_origen_visita = '';
-      //   }
-      // }
-
-      return newState;
-    });
-};
+  const handleInputChange = (e, fieldName) => {
+    const { value } = e.target;
+  
+    setItems((prevState) => ({
+      ...prevState,
+      [fieldName]: value,
+  
+      ...(fieldName === 'participa_actividades_ninguna' && value === '2' && {
+        participa_actividades_con_familia_amigos: '1',
+        participa_actividades_con_comunidad: '1',
+        participa_actividades_religiosas: '1',
+        participa_actividades_productivas: '1',
+        participa_actividades_deportivas_recreacion: '1',
+        participa_actividades_culturales: '1',
+        participa_actividades_trabajo_des_humano: '1',
+        participa_actividades_ciudadanas: '1',
+        participa_actividades_otras: '1',
+      }),
+      ...(fieldName === 'participa__en_alguna_organizacion' && value === '1' && {
+        señale_porque_no_participa_en_organizacion: '',
+      }),
+    }));
+  };
+  
 
 
  useEffect(() => {
@@ -350,6 +344,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_con_familia_amigos"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -363,6 +358,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_con_comunidad"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -379,6 +375,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_religiosas"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -392,6 +389,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_productivas"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -408,6 +406,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_deportivas_recreacion"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -421,6 +420,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_culturales"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -437,6 +437,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_trabajo_des_humano"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -450,6 +451,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_ciudadanas"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -466,6 +468,7 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="participa_actividades_otras"
                 required
+                disabled={items.participa_actividades_ninguna === '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -526,6 +529,8 @@ useEffect(() => {
                 className="form-control form-control-sm"
                 id="señale_porque_no_participa_en_organizacion"
                 required
+                disabled={items.participa__en_alguna_organizacion == '1'}
+
               >
                   <option value=""> SELECCIONE </option><option value="1"> FALTA DE DINERO </option><option value="2"> FALTA DE TIEMPO </option><option value="6"> NO CREE EN ELLAS </option><option value="3"> NO EXISTE O NO LA CONOCE </option><option value="9"> OTRA </option><option value="5"> POR SU DISCAPACIDAD </option><option value="8"> PREFIERE RESOLVER SUS PROBLEMAS SÓLO </option><option value="4"> SIENTE RECHAZO </option><option value="7"> SUS PRINCIPIOS O CREENCIAS </option>   
               </select>

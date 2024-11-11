@@ -39,6 +39,8 @@ const Tab6: React.FC = () => {
   const params = useParams();
   const [people, setPeople] = useState<Person[]>([]);
   const [db, setDb] = useState<any>(null);
+  const [edad, setEdad] = useState<any>(null);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [items, setItems] = useState<Person>({
     id_usuario: '',
     durante_los_ultimos_6_meses_ha_estado: '',
@@ -106,6 +108,11 @@ const Tab6: React.FC = () => {
   const fetchUsers = async (database = db) => {
     if (db) {
       const res = await database.exec(`SELECT * FROM discapacidad_capitulo_7 WHERE id_usuario=${params.ficha}`);
+      const edadU = await database.exec(`
+        SELECT fechadenacimiento 
+        FROM inclusion_ciudadano 
+        WHERE id_usuario=${params.ficha}
+      `)
       if (res[0]?.values && res[0]?.columns) {
         const transformedPeople: Person[] = res[0].values.map((row: any[]) => {
           return res[0].columns.reduce((obj, col, index) => {
@@ -115,7 +122,23 @@ const Tab6: React.FC = () => {
         });
         setPeople(transformedPeople);
         setButtonDisabled((transformedPeople[0].durante_los_ultimos_6_meses_ha_estado) ? false : true);
-      } else {
+      } 
+      if (edadU[0]?.values?.length) {
+        const fechaNacimiento = new Date(edadU[0].values[0][0]);
+        const hoy = new Date();
+        let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+        const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+       
+        // Ajustar la edad si el cumpleaños aún no ha sucedido este año
+        if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+          edad--;
+        }
+        setEdad(edad);
+        //console.log(edad, 'esta es la edad');
+       }
+      
+      
+      else {
         setItems({
           id_usuario: parseInt(params.ficha),
           durante_los_ultimos_6_meses_ha_estado: '',
@@ -183,22 +206,49 @@ const Tab6: React.FC = () => {
       });
     }
   }, [people]);
+
+  useEffect(() => {
+    if (edad <= 14) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [edad]);
   
 
   useEffect(() => {
     fetchUsers();
   }, [db]);
 
-  const handleInputChange = (event, field) => {
-    const { value } = event.target;
-    setItems((prevItems) => {
-      const newState = { ...prevItems, [field]: value };
-      // if (field === 'telefono') {
-      //   newState.telefonofijo = value === '1' ? 'NO APLICA' : '';
-      // }
-      return newState;
-    });
+  const handleInputChange = (e, fieldName) => {
+    const { value } = e.target;
+  
+    setItems((prevItems) => ({
+      ...prevItems,
+      [fieldName]: value,
+      
+      // Lógica para limpiar campos relacionados cuando ciertos valores cambian
+      ...(fieldName === 'durante_los_ultimos_6_meses_ha_estado' && value !== '1' && {
+        usted_tiene_contrato_de_trabajo: '',
+        la_actividad_economica_en_la_cual_trabaja: '',
+        en_el_trabajo_se_desempeña_como: '',
+        le_interesa_el_emprendimiento: '',
+        tiene_alguna_idea_de_negocio: '',
+        en_que_sector_se_inscribe_su_idea_de_negocio: '',
+        otro_sector_cual: '',
+      }),
+      ...(fieldName === 'le_interesa_el_emprendimiento' && value !== '2' && {
+        tiene_alguna_idea_de_negocio: '',
+        en_que_sector_se_inscribe_su_idea_de_negocio: '',
+        otro_sector_cual: '',
+      }),
+      ...(fieldName === 'tiene_alguna_idea_de_negocio' && value !== '2' && {
+        en_que_sector_se_inscribe_su_idea_de_negocio: '',
+        otro_sector_cual: '',
+      }),
+    }));
   };
+  
 
   useEffect(() => {
     console.log("Items updated:", items);
@@ -304,8 +354,14 @@ const Tab6: React.FC = () => {
       <div className="row g-3 was-validated ">
         <IonList>
           <div className="alert alert-primary" role="alert">
-            <span className="badge badge-secondary text-dark">CAPÍTULO VII. ACTIVIDAD LABORAL</span>
+            <span className="badge badge-secondary text-dark">CAPITULO VII. OCUPACIÓN Y TRABAJO</span>
           </div>
+          <div className="col-sm">
+                <div className="alert alert-warning" role="alert">
+                <b>IMPORTANTE:</b> Este capítulo aplica para mayores de <strong> 14 años </strong>, si el ciudadano es menor, todos los campos estarán deshabilitados y debes dar clic en guardar para continuar. La edad del ciudadano es de <strong>{edad}</strong>
+
+                </div>
+            </div>
 
           {/* Sección 7.1 a 7.2 */}
           <div className="row g-3">
@@ -317,11 +373,9 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="durante_los_ultimos_6_meses_ha_estado"
                 required
+                disabled={isDisabled}
               >
-                <option value="1">Empleado</option>
-                <option value="2">Desempleado</option>
-                <option value="3">Estudiante</option>
-                <option value="4">Otra situación</option>
+                 <option value=""> SELECCIONE </option><option value="2"> BUSCANDO TRABAJO </option><option value="3"> CON INCAPACIDAD PERMANENTE SIN PENSIÓN </option><option value="4"> ESTUDIANDO </option><option value="9"> OTRA ACTIVIDAD </option><option value="7"> PENSIONADO-JUBILADO </option><option value="8"> REALIZANDO ACTIVIDADES DE AUTOCONSUMO </option><option value="5"> REALIZANDO OFICIOS DEL HOGAR </option><option value="6"> RECIBIENDO RENTA </option><option value="1"> TRABAJANDO </option> 
               </select>
             </div>
             <div className="col-sm-6 pt-2 pb-2">
@@ -332,6 +386,7 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="usted_tiene_contrato_de_trabajo"
                 required
+                disabled={isDisabled || items.durante_los_ultimos_6_meses_ha_estado !== '1'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -345,30 +400,26 @@ const Tab6: React.FC = () => {
               <label htmlFor="la_actividad_economica_en_la_cual_trabaja">7.3 La actividad económica en la cual trabaja actualmente se relaciona con:</label>
               <select
                 onChange={(e) => handleInputChange(e, 'la_actividad_economica_en_la_cual_trabaja')}
-                value={items.la_actividad_economica_en_la_cual_trabaja}
+                value={items.la_actividad_economica_en_la_cual_trabaja }
                 className="form-control form-control-sm"
                 id="la_actividad_economica_en_la_cual_trabaja"
                 required
+                disabled={isDisabled || items.durante_los_ultimos_6_meses_ha_estado !== '1'}
               >
-                <option value="1">Comercio</option>
-                <option value="2">Servicios</option>
-                <option value="3">Industria</option>
-                <option value="4">Otra</option>
+             <option value=""> SELECCIONE </option><option value="1"> AGRÍCOLA </option><option value="2"> COMERCIO </option><option value="3"> INDUSTRIA </option><option value="6"> OTRA ACTIVIDAD </option><option value="4"> PECUARIA </option><option value="5"> SERVICIOS </option>
               </select>
             </div>
             <div className="col-sm-6 pt-2 pb-2">
               <label htmlFor="en_el_trabajo_se_desempeña_como">7.4 En el trabajo se desempeña como:</label>
               <select
                 onChange={(e) => handleInputChange(e, 'en_el_trabajo_se_desempeña_como')}
-                value={items.en_el_trabajo_se_desempeña_como}
+                value={items.en_el_trabajo_se_desempeña_como }
                 className="form-control form-control-sm"
                 id="en_el_trabajo_se_desempeña_como"
                 required
+                disabled={isDisabled || items.durante_los_ultimos_6_meses_ha_estado !== '1'}
               >
-                <option value="1">Empleado</option>
-                <option value="2">Autónomo</option>
-                <option value="3">Empleador</option>
-                <option value="4">Otro</option>
+                <option value=""> SELECCIONE </option><option value="1"> EMPLEADO DEL GOBIERNO </option><option value="2"> EMPLEADO PARTICULAR </option><option value="6"> EMPLEADO(A) DOMÉSTICO(A) </option><option value="3"> JORNALERO O PEÓN </option><option value="4"> PATRÓN O EMPLEADOR </option><option value="7"> TRABAJADOR FAMILIAR SIN REMUNERACIÓN </option><option value="5"> TRABAJADOR POR CUENTA PROPIA </option>
               </select>
             </div>
           </div>
@@ -383,6 +434,7 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="le_interesa_el_emprendimiento"
                 required
+                disabled={isDisabled || items.durante_los_ultimos_6_meses_ha_estado !== '1'   && items.durante_los_ultimos_6_meses_ha_estado !== '3'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -396,6 +448,7 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="tiene_alguna_idea_de_negocio"
                 required
+                disabled={isDisabled ||  items.durante_los_ultimos_6_meses_ha_estado !== '1'   && items.durante_los_ultimos_6_meses_ha_estado !== '3'  || items.le_interesa_el_emprendimiento !== '2'}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -413,11 +466,10 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="en_que_sector_se_inscribe_su_idea_de_negocio"
                 required
+                disabled={isDisabled || items.durante_los_ultimos_6_meses_ha_estado !== '1'  && items.durante_los_ultimos_6_meses_ha_estado !== '3' ||
+                   items.le_interesa_el_emprendimiento !== '2' || items.tiene_alguna_idea_de_negocio !== '2'}
               >
-                <option value="1">Comercio</option>
-                <option value="2">Servicios</option>
-                <option value="3">Industria</option>
-                <option value="4">Tecnología</option>
+                <option value=""> SELECCIONE </option><option value="1"> ALIMENTOS </option><option value="2"> ARTESANÍAS </option><option value="3"> BELLEZA </option><option value="4"> COMERCIO-VENTAS </option><option value="5"> CONFECCIONES </option><option value="6"> MARQUETERÍA </option><option value="7"> OTRO </option>
               </select>
             </div>
             <div className="col-sm-6 pt-2 pb-2">
@@ -430,6 +482,8 @@ const Tab6: React.FC = () => {
                 id="otro_sector_cual"
                 style={{ textTransform: 'uppercase' }}
                 required
+                disabled={isDisabled || items.durante_los_ultimos_6_meses_ha_estado !== '1'  && items.durante_los_ultimos_6_meses_ha_estado !== '3' 
+                  || items.le_interesa_el_emprendimiento !== '2' || items.tiene_alguna_idea_de_negocio !== '2'}
               />
             </div>
           </div>
@@ -443,6 +497,7 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="su_capacidad_laboral_afectada_por_discapacidad"
                 required
+                disabled={isDisabled}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -456,6 +511,7 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="cuenta_con_calificacion_perdida_capacidad_laboral"
                 required
+                disabled={isDisabled}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -475,6 +531,7 @@ const Tab6: React.FC = () => {
                 id="porcentaje_de_perdida_laboral"
                 style={{ textTransform: 'uppercase' }}
                 required
+                disabled={isDisabled}
               />
             </div>
             <div className="col-sm-6 pt-2 pb-2">
@@ -485,10 +542,9 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="cual_es_su_ingreso_mensual_promedio"
                 required
+                disabled={isDisabled}
               >
-                <option value="1">Menos de $1,000</option>
-                <option value="2">$1,000 - $2,000</option>
-                <option value="3">Más de $2,000</option>
+                <option value=""> SELECCIONE </option><option value="4"> DE 1'000.001 A 2'000.000 </option><option value="11"> DE 1'000.001 A 2'000.000 </option><option value="3"> DE 500.001 A $1'000.000 </option><option value="10"> DE 500.001 A $1'000.000 </option><option value="5"> MÁS DE 2'000.000 </option><option value="12"> MÁS DE 2'000.000 </option><option value="2"> MENOS DE 500.000 </option><option value="9"> MENOS DE 500.000 </option><option value="6"> NO INFORMA </option><option value="13"> NO INFORMA </option><option value="1"> SIN INGRESO </option><option value="8"> SIN INGRESO </option>
               </select>
             </div>
           </div>
@@ -503,6 +559,7 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="ha_recibido_capacitacion_despues_de_discapacidad"
                 required
+                disabled={isDisabled}
               >
                 <option value="1">NO</option>
                 <option value="2">SÍ</option>
@@ -516,10 +573,9 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="donde_recibio_capacitacion"
                 required
+                disabled={isDisabled}
               >
-                <option value="1">Institución educativa</option>
-                <option value="2">Centro de capacitación</option>
-                <option value="3">Otra</option>
+                <option value=""> SELECCIONE </option><option value="2"> OTRA INSTITUCIÓN PÚBLICA </option><option value="1"> SENA </option><option value="3"> UNA INSTITUCIÓN PRIVADA </option>  
               </select>
             </div>
           </div>
@@ -533,11 +589,9 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="necesita_capacitacion_para"
                 required
+                disabled={isDisabled}
               >
-                <option value="1">Oficios técnicos</option>
-                <option value="2">Gestión empresarial</option>
-                <option value="3">Tecnologías</option>
-                <option value="4">Otra</option>
+                 <option value=""> SELECCIONE </option><option value="2"> CAMBIAR DE ACTIVIDAD PRODUCTIVA </option><option value="1"> MEJORAR SU ACTIVIDAD PRODUCTIVA </option><option value="3"> NO NECESITA CAPACITACIÓN </option>  
               </select>
             </div>
             <div className="col-sm-6 pt-2 pb-2">
@@ -550,6 +604,7 @@ const Tab6: React.FC = () => {
                 id="necesidades_de_capacitacion_de_pers_discapacidad"
                 style={{ textTransform: 'uppercase' }}
                 required
+                disabled={isDisabled}
               />
             </div>
           </div>
