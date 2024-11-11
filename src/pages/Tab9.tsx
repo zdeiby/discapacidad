@@ -3,12 +3,14 @@ import './Tab4.css';
 import React, { useState, useEffect } from 'react';
 import {
   IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-  IonList, IonButton
+  IonList, IonButton,
+  IonToast
 } from '@ionic/react';
 import { useHistory, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CustomDataTable from '../components/DataTable';
 import loadSQL from '../models/database';
+import { informationCircleOutline } from 'ionicons/icons';
 
 interface Person {
   id_usuario: number;
@@ -95,6 +97,7 @@ const Tab9: React.FC = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [integrantes, setIntegrantes] = useState([]);
   const [db, setDb] = useState<any>(null);
+  const [showAlert, setShowAlert] = useState(false);
   const [jefe, setJefe] = useState(false);
   const [items, setItems] = useState({
     id_usuario: params.ficha || '', // Asignando params.ficha o un valor vacío como predeterminado
@@ -395,6 +398,16 @@ const Tab9: React.FC = () => {
   }, [items]);
 
   const enviar = async (database = db) => {
+    const camposRequeridos = [
+      'neceidades_de_capacitacion_de_la_familia',
+    ];
+  
+    const camposVacios = camposRequeridos.filter((campo) => !items[campo]);
+  
+    if (camposVacios.length > 0) {
+      setShowAlert(true);
+      return;
+    }
     console.log(items);
     try {
       await db.exec(`INSERT OR REPLACE INTO discapacidad_capitulo_8 (
@@ -870,6 +883,21 @@ const Tab9: React.FC = () => {
         </div>
 
         <br />
+        <IonToast
+        isOpen={showAlert}
+        onDidDismiss={() => setShowAlert(false)}
+        message="Llena los campos obligatorios antes de guardar."
+        duration={1000} // 1000 ms = 1 segundo
+        color="primary"
+        icon={informationCircleOutline}
+        position="bottom"
+        buttons={[
+          {
+            side: 'start',
+            icon: informationCircleOutline,
+          }
+        ]}
+      />
 
         <div><IonButton color="success" onClick={enviar}>Guardar</IonButton>
         <IonButton routerLink={`/tabs/tab17/${params.ficha}`} disabled={buttonDisabled}>Siguiente</IonButton></div>

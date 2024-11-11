@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import loadSQL from '../models/database';
 
 interface Person {
-  id_usuario: number;
+  id_usuario: string;
   durante_los_ultimos_6_meses_ha_estado: string | null;
   usted_tiene_contrato_de_trabajo: string | null;
   la_actividad_economica_en_la_cual_trabaja: string | null;
@@ -29,8 +29,8 @@ interface Person {
   necesita_capacitacion_para: string | null;
   necesidades_de_capacitacion_de_pers_discapacidad: string | null;
   fecharegistro: string | null;
-  usuario: number | null;
-  estado: number | null;
+  usuario: string | null;
+  estado: string | null;
   tabla: string | null;
 }
 
@@ -41,29 +41,7 @@ const Tab6: React.FC = () => {
   const [db, setDb] = useState<any>(null);
   const [edad, setEdad] = useState<any>(null);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [items, setItems] = useState<Person>({
-    id_usuario: '',
-    durante_los_ultimos_6_meses_ha_estado: '',
-    usted_tiene_contrato_de_trabajo: '',
-    la_actividad_economica_en_la_cual_trabaja: '',
-    en_el_trabajo_se_desempeña_como: '',
-    le_interesa_el_emprendimiento: '',
-    tiene_alguna_idea_de_negocio: '',
-    en_que_sector_se_inscribe_su_idea_de_negocio: '',
-    otro_sector_cual: '',
-    su_capacidad_laboral_afectada_por_discapacidad: '',
-    cuenta_con_calificacion_perdida_capacidad_laboral: '',
-    porcentaje_de_perdida_laboral: '',
-    cual_es_su_ingreso_mensual_promedio: '',
-    ha_recibido_capacitacion_despues_de_discapacidad: '',
-    donde_recibio_capacitacion: '',
-    necesita_capacitacion_para: '',
-    necesidades_de_capacitacion_de_pers_discapacidad: '',
-    fecharegistro: '',
-    usuario: '',
-    estado: '',
-    tabla: 'discapacidad_capitulo_7'
-  });
+  const [items, setItems] =  useState<Person[]>([]);
   
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
@@ -105,6 +83,17 @@ const Tab6: React.FC = () => {
     }
   };
 
+  const getCurrentDateTime = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
   const fetchUsers = async (database = db) => {
     if (db) {
       const res = await database.exec(`SELECT * FROM discapacidad_capitulo_7 WHERE id_usuario=${params.ficha}`);
@@ -140,26 +129,26 @@ const Tab6: React.FC = () => {
       
       else {
         setItems({
-          id_usuario: parseInt(params.ficha),
+          id_usuario: params.ficha,
           durante_los_ultimos_6_meses_ha_estado: '',
           usted_tiene_contrato_de_trabajo: '',
           la_actividad_economica_en_la_cual_trabaja: '',
           en_el_trabajo_se_desempeña_como: '',
-          le_interesa_el_emprendimiento: '',
-          tiene_alguna_idea_de_negocio: '',
+          le_interesa_el_emprendimiento: '1',
+          tiene_alguna_idea_de_negocio: '1',
           en_que_sector_se_inscribe_su_idea_de_negocio: '',
           otro_sector_cual: '',
-          su_capacidad_laboral_afectada_por_discapacidad: '',
-          cuenta_con_calificacion_perdida_capacidad_laboral: '',
+          su_capacidad_laboral_afectada_por_discapacidad: '1',
+          cuenta_con_calificacion_perdida_capacidad_laboral: '1',
           porcentaje_de_perdida_laboral: '',
           cual_es_su_ingreso_mensual_promedio: '',
-          ha_recibido_capacitacion_despues_de_discapacidad: '',
+          ha_recibido_capacitacion_despues_de_discapacidad: '1',
           donde_recibio_capacitacion: '',
           necesita_capacitacion_para: '',
           necesidades_de_capacitacion_de_pers_discapacidad: '',
           fecharegistro: getCurrentDateTime(),
           usuario: localStorage.getItem('cedula'),
-          estado: 1,
+          estado: '1',
           tabla: 'discapacidad_capitulo_7'
         });
       }
@@ -167,41 +156,31 @@ const Tab6: React.FC = () => {
   };
   
 
-  const getCurrentDateTime = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  };
 
   useEffect(() => {
     if (people.length > 0) {
       let data = people[0] || {};
       setItems({
-        id_usuario: data.id_usuario || parseInt(params.ficha),
+        id_usuario: data.id_usuario ||params.ficha,
         durante_los_ultimos_6_meses_ha_estado: data.durante_los_ultimos_6_meses_ha_estado || '',
         usted_tiene_contrato_de_trabajo: data.usted_tiene_contrato_de_trabajo || '',
         la_actividad_economica_en_la_cual_trabaja: data.la_actividad_economica_en_la_cual_trabaja || '',
         en_el_trabajo_se_desempeña_como: data.en_el_trabajo_se_desempeña_como || '',
-        le_interesa_el_emprendimiento: data.le_interesa_el_emprendimiento || '',
-        tiene_alguna_idea_de_negocio: data.tiene_alguna_idea_de_negocio || '',
+        le_interesa_el_emprendimiento: data.le_interesa_el_emprendimiento || '1',
+        tiene_alguna_idea_de_negocio: data.tiene_alguna_idea_de_negocio || '1',
         en_que_sector_se_inscribe_su_idea_de_negocio: data.en_que_sector_se_inscribe_su_idea_de_negocio || '',
         otro_sector_cual: data.otro_sector_cual || '',
-        su_capacidad_laboral_afectada_por_discapacidad: data.su_capacidad_laboral_afectada_por_discapacidad || '',
-        cuenta_con_calificacion_perdida_capacidad_laboral: data.cuenta_con_calificacion_perdida_capacidad_laboral || '',
+        su_capacidad_laboral_afectada_por_discapacidad: data.su_capacidad_laboral_afectada_por_discapacidad || '1',
+        cuenta_con_calificacion_perdida_capacidad_laboral: data.cuenta_con_calificacion_perdida_capacidad_laboral || '1',
         porcentaje_de_perdida_laboral: data.porcentaje_de_perdida_laboral || '',
         cual_es_su_ingreso_mensual_promedio: data.cual_es_su_ingreso_mensual_promedio || '',
-        ha_recibido_capacitacion_despues_de_discapacidad: data.ha_recibido_capacitacion_despues_de_discapacidad || '',
+        ha_recibido_capacitacion_despues_de_discapacidad: data.ha_recibido_capacitacion_despues_de_discapacidad || '1',
         donde_recibio_capacitacion: data.donde_recibio_capacitacion || '',
         necesita_capacitacion_para: data.necesita_capacitacion_para || '',
         necesidades_de_capacitacion_de_pers_discapacidad: data.necesidades_de_capacitacion_de_pers_discapacidad || '',
         fecharegistro: data.fecharegistro || '',
-        usuario: data.usuario || null,
-        estado: data.estado || null,
+        usuario: data.usuario || localStorage.getItem('cedula'),
+        estado: data.estado || '1',
         tabla: data.tabla || 'discapacidad_capitulo_7'
       });
     }
@@ -245,6 +224,12 @@ const Tab6: React.FC = () => {
       ...(fieldName === 'tiene_alguna_idea_de_negocio' && value !== '2' && {
         en_que_sector_se_inscribe_su_idea_de_negocio: '',
         otro_sector_cual: '',
+      }),
+      ...(fieldName === 'cuenta_con_calificacion_perdida_capacidad_laboral' && value !== '2' && {
+        porcentaje_de_perdida_laboral: '',
+      }),
+      ...(fieldName === 'ha_recibido_capacitacion_despues_de_discapacidad' && value !== '2' && {
+        donde_recibio_capacitacion: '',
       }),
     }));
   };
@@ -531,7 +516,7 @@ const Tab6: React.FC = () => {
                 id="porcentaje_de_perdida_laboral"
                 style={{ textTransform: 'uppercase' }}
                 required
-                disabled={isDisabled}
+                disabled={isDisabled || items.cuenta_con_calificacion_perdida_capacidad_laboral !=='2'}
               />
             </div>
             <div className="col-sm-6 pt-2 pb-2">
@@ -573,7 +558,7 @@ const Tab6: React.FC = () => {
                 className="form-control form-control-sm"
                 id="donde_recibio_capacitacion"
                 required
-                disabled={isDisabled}
+                disabled={isDisabled || items.ha_recibido_capacitacion_despues_de_discapacidad !=='2'}
               >
                 <option value=""> SELECCIONE </option><option value="2"> OTRA INSTITUCIÓN PÚBLICA </option><option value="1"> SENA </option><option value="3"> UNA INSTITUCIÓN PRIVADA </option>  
               </select>

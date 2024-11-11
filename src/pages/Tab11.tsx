@@ -351,15 +351,57 @@ const Tab17: React.FC = () => {
     }
   };
   
-  const handleInputChange = (event, field) => {
-    const { value } = event.target;
+  const handleInputChange = (e, fieldName) => {
+    const value = e.target.value;
+    
+    // Actualiza el estado con la nueva información
     setItems((prevItems) => ({
       ...prevItems,
-      [field]: value,
+      [fieldName]: value,
+  
+      // Reiniciar "otra_condicion_cual" si se cambia a una opción diferente a "Otra"
+      ...(fieldName === 'en_que_condicion_posee_vivienda' && value !== '8' && {
+        otra_condicion_cual: '',
+      }),
+      ...(fieldName === 'vivienda_construida_en_otro' && value !== '2' && {
+        vivienda_construida_en_otro_cual: '',
+      }),
+      ...(fieldName === 'vivienda_cuenta_servicios_publ_ninguno' && value === '2' && {
+        vivienda_cuenta_servicios_publ_energia_elec: '1',
+        vivienda_cuenta_servicios_publ_alcantarillado: '1',
+        vivienda_cuenta_servicios_publ_telefono: '1',
+        vivienda_cuenta_servicios_publ_acueducto: '1',
+        vivienda_cuenta_servicios_publ_gas_natural: '1',
+        vivienda_cuenta_servicios_publ_recoleccion_basura: '1',
+        vivienda_cuenta_servicios_publ_internet: '1',
+      }),
+      ...(fieldName === 'dispositivos_tecnologicos_ninguno' && value === '2' && {
+        dispositivos_tecnologicos_televisor: '1',
+        dispositivos_tecnologicos_computador: '1',
+        dispositivos_tecnologicos_tablet: '1',
+        dispositivos_tecnologicos_celular: '1',
+        dispositivos_tecnologicos_otros: '1',
+        dispositivos_tecnologicos_otros_cuales:''
+      }),
+      ...(fieldName === 'dispositivos_tecnologicos_otros' && value !== '2' && {
+        dispositivos_tecnologicos_otros_cuales: '',
+      }),
+      ...(fieldName === 'riesgos_vivienda_por_ninguno' && value === '2' && {
+        riesgos_vivienda_por_deslizamiento: '1',
+        riesgos_vivienda_por_inundaciones: '1',
+        riesgos_vivienda_por_techo_paredes_mal_estado: '1',
+        riesgos_vivienda_por_fallas_geologicas: '1',
+        riesgos_vivienda_por_otro: '1',
+        riesgos_vivienda_por_otro_cual: ''
+      }),
+      ...(fieldName === 'riesgos_vivienda_por_otro' && value !== '2' && {
+        riesgos_vivienda_por_otro_cual: '',
+      }),
     }));
-    console.log(items);
-    
   };
+  
+  
+
   const viviendaOptions = [
     { value: "", label: "SELECCIONE" },
     { value: "2", label: "APARTAMENTO" },
@@ -391,6 +433,7 @@ const Tab17: React.FC = () => {
 
 
   const t1_condiciones_higienicas = [
+    { value: "", label: "SELECCIONE" },
     { value: "1", label: "Adecuadas" },
     { value: "2", label: "Inadecuadas" }
   ];
@@ -456,6 +499,7 @@ const Tab17: React.FC = () => {
             value={items.otra_condicion_cual}
             onChange={(e) => handleInputChange(e, 'otra_condicion_cual')}
             required
+            disabled={items.en_que_condicion_posee_vivienda !== '8'}
           />
         </div>
       </div>
@@ -947,6 +991,8 @@ const Tab17: React.FC = () => {
           onChange={(e) => handleInputChange(e, 'vivienda_construida_en_otro_cual')}
           style={{ textTransform: 'uppercase' }}
           required
+          disabled={items.vivienda_construida_en_otro !== '2'}
+
         />
       </div>
       </div>
@@ -965,6 +1011,8 @@ const Tab17: React.FC = () => {
           id="vivienda_cuenta_servicios_publ_energia_elec"
           value={items.vivienda_cuenta_servicios_publ_energia_elec || ''}
           onChange={(e) => handleInputChange(e, 'vivienda_cuenta_servicios_publ_energia_elec')}
+          disabled={items.vivienda_cuenta_servicios_publ_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -977,6 +1025,8 @@ const Tab17: React.FC = () => {
           id="vivienda_cuenta_servicios_publ_alcantarillado"
           value={items.vivienda_cuenta_servicios_publ_alcantarillado || ''}
           onChange={(e) => handleInputChange(e, 'vivienda_cuenta_servicios_publ_alcantarillado')}
+          disabled={items.vivienda_cuenta_servicios_publ_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -992,6 +1042,8 @@ const Tab17: React.FC = () => {
           id="vivienda_cuenta_servicios_publ_telefono"
           value={items.vivienda_cuenta_servicios_publ_telefono || ''}
           onChange={(e) => handleInputChange(e, 'vivienda_cuenta_servicios_publ_telefono')}
+          disabled={items.vivienda_cuenta_servicios_publ_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1004,6 +1056,8 @@ const Tab17: React.FC = () => {
           id="vivienda_cuenta_servicios_publ_acueducto"
           value={items.vivienda_cuenta_servicios_publ_acueducto || ''}
           onChange={(e) => handleInputChange(e, 'vivienda_cuenta_servicios_publ_acueducto')}
+          disabled={items.vivienda_cuenta_servicios_publ_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1019,6 +1073,8 @@ const Tab17: React.FC = () => {
           id="vivienda_cuenta_servicios_publ_gas_natural"
           value={items.vivienda_cuenta_servicios_publ_gas_natural || ''}
           onChange={(e) => handleInputChange(e, 'vivienda_cuenta_servicios_publ_gas_natural')}
+          disabled={items.vivienda_cuenta_servicios_publ_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1031,6 +1087,8 @@ const Tab17: React.FC = () => {
           id="vivienda_cuenta_servicios_publ_recoleccion_basura"
           value={items.vivienda_cuenta_servicios_publ_recoleccion_basura || ''}
           onChange={(e) => handleInputChange(e, 'vivienda_cuenta_servicios_publ_recoleccion_basura')}
+          disabled={items.vivienda_cuenta_servicios_publ_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1046,6 +1104,8 @@ const Tab17: React.FC = () => {
           id="vivienda_cuenta_servicios_publ_internet"
           value={items.vivienda_cuenta_servicios_publ_internet || ''}
           onChange={(e) => handleInputChange(e, 'vivienda_cuenta_servicios_publ_internet')}
+          disabled={items.vivienda_cuenta_servicios_publ_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1094,6 +1154,8 @@ const Tab17: React.FC = () => {
           id="dispositivos_tecnologicos_televisor"
           value={items.dispositivos_tecnologicos_televisor || ''}
           onChange={(e) => handleInputChange(e, 'dispositivos_tecnologicos_televisor')}
+          disabled={items.dispositivos_tecnologicos_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1106,6 +1168,8 @@ const Tab17: React.FC = () => {
           id="dispositivos_tecnologicos_computador"
           value={items.dispositivos_tecnologicos_computador || ''}
           onChange={(e) => handleInputChange(e, 'dispositivos_tecnologicos_computador')}
+          disabled={items.dispositivos_tecnologicos_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1121,6 +1185,8 @@ const Tab17: React.FC = () => {
           id="dispositivos_tecnologicos_tablet"
           value={items.dispositivos_tecnologicos_tablet || ''}
           onChange={(e) => handleInputChange(e, 'dispositivos_tecnologicos_tablet')}
+          disabled={items.dispositivos_tecnologicos_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1133,6 +1199,8 @@ const Tab17: React.FC = () => {
           id="dispositivos_tecnologicos_celular"
           value={items.dispositivos_tecnologicos_celular || ''}
           onChange={(e) => handleInputChange(e, 'dispositivos_tecnologicos_celular')}
+          disabled={items.dispositivos_tecnologicos_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1148,6 +1216,8 @@ const Tab17: React.FC = () => {
           id="dispositivos_tecnologicos_otros"
           value={items.dispositivos_tecnologicos_otros || ''}
           onChange={(e) => handleInputChange(e, 'dispositivos_tecnologicos_otros')}
+          disabled={items.dispositivos_tecnologicos_ninguno !== '1'}
+
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1163,6 +1233,8 @@ const Tab17: React.FC = () => {
           onChange={(e) => handleInputChange(e, 'dispositivos_tecnologicos_otros_cuales')}
           style={{ textTransform: 'uppercase' }}
           required
+          disabled={items.dispositivos_tecnologicos_ninguno !== '1' || items.dispositivos_tecnologicos_otros !== '2' }
+
         />
       </div>
     </div>
@@ -1196,6 +1268,7 @@ const Tab17: React.FC = () => {
           id="riesgos_vivienda_por_deslizamiento"
           value={items.riesgos_vivienda_por_deslizamiento || ''}
           onChange={(e) => handleInputChange(e, 'riesgos_vivienda_por_deslizamiento')}
+          disabled={items.riesgos_vivienda_por_ninguno === '2'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1208,6 +1281,7 @@ const Tab17: React.FC = () => {
           id="riesgos_vivienda_por_inundaciones"
           value={items.riesgos_vivienda_por_inundaciones || ''}
           onChange={(e) => handleInputChange(e, 'riesgos_vivienda_por_inundaciones')}
+          disabled={items.riesgos_vivienda_por_ninguno === '2'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1223,6 +1297,7 @@ const Tab17: React.FC = () => {
           id="riesgos_vivienda_por_techo_paredes_mal_estado"
           value={items.riesgos_vivienda_por_techo_paredes_mal_estado || ''}
           onChange={(e) => handleInputChange(e, 'riesgos_vivienda_por_techo_paredes_mal_estado')}
+          disabled={items.riesgos_vivienda_por_ninguno === '2'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1235,6 +1310,7 @@ const Tab17: React.FC = () => {
           id="riesgos_vivienda_por_fallas_geologicas"
           value={items.riesgos_vivienda_por_fallas_geologicas || ''}
           onChange={(e) => handleInputChange(e, 'riesgos_vivienda_por_fallas_geologicas')}
+          disabled={items.riesgos_vivienda_por_ninguno === '2'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1250,6 +1326,7 @@ const Tab17: React.FC = () => {
           id="riesgos_vivienda_por_otro"
           value={items.riesgos_vivienda_por_otro || ''}
           onChange={(e) => handleInputChange(e, 'riesgos_vivienda_por_otro')}
+          disabled={items.riesgos_vivienda_por_ninguno === '2'}
         >
           <option value="1">NO</option>
           <option value="2">SÍ</option>
@@ -1265,6 +1342,7 @@ const Tab17: React.FC = () => {
           onChange={(e) => handleInputChange(e, 'riesgos_vivienda_por_otro_cual')}
           style={{ textTransform: 'uppercase' }}
           required
+          disabled={items.riesgos_vivienda_por_ninguno === '2' || items.riesgos_vivienda_por_otro === '1'}
         />
       </div>
     </div>

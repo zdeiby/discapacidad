@@ -340,6 +340,7 @@ const Tab16: React.FC = () => {
                 rows="5"
                 value={autorizacion?.conclusiones_y_observaciones || ''}
                 onChange={(e) => handleInputChange(e, 'conclusiones_y_observaciones')}
+                required
               />
             </div>
           </div>

@@ -134,10 +134,29 @@ import {
       }
     };
   
+    const validarCampos = () => {
+      const camposObligatorios = [
+        'registre_relacion_familiar_con_persona_con_discapacidad',
+      ];
   
+      // if (items.discapacidad === '7') { // Si es múltiple, agregar los campos adicionales
+      //   camposObligatorios.push('auditiva', 'mental', 'fisica', 'sordoceguera', 'intelectual', 'visual');
+      // }
+  
+  
+      for (let campo of camposObligatorios) {
+        if (!items[campo]) {
+          return false;
+        }
+      }
+      return true;
+    };
 
   
     const enviar = async (database = db, event: React.MouseEvent<HTMLButtonElement>) => {
+      if (!validarCampos()) {
+        return;
+      }
       event.preventDefault();
     
       try {
