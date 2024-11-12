@@ -139,9 +139,9 @@ const IngresarIntegrantes: React.FC = () => {
     telcontactouno: '',
     telcontactodos: '',
     fechadenacimiento_verificada: '',
-    tabla: '',
-    usuario: '',
-    estado:'',   
+    tabla: 'inclusion_ciudadano',
+    usuario: localStorage.getItem('cedula') ,
+    estado:'1',   
   });
   
   
