@@ -41,7 +41,40 @@ const Tab6: React.FC = () => {
   const [db, setDb] = useState<any>(null);
   const [edad, setEdad] = useState<any>(null);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [items, setItems] =  useState<Person[]>([]);
+
+  const getCurrentDateTime = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+  const [items, setItems] = useState<Person>({
+    id_usuario: params.ficha,
+    durante_los_ultimos_6_meses_ha_estado: '',
+    usted_tiene_contrato_de_trabajo: '',
+    la_actividad_economica_en_la_cual_trabaja: '',
+    en_el_trabajo_se_desempeña_como: '',
+    le_interesa_el_emprendimiento: '1',
+    tiene_alguna_idea_de_negocio: '1',
+    en_que_sector_se_inscribe_su_idea_de_negocio: '',
+    otro_sector_cual: '',
+    su_capacidad_laboral_afectada_por_discapacidad: '1',
+    cuenta_con_calificacion_perdida_capacidad_laboral: '1',
+    porcentaje_de_perdida_laboral: '',
+    cual_es_su_ingreso_mensual_promedio: '',
+    ha_recibido_capacitacion_despues_de_discapacidad: '1',
+    donde_recibio_capacitacion: '',
+    necesita_capacitacion_para: '',
+    necesidades_de_capacitacion_de_pers_discapacidad: '',
+    fecharegistro: getCurrentDateTime(),
+    usuario: localStorage.getItem('cedula'),
+    estado: '1',
+    tabla: 'discapacidad_capitulo_7'
+  });
   
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
@@ -83,16 +116,7 @@ const Tab6: React.FC = () => {
     }
   };
 
-  const getCurrentDateTime = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  };
+
 
   const fetchUsers = async (database = db) => {
     if (db) {

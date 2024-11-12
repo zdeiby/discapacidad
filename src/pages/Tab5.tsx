@@ -726,7 +726,7 @@ const Tab5: React.FC = () => {
 <div className="row g-3 was-validated ">
 
         <div className="row pt-2 pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="oportunamente_diagnosticada">3.1 ¿Su condición de discapacidad fue oportunamente diagnosticada?</label>
     <select
       className="form-control form-control-sm"
@@ -742,7 +742,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="orientacion_sobre_discapacidad">3.2 ¿Usted o su familia han recibido orientación sobre el manejo de la discapacidad?</label>
     <select
       className="form-control form-control-sm"
@@ -760,13 +760,13 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     3.3 ¿Ha recibido atención general en salud en el último año?
   </div>
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="atencion_general_ultimo_año">Atención general en salud</label>
     <select
       className="form-control form-control-sm"
@@ -783,7 +783,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="atencion_discapacidad_ultimo_año">Atención en salud por causa de su discapacidad</label>
     <select
       className="form-control form-control-sm"
@@ -800,7 +800,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="ninguna_atencion_ultimo_año">Ninguna</label>
     <select
       className="form-control form-control-sm"
@@ -818,13 +818,13 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     3.4 ¿Cuánto tiempo ha transcurrido sin revisión médica general?
   </div>
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="tiempo_sin_revision_general">Años</label>
     <input
       type="number"
@@ -836,7 +836,7 @@ const Tab5: React.FC = () => {
     />
   </div>
   
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="tiempo_sin_revision_general_meses">Meses</label>
     <input
       type="number"
@@ -850,7 +850,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="requiere_atencion_a_causa_discapacidad">3.5 ¿Requiere atención en salud por causa de su discapacidad?</label>
     <select
       className="form-control form-control-sm"
@@ -867,14 +867,14 @@ const Tab5: React.FC = () => {
   </div>
 </div>
 
-<div className="row pb-3">
-  <div className="form-group col-sm">
+<div className="row ">
+  <div className="form-group col-sm pb-3">
     3.6 ¿Le ordenaron usar?
   </div>
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="debe_usar_silla_de_ruedas">Silla de ruedas</label>
     <select
       className="form-control form-control-sm"
@@ -891,7 +891,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="debe_usar_caminador">Caminador</label>
     <select
       className="form-control form-control-sm"
@@ -910,7 +910,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="debe_usar_muletas">Muletas</label>
     <select
       className="form-control form-control-sm"
@@ -927,7 +927,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="debe_usar_baston_de_apoyo">Bastón de apoyo</label>
     <select
       className="form-control form-control-sm"
@@ -946,7 +946,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="debe_usar_baston_guia">Bastón guía</label>
     <select
       className="form-control form-control-sm"
@@ -963,7 +963,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="debe_usar_audifonos">Audífonos</label>
     <select
       className="form-control form-control-sm"
@@ -981,8 +981,8 @@ const Tab5: React.FC = () => {
   </div>
 </div>
 
-<div className="row pb-3">
-  <div className="form-group col-sm">
+<div className="row ">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="debe_usar_insumos_medicos">Insumos médicos</label>
     <select
       className="form-control form-control-sm"
@@ -999,7 +999,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="debe_usar_protesis">Prótesis</label>
     <select
       className="form-control form-control-sm"
@@ -1018,7 +1018,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="debe_usar_otros_productos_de_apoyo">Otros productos de apoyo:</label>
     <select
       className="form-control form-control-sm"
@@ -1035,7 +1035,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="debe_usar_ninguno">Ninguno</label>
     <select
       className="form-control form-control-sm"
@@ -1053,13 +1053,13 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     3.7 ¿Utiliza actualmente?
   </div>
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="utiliza_actualmente_silla_de_ruedas">Silla de ruedas:</label>
     <select
       className="form-control form-control-sm"
@@ -1076,7 +1076,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="utiliza_actualmente_caminador">Caminador:</label>
     <select
       className="form-control form-control-sm"
@@ -1094,7 +1094,7 @@ const Tab5: React.FC = () => {
   </div>
 </div>
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="utiliza_actualmente_muletas">Muletas:</label>
     <select
       className="form-control form-control-sm"
@@ -1111,7 +1111,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="utiliza_actualmente_baston_de_apoyo">Bastón de apoyo:</label>
     <select
       className="form-control form-control-sm"
@@ -1130,7 +1130,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="utiliza_actualmente_baston_guia">Bastón guía:</label>
     <select
       className="form-control form-control-sm"
@@ -1147,7 +1147,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="utiliza_actualmente_audifonos">Audífonos:</label>
     <select
       className="form-control form-control-sm"
@@ -1165,8 +1165,8 @@ const Tab5: React.FC = () => {
   </div>
 </div>
 
-<div className="row pb-3">
-  <div className="form-group col-sm">
+<div className="row ">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="utiliza_actualmente_insumos_medicos">Insumos médicos:</label>
     <select
       className="form-control form-control-sm"
@@ -1183,7 +1183,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="utiliza_actualmente_protesis">Prótesis:</label>
     <select
       className="form-control form-control-sm"
@@ -1202,7 +1202,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="utiliza_actualmente_otros_productos_de_apoyo">Otros productos de apoyo:</label>
     <select
       className="form-control form-control-sm"
@@ -1219,7 +1219,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="utiliza_actualmente_ninguno">Ninguno:</label>
     <select
       className="form-control form-control-sm"
@@ -1237,13 +1237,13 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     3.8 ¿Cree que aún necesita?
   </div>
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cree_necesita_silla_de_ruedas">Silla de ruedas</label>
     <select
       className="form-control form-control-sm"
@@ -1260,7 +1260,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="cree_necesita_caminador">Caminador</label>
     <select
       className="form-control form-control-sm"
@@ -1279,7 +1279,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cree_necesita_muletas">Muletas</label>
     <select
       className="form-control form-control-sm"
@@ -1296,7 +1296,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="cree_necesita_baston_de_apoyo">Bastón de apoyo</label>
     <select
       className="form-control form-control-sm"
@@ -1315,7 +1315,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cree_necesita_baston_guia">Bastón guía:</label>
     <select
       className="form-control form-control-sm"
@@ -1332,7 +1332,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="cree_necesita_audifonos">Audífonos:</label>
     <select
       className="form-control form-control-sm"
@@ -1351,7 +1351,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cree_necesita_insumos_medicos">Insumos médicos</label>
     <select
       className="form-control form-control-sm"
@@ -1368,7 +1368,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cree_necesita_protesis">Prótesis</label>
     <select
       className="form-control form-control-sm"
@@ -1387,7 +1387,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cree_necesita_otros_productos_de_apoyo">Otros productos de apoyo</label>
     <select
       className="form-control form-control-sm"
@@ -1404,7 +1404,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm ">
     <label htmlFor="cree_necesita_ninguno">Ninguno:</label>
     <select
       className="form-control form-control-sm"
@@ -1423,7 +1423,7 @@ const Tab5: React.FC = () => {
 
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otras_condiciones_usa_medicamentos">3.9.1 Usa medicamentos</label>
     <select
       className="form-control form-control-sm"
@@ -1439,7 +1439,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cuales_medicamentos">Cuáles:</label>
     <input
       type="text"
@@ -1455,7 +1455,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otras_condiciones_tiene_escaras">3.9.2 ¿Tiene escaras?</label>
     <select
       className="form-control form-control-sm"
@@ -1471,7 +1471,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otras_condiciones_tiene_traqueotomia">3.9.3 ¿Tiene traqueotomía?</label>
     <select
       className="form-control form-control-sm"
@@ -1489,7 +1489,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otras_condiciones_tiene_gastrostomia">3.9.4 ¿Tiene gastrostomía?</label>
     <select
       className="form-control form-control-sm"
@@ -1505,7 +1505,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otras_condiciones_requiere_uso_de_pañal">3.9.5 ¿Requiere uso permanente de pañal?</label>
     <select
       className="form-control form-control-sm"
@@ -1523,7 +1523,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otras_condiciones_oxigeno_dependiente">3.9.6 ¿Es oxígeno dependiente?</label>
     <select
       className="form-control form-control-sm"
@@ -1539,7 +1539,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otras_condiciones_dialisis_permanente">3.9.7 ¿Requiere diálisis permanente?</label>
     <select
       className="form-control form-control-sm"
@@ -1557,7 +1557,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="ha_presentado_covid19">3.10 ¿Ha presentado Covid-19?</label>
     <select
       className="form-control form-control-sm"
@@ -1573,7 +1573,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cuantas_veces_covid19">3.10.1 ¿Cuántas veces?</label>
     <input
       type="number"
@@ -1588,7 +1588,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="fecha_ultimo_contagio">3.10.2 Fecha de último contagio:</label>
     <input
       type="date"
@@ -1601,7 +1601,7 @@ const Tab5: React.FC = () => {
     />
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="esta_vacunado_contra_covid19">3.11 ¿Está vacunado contra Covid-19?</label>
     <select
       className="form-control form-control-sm"
@@ -1619,7 +1619,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="numero_dosis_aplicadas">3.11.1 Número de dosis aplicadas</label>
     <input
       type="number"
@@ -1632,7 +1632,7 @@ const Tab5: React.FC = () => {
     />
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="fecha_ultima_dosis_aplicada">3.11.2 Fecha aplicación de última dosis:</label>
     <input
       type="date"
@@ -1648,7 +1648,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="fabricante_de_la_vacuna">3.11.3 Fabricante de la vacuna aplicada</label>
     <select
       className="form-control form-control-sm"
@@ -1662,7 +1662,7 @@ const Tab5: React.FC = () => {
       <option value=""> SELECCIONE </option><option value="4"> ASTRA ZENECA </option><option value="5"> JOHNSON Y JOHNSON (JANSSEN) </option><option value="3"> MODERNA </option><option value="6"> OTRO </option><option value="1"> PFIZER </option><option value="2"> SINOVAC </option>    </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otro_fabricante_cual">Otro:</label>
     <input
       type="text"
@@ -1680,7 +1680,7 @@ const Tab5: React.FC = () => {
 
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="tiene_esquema_de_vacunas_completo">3.12 ¿Tiene esquema de vacunas completo?</label>
     <select
       className="form-control form-control-sm"
@@ -1696,7 +1696,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="requiere_apoyo_para_actividades_diarias">3.13 ¿Requiere apoyo permanente de otra persona para realizar las actividades de su vida diaria?</label>
     <select
       className="form-control form-control-sm"
@@ -1714,7 +1714,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="persona_que_ayuda_actividades_diarias">3.14 ¿Cuál es la persona que más le ayuda a desarrollar sus actividades de la vida diaria?</label>
     <select
       className="form-control form-control-sm"
@@ -1728,7 +1728,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="sexo_persona_que_mas_ayuda">3.14.1 ¿Sexo de la persona que más le ayuda a desarrollar sus actividades de la vida diaria?</label>
     <select
       className="form-control form-control-sm"
@@ -1745,13 +1745,13 @@ const Tab5: React.FC = () => {
 
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     3.15 ¿Qué tipo de rehabilitación le han ordenado?
   </div>
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_fisioterapia">Fisioterapia</label>
     <select
       className="form-control form-control-sm"
@@ -1768,7 +1768,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_fonoaudiologia">Fonoaudiología</label>
     <select
       className="form-control form-control-sm"
@@ -1787,7 +1787,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_medic_permanen">Medicamentos permanentes</label>
     <select
       className="form-control form-control-sm"
@@ -1804,7 +1804,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_medici_fisica">Medicina física y de rehabilitación</label>
     <select
       className="form-control form-control-sm"
@@ -1823,7 +1823,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_optometria">Optometría</label>
     <select
       className="form-control form-control-sm"
@@ -1840,7 +1840,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_psicologia">Psicología</label>
     <select
       className="form-control form-control-sm"
@@ -1859,7 +1859,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_psiquiatria">Psiquiatría</label>
     <select
       className="form-control form-control-sm"
@@ -1876,7 +1876,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_terapia_ocupa">Terapia ocupacional</label>
     <select
       className="form-control form-control-sm"
@@ -1895,7 +1895,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_trabajo_social">Trabajo social</label>
     <select
       className="form-control form-control-sm"
@@ -1912,7 +1912,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_otro_tipo">Otro tipo de rehabilitación</label>
     <select
       className="form-control form-control-sm"
@@ -1931,7 +1931,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="rehabilitacion_ordenada_ninguno">Ninguno</label>
     <select
       className="form-control form-control-sm"
@@ -1951,7 +1951,7 @@ const Tab5: React.FC = () => {
 <hr />
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="actualmente_esta_en_rehabilitacion">3.16 ¿Actualmente está asistiendo al servicio de rehabilitación?</label>
     <select
       className="form-control form-control-sm"
@@ -1970,7 +1970,7 @@ const Tab5: React.FC = () => {
 
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="quien_paga_rehabilitacion">3.17 ¿Quién paga la rehabilitación?:</label>
     <select
       className="form-control form-control-sm"
@@ -1984,7 +1984,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="quien_paga_rehabilitacion_otro_quien">Otro ¿Quién?:</label>
     <input
       type="text"
@@ -2000,7 +2000,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="establecimiento_rehabilitacion_es">3.18 El establecimiento donde recibe la rehabilitación, es:</label>
     <select
       className="form-control form-control-sm"
@@ -2016,7 +2016,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="porque_no_recibe_rehabilitacion">3.19 ¿Por qué no recibe el servicio de rehabilitación?:</label>
     <select
       className="form-control form-control-sm"
@@ -2030,7 +2030,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="porque_no_recibe_rehabilitacion_otro">Otro ¿Cuál?:</label>
     <input
       type="text"
@@ -2046,7 +2046,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cuanto_tiempo_sin_rehabilitacion">3.20 ¿Cuánto tiempo lleva sin recibir el servicio de rehabilitación?:</label>
     <select
       className="form-control form-control-sm"
@@ -2060,7 +2060,7 @@ const Tab5: React.FC = () => {
     </select>
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="conoce_prestadores_rehabilitacion">3.21 ¿Conoce prestadores de servicios de rehabilitación acorde a sus necesidades?:</label>
     <select
       className="form-control form-control-sm"
@@ -2078,7 +2078,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="a_que_regimen_de_salud_pertenece">3.22 ¿A qué régimen de salud pertenece?:</label>
     <select
       className="form-control form-control-sm"
@@ -2093,7 +2093,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="cual_es_su_eps">3.23 ¿Cuál es su EPS?:</label>
     <input
       type="text"
@@ -2106,7 +2106,7 @@ const Tab5: React.FC = () => {
     />
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="tipo_afiliacion">3.24 Tipo de afiliación:</label>
     <select
       className="form-control form-control-sm"
@@ -2121,7 +2121,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="otro_tipo_afiliacion_cual">Otro. ¿Cuál?:</label>
     <input
       type="text"
@@ -2137,13 +2137,13 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     3.25 Última hospitalización
   </div>
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="ultima_hospitalizacion_motivo">Motivo:</label>
     <input
       type="text"
@@ -2156,7 +2156,7 @@ const Tab5: React.FC = () => {
     />
   </div>
 
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="hace_cuanto_ultima_hospitalizacion">¿Hace cuánto?:</label>
     <select
       className="form-control form-control-sm"
@@ -2171,7 +2171,7 @@ const Tab5: React.FC = () => {
 </div>
 
 <div className="row pb-3">
-  <div className="form-group col-sm">
+  <div className="form-group col-sm pb-3">
     <label htmlFor="tiempo_de_hospitalizacion">Tiempo de hospitalización:</label>
     <input
       type="text"

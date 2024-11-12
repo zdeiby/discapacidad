@@ -1,4 +1,4 @@
-package io.infurbanistica.starter;
+package io.discapacidad.starter;
 
 import com.getcapacitor.BridgeActivity;
 

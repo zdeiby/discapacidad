@@ -242,7 +242,7 @@ const Login = () => {
             <IonContent>
                 <IonHeader>
                     <IonToolbar >
-                        <IonTitle >Infracción Urbanística </IonTitle>
+                        <IonTitle >Discapacidad</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonGrid>

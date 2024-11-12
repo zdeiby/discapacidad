@@ -802,7 +802,7 @@ const Tab4: React.FC = () => {
   <br />
 <div className="row  g-3 was-validated">
     <div className="row ">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label >2.1 Cual es el diagnóstico en salud:</label>
         <textarea
           className="form-control"
@@ -817,15 +817,15 @@ const Tab4: React.FC = () => {
     </div>
     <hr />
     <div className="row ">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         2.2 Por su condición de salud, presenta alteraciones permanentes en: 
         <strong>(Debes seleccionar “SI” mínimo en una opción).</strong>
       </div>
       <hr />
     </div>
     
-    <div className="row  pb-3">
-      <div className=" col-sm">
+    <div className="row  pb-3 ">
+      <div className=" col-sm ">
         <label htmlFor="permanentes_sistema_nervioso">El sistema nervioso</label>
         <select
           className="form-control form-control-sm"
@@ -837,7 +837,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_los_ojos">Los ojos</label>
         <select
           className="form-control form-control-sm"
@@ -851,7 +851,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_los_oidos">Los oídos</label>
         <select
           className="form-control form-control-sm"
@@ -863,7 +863,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_demas_sentidos">Los demás órganos de los sentidos (Olfato, Tacto, Gusto)</label>
         <select
           className="form-control form-control-sm"
@@ -877,7 +877,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_la_voz_el_habla">La voz, el habla</label>
         <select
           className="form-control form-control-sm"
@@ -889,7 +889,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_cardiorrespiratorio_defensas">El sistema cardiorrespiratorio, las defensas</label>
         <select
           className="form-control form-control-sm"
@@ -903,7 +903,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_digestion_metabolismo">La digestión, el metabolismo, las hormonas</label>
         <select
           className="form-control form-control-sm"
@@ -915,7 +915,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_sistema_genital">El sistema genital, urinario, reproductivo</label>
         <select
           className="form-control form-control-sm"
@@ -929,7 +929,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_movimiento_del_cuerpo">El movimiento del cuerpo, manos, brazos, piernas</label>
         <select
           className="form-control form-control-sm"
@@ -941,7 +941,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_la_piel_unas_cabello">La piel, las uñas, el cabello</label>
         <select
           className="form-control form-control-sm"
@@ -955,7 +955,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row ">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="permanentes_ninguno">Ninguno (Persona sin discapacidad)  (pase al capítulo XII)</label>
         <select
           className="form-control form-control-sm"
@@ -970,7 +970,7 @@ const Tab4: React.FC = () => {
     </div>
     <hr />
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="cual_afecta_mas">2.3 ¿Cuál es la que más le afecta?</label>
         <textarea
           className="form-control"
@@ -985,12 +985,12 @@ const Tab4: React.FC = () => {
     </div>
     <hr />
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm ">
         2.4 ¿Hace cuánto presenta esta alteración?
       </div>
     </div>
     <div className="row ">
-      <div className=" col-sm">
+      <div className=" col-sm ">
         <label htmlFor="hace_cuanto_años">Años</label>
         <input
           type="number"
@@ -1001,7 +1001,7 @@ const Tab4: React.FC = () => {
            disabled={isDisabled} onChange={(e) => handleInputChange(e, 'hace_cuanto_años')}
         />
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="hace_cuantos_meses">Meses</label>
         <input
           type="number"
@@ -1014,8 +1014,8 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <hr />
-    <div className="row pb-3">
-      <div className=" col-sm">
+    <div className="row ">
+      <div className=" col-sm ">
         <label htmlFor="origen_discapacidad">2.5 ¿Sabe usted cuál es el origen de su discapacidad?</label>
         <select
           className="form-control form-control-sm"
@@ -1027,7 +1027,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="consecuencia_discapacidad">2.6 Principalmente, su discapacidad es consecuencia de:</label>
         <select
           className="form-control form-control-sm"
@@ -1041,7 +1041,7 @@ const Tab4: React.FC = () => {
     </div>
     {(items.consecuencia_discapacidad == '13')?
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="consecuencia_discapacidad_cual">Informa cuál:</label>
         <input
           type="text"
@@ -1055,7 +1055,7 @@ const Tab4: React.FC = () => {
     </div>:''}
     <hr />
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm ">
         <label htmlFor="enfermedad_profesional">2.7 Enfermedad profesional por:</label>
         <select
           className="form-control form-control-sm"
@@ -1066,7 +1066,7 @@ const Tab4: React.FC = () => {
         >
         <option value=""> SELECCIONE </option><option value="4"> CARGA DE TRABAJO FÍSICA O MENTAL </option><option value="2"> CONDICIONES DE SEGURIDAD </option><option value="3"> CONTAMINANTES (QUÍMICOS, BIOLÓGICOS) </option><option value="1"> MEDIO AMBIENTE DEL LUGAR DE TRABAJO </option><option value="5"> ORGANIZACIÓN DEL TRABAJO </option><option value="6"> OTRA CAUSA </option>        </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="consumo_psicoactivos">2.8 Por consumo de psicoactivos:</label>
         <select
           className="form-control form-control-sm"
@@ -1079,7 +1079,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm ">
         <label htmlFor="desastres_naturales">2.9 Desastres naturales:</label>
         <select
           className="form-control form-control-sm"
@@ -1090,7 +1090,7 @@ const Tab4: React.FC = () => {
         >
         <option value=""> SELECCIONE </option><option value="3"> DESLIZAMIENTO </option><option value="2"> INUNDACIÓN </option><option value="4"> OTRO DESASTRE NATURAL </option><option value="1"> TERREMOTO </option>        </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="por_accidente">2.10 Por accidente:</label>
         <select
           className="form-control form-control-sm"
@@ -1103,7 +1103,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row pb-3">
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="victima_de_violencia">2.11 Como víctima de violencia:</label>
         <select
           className="form-control form-control-sm"
@@ -1114,7 +1114,7 @@ const Tab4: React.FC = () => {
         >
           <option value=""> SELECCIONE </option><option value="1"> AL INTERIOR DEL HOGAR </option><option value="2"> DELICUENCIA COMÚN </option><option value="4"> OTRA </option><option value="3"> SOCIAL </option>        </select>
       </div>
-      <div className=" col-sm">
+      <div className=" col-sm pt-3">
         <label htmlFor="del_conflicto_armado_por">2.12 Del conflicto armado por:</label>
         <select
           className="form-control form-control-sm"
@@ -1127,7 +1127,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="dificultades_prestacion_servicios">2.13 Dificultades en la prestación de servicios de salud por:</label>
         <select
           className="form-control form-control-sm"
@@ -1138,7 +1138,7 @@ const Tab4: React.FC = () => {
         >
           <option value=""> SELECCIONE </option><option value="1"> ATENCIÓN MÉDICA INOPORTUNA </option><option value="4"> DEFICIENCIAS EN LA CALIDAD DE LA ATENCIÓN </option><option value="2"> EQUIVOCACIONES EN EL DIAGNÓSTICO </option><option value="3"> FORMULACIÓN O APLICACIÓN MALA DE MEDICAMENTOS </option><option value="5"> OTRA </option>        </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="en_la_familia_existen_personas_con_discapacidad">2.14 ¿En su familia existen o existieron más personas con discapacidad?:</label>
         <select
           className="form-control form-control-sm"
@@ -1152,7 +1152,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-1">
         <label htmlFor="en_cual_pais_adquirio_discapacidad">2.15 ¿En cuál país adquirió la discapacidad?:</label>
         <input
           type="text"
@@ -1163,7 +1163,7 @@ const Tab4: React.FC = () => {
           required
         />
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="en_cual_departamento_adquirio_discapacidad">2.16 ¿En cuál departamento adquirió la discapacidad?:</label>
         <input
           type="text"
@@ -1177,7 +1177,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm ">
         <label htmlFor="en_cual_municipio_adquirio_discapacidad">2.17 ¿En cuál municipio adquirió la discapacidad?:</label>
         <input
           type="text"
@@ -1192,8 +1192,8 @@ const Tab4: React.FC = () => {
 
     <hr />
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row ">
+      <div className="form-group col-sm ">
         <label htmlFor="discapacidad_auditiva">2.18 Incluya su discapacidad en las siguientes categorías: (Debe seleccionar "SI" mínimo en una opción)</label>
         <select
           className="form-control form-control-sm"
@@ -1205,7 +1205,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="discapacidad_fisica">Física</label>
         <select
           className="form-control form-control-sm"
@@ -1220,7 +1220,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="discapacidad_intelectual">Intelectual</label>
         <select
           className="form-control form-control-sm"
@@ -1232,7 +1232,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="discapacidad_mental">Mental</label>
         <select
           className="form-control form-control-sm"
@@ -1247,7 +1247,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="discapacidad_sordoceguera">Sordoceguera</label>
         <select
           className="form-control form-control-sm"
@@ -1259,7 +1259,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="discapacidad_visual">Visual</label>
         <select
           className="form-control form-control-sm"
@@ -1273,8 +1273,8 @@ const Tab4: React.FC = () => {
       </div>
     </div>
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row ">
+      <div className="form-group col-sm ">
         <label htmlFor="discapacidad_multiple">Múltiple</label>
         <select
           className="form-control form-control-sm"
@@ -1290,8 +1290,8 @@ const Tab4: React.FC = () => {
 
     <hr />
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row ">
+      <div className="form-group col-sm ">
         <label htmlFor="adicionales_a_las_anteriores">2.18.1 Otras específicas adicionales a las anteriores:</label>
         <select
           className="form-control form-control-sm"
@@ -1302,7 +1302,7 @@ const Tab4: React.FC = () => {
         >
         <option value=""> SELECCIONE </option><option value="2"> GRAVE </option><option value="1"> LEVE </option><option value="3"> MODERADA </option><option value="4"> PROFUNDA </option>         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="grado_discapacidad_intelectual">2.18.2 Grado de discapacidad intelectual (En caso de presentarla):</label>
         <select
           className="form-control form-control-sm"
@@ -1318,7 +1318,7 @@ const Tab4: React.FC = () => {
     <hr />
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_pensar">2.19 En sus actividades diarias presenta dificultades permanentes para: (Debe seleccionar "SI" mínimo en una opción)</label>
         <select
           className="form-control form-control-sm"
@@ -1330,7 +1330,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_percibir_luz">Percibir la luz, distinguir objetos o personas a pesar de usar lentes o gafas:</label>
         <select
           className="form-control form-control-sm"
@@ -1345,7 +1345,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_oir">Oír, aun con aparatos especiales:</label>
         <select
           className="form-control form-control-sm"
@@ -1357,7 +1357,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_sabores">Distinguir sabores u olores:</label>
         <select
           className="form-control form-control-sm"
@@ -1372,7 +1372,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_hablar">Hablar y comunicarse:</label>
         <select
           className="form-control form-control-sm"
@@ -1384,7 +1384,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_desplazarse">Desplazarse en trechos cortos por problemas respiratorios o del corazón:</label>
         <select
           className="form-control form-control-sm"
@@ -1398,7 +1398,7 @@ const Tab4: React.FC = () => {
       </div>
     </div>
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_masticar">Masticar, tragar, asimilar y transformar los alimentos:</label>
         <select
           className="form-control form-control-sm"
@@ -1410,7 +1410,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_retener_expulsar">Retener o expulsar la orina, tener relaciones sexuales, tener hijos:</label>
         <select
           className="form-control form-control-sm"
@@ -1425,7 +1425,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_caminar">Caminar, correr, saltar:</label>
         <select
           className="form-control form-control-sm"
@@ -1437,7 +1437,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_piel_sana">Mantener piel, uñas y cabellos sanos:</label>
         <select
           className="form-control form-control-sm"
@@ -1452,7 +1452,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_relacionarse">Relacionarse con las demás personas y el entorno:</label>
         <select
           className="form-control form-control-sm"
@@ -1464,7 +1464,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_mover_objetos">Llevar, mover, utilizar objetos con las manos:</label>
         <select
           className="form-control form-control-sm"
@@ -1479,7 +1479,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_posturas">Cambiar y mantener las posiciones del cuerpo:</label>
         <select
           className="form-control form-control-sm"
@@ -1491,7 +1491,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_alimentarse">Alimentarse, asearse, vestirse por sí mismo:</label>
         <select
           className="form-control form-control-sm"
@@ -1505,8 +1505,8 @@ const Tab4: React.FC = () => {
       </div>
     </div>
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row ">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actividades_dificultades_otra">Otra:</label>
         <select
           className="form-control form-control-sm"
@@ -1522,7 +1522,7 @@ const Tab4: React.FC = () => {
 
     <hr />
 
-    <div className="row pb-3">
+    <div className="row ">
       <div className="form-group col-sm-12 pb-3">
         <label htmlFor="actitudes_negativos_familiares">2.20 En su hogar o entorno social, ¿quiénes presentan actitudes negativas que le impidan desarrollar su actividad diaria con mayor autonomía?: (Debe seleccionar "SI" mínimo en una opción)</label>
         <select
@@ -1535,7 +1535,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actitudes_negativos_vecinos">Vecinos:</label>
         <select
           className="form-control form-control-sm"
@@ -1550,7 +1550,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actitudes_negativos_amigos">Amigos, compañeros:</label>
         <select
           className="form-control form-control-sm"
@@ -1562,7 +1562,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actitudes_negativos_empleados">Funcionarios, empleados:</label>
         <select
           className="form-control form-control-sm"
@@ -1576,8 +1576,8 @@ const Tab4: React.FC = () => {
       </div>
     </div>
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actitudes_negativos_otras">Otras personas:</label>
         <select
           className="form-control form-control-sm"
@@ -1589,7 +1589,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="actitudes_negativos_nadie">Nadie:</label>
         <select
           className="form-control form-control-sm"
@@ -1618,7 +1618,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_sala">Sala-Comedor:</label>
         <select
           className="form-control form-control-sm"
@@ -1633,7 +1633,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_baño">Baño-Sanitario:</label>
         <select
           className="form-control form-control-sm"
@@ -1645,7 +1645,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_escaleras">Escaleras:</label>
         <select
           className="form-control form-control-sm"
@@ -1661,7 +1661,7 @@ const Tab4: React.FC = () => {
 
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_pasillos">Pasillos-Patios:</label>
         <select
           className="form-control form-control-sm"
@@ -1673,7 +1673,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_andenes">Andenes-Aceras:</label>
         <select
           className="form-control form-control-sm"
@@ -1688,7 +1688,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_calles">Calles-Vías:</label>
         <select
           className="form-control form-control-sm"
@@ -1700,7 +1700,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_centros_edu">Centros educativos:</label>
         <select
           className="form-control form-control-sm"
@@ -1715,7 +1715,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_lug_trabajo">Lugares de trabajo:</label>
         <select
           className="form-control form-control-sm"
@@ -1727,7 +1727,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_parques">Parques, plazas, estadios, teatros, iglesias:</label>
         <select
           className="form-control form-control-sm"
@@ -1742,7 +1742,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_paraderos">Paraderos, terminales de transporte:</label>
         <select
           className="form-control form-control-sm"
@@ -1754,7 +1754,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_trans_publico">Vehículos de transporte público:</label>
         <select
           className="form-control form-control-sm"
@@ -1769,7 +1769,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_hospitales">Centros de salud, hospitales:</label>
         <select
           className="form-control form-control-sm"
@@ -1781,7 +1781,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_tiendas">Centros comerciales, tiendas, plazas de mercado:</label>
         <select
           className="form-control form-control-sm"
@@ -1795,8 +1795,8 @@ const Tab4: React.FC = () => {
       </div>
     </div>
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row ">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_otros">Otros lugares:</label>
         <select
           className="form-control form-control-sm"
@@ -1808,7 +1808,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="lugares_barreras_ninguno">Ninguno:</label>
         <select
           className="form-control form-control-sm"
@@ -1824,7 +1824,7 @@ const Tab4: React.FC = () => {
 
     <hr />
 
-    <div className="row pb-3">
+    <div className="row ">
       <div className="form-group col-sm-12 pb-3">
         <label htmlFor="medios_comunicacion_escritos">2.22 ¿Cuáles medios o sistemas de comunicación utiliza habitualmente?: (Debe seleccionar "SI" mínimo en una opción)</label>
         <select
@@ -1837,7 +1837,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="medios_comunicacion_radio">Radio:</label>
         <select
           className="form-control form-control-sm"
@@ -1852,7 +1852,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="medios_comunicacion_television">Televisión:</label>
         <select
           className="form-control form-control-sm"
@@ -1864,7 +1864,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="medios_comunicacion_senas">Lengua de señas:</label>
         <select
           className="form-control form-control-sm"
@@ -1879,7 +1879,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="medios_comunicacion_senas_naturales">Señas naturales:</label>
         <select
           className="form-control form-control-sm"
@@ -1891,7 +1891,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="medios_comunicacion_telefono">Teléfono:</label>
         <select
           className="form-control form-control-sm"
@@ -1906,7 +1906,7 @@ const Tab4: React.FC = () => {
     </div>
 
     <div className="row pb-3">
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="medios_comunicacion_internet">Internet:</label>
         <select
           className="form-control form-control-sm"
@@ -1918,7 +1918,7 @@ const Tab4: React.FC = () => {
           <option value="1"> NO </option><option value="2"> SI </option>
         </select>
       </div>
-      <div className="form-group col-sm">
+      <div className="form-group col-sm pt-3">
         <label htmlFor="medios_comunicacion_braille">Braille:</label>
         <select
           className="form-control form-control-sm"
@@ -1932,8 +1932,8 @@ const Tab4: React.FC = () => {
       </div>
     </div>
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row ">
+      <div className="form-group col-sm ">
         <label htmlFor="medios_comunicacion_ninguno">Ninguno:</label>
         <select
           className="form-control form-control-sm"
@@ -1949,8 +1949,8 @@ const Tab4: React.FC = () => {
 
     <hr />
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row ">
+      <div className="form-group col-sm ">
         <label htmlFor="derechos_deberes_pcd">2.23 ¿Conoce los derechos y deberes de las PcD?:</label>
         <select
           className="form-control form-control-sm"
@@ -1963,7 +1963,7 @@ const Tab4: React.FC = () => {
         </select>
       </div>
       {items.derechos_deberes_pcd == '2' ? 
-      <div className="form-group col-sm">
+      <div className="form-group col-sm ">
         <label htmlFor="derechos_deberes_pcd_cuales">¿Cuáles?:</label>
         <input
           type="text"
@@ -1979,8 +1979,8 @@ const Tab4: React.FC = () => {
 
     <hr />
 
-    <div className="row pb-3">
-      <div className="form-group col-sm">
+    <div className="row ">
+      <div className="form-group col-sm ">
         <label htmlFor="certificado_discapacidad">2.24 ¿La persona cuenta con el certificado de discapacidad acorde a la resolución 1239 de 2022?:</label>
         <select
           className="form-control form-control-sm"
